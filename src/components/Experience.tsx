@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const Experience = () => {
   return (
-    <section id={'about-me'} className={'max-w-[62.5rem] w-full'}>
+    <section id={'experience'} className={'max-w-[62.5rem] w-full'}>
       <div id={'about-me-title'} className={'text-[3rem] font-semibold'}>
         Experience
       </div>

@@ -1,4 +1,4 @@
-import { UserCircle } from 'phosphor-react';
+import { UserCircle, AddressBook, Browser } from 'phosphor-react';
 import { PropsWithChildren } from 'react';
 import styles from './navbar.module.scss';
 import colors from '@styles/colors';
@@ -11,6 +11,12 @@ export const NavBar = () => {
     >
       <Item link={'/#about-me'}>
         <UserCircle size={66} color={colors.latte} weight='fill' />
+      </Item>
+      <Item link={'/#experience'}>
+        <AddressBook size={66} color={colors.latte} weight='fill' />
+      </Item>
+      <Item link={'/#projects'}>
+        <Browser size={66} color={colors.latte} weight='fill' />
       </Item>
     </div>
   );
