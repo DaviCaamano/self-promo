@@ -2,20 +2,6 @@
 import colors from './src/styles/colors';
 const defaultTheme = require('tailwindcss/defaultTheme');
 
-console.log(
-  `
-
-
-
-
-
-colors`,
-  colors,
-  `
-
-
-`,
-);
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   purge: [
