@@ -1,0 +1,48 @@
+.jobTitleBoxRight {
+  @apply absolute h-[20rem] w-[45rem] text-[3rem] overflow-hidden;
+  right: 18px;
+  bottom: -236px;
+  transform: rotate(344.25deg);
+}
+
+.jobTitleInnerRight {
+  @apply relative h-full w-full;
+  transform: rotate(-344.25deg);
+}
+
+.jobTitleRight {
+  @apply absolute w-full h-full;
+  top: 14px;
+  left: -122px;
+}
+
+.jobTitleBoxLeft {
+  @apply absolute h-[20rem] w-[45rem] text-[3rem] overflow-hidden;
+  left: -177px;
+  bottom: -241px;
+  transform: rotate(28.25deg);
+}
+
+.jobTitleInnerLeft {
+  @apply relative h-full w-full;
+  transform: rotate(-28.25deg);
+}
+
+.jobTitleLeft {
+  @apply absolute w-full h-full;
+  top: 10px;
+  left: 317px;
+}
+
+.jobTitleBoxCenter {
+  @apply absolute h-[10rem] w-[45rem] text-[3rem];
+  left: 145px;
+  bottom: 17px;
+  clip-path: polygon(4.25% 42.5%, 28.25% 100%, 75% 40.5%);
+}
+
+.jobTitleCenter {
+  @apply absolute w-full h-full text-dim;
+  bottom: -108px;
+  left: -4.5px;
+}
