@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en' className={`${montserratFont.variable} ${montserratFont.className} bg-mug`}>
+    <html lang='en' className={`${montserratFont.variable} ${montserratFont.className} bg-latte`}>
       <body className={inter.className}>
         <main className='flex min-h-screen flex-col items-center justify-between'>{children} </main>
       </body>

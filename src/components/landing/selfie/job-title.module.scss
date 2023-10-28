@@ -1,19 +1,13 @@
 .jobTitleBox {
-  @apply absolute h-[4rem] w-[45rem] text-[3rem] overflow-hidden text-latte;
+  @apply absolute h-[4rem] w-[45rem] text-[3rem] overflow-hidden;
   left: 100px;
   bottom: 5px;
-  clip-path: polygon(0% 0%, 19.5% 0%, 34.5% 87%, 62.5% 0,100% 0,  100% 100%, 0 100%);
-}
-
-.jobTitle {
+  clip-path: polygon(0% 0%, 19.5% 0%, 34.5% 87%, 62.5% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .jobTitleBoxCenter {
-  @apply absolute h-[4rem] w-[45rem] text-[3rem] overflow-hidden text-dim;
+  @apply absolute h-[4rem] w-[45rem] text-[3rem] overflow-hidden text-latte;
   left: 100px;
   bottom: 5px;
   clip-path: polygon(21% 0%, 60% 0%, 34.5% 80%);
-}
-
-.jobTitleCenter {
 }
