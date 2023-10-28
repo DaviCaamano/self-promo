@@ -1,8 +1,6 @@
-import Link from 'next/link';
-
 export const AboutMe = () => {
   return (
-    <section id={'about-me'} className={'max-w-[62.5rem] w-full mb-[8rem]'}>
+    <div id={'about-me'} className={'max-w-[62.5rem] min-w-screen mb-[8rem] keen-slider__slide number-slide2'}>
       <div id={'about-me-title'} className={'text-[3rem] font-semibold'}>
         About Me
       </div>
@@ -29,10 +27,10 @@ export const AboutMe = () => {
         a has done nothing to slow me down. Even outside my professional life where I am working on developing a small
         business for AI driven assistance for creative writing.
         <div className={'mb-3'} />
-        Unfortunately, layoff have hit many of us this industry, especially in Miami. And while I was the
+        Unfortunately, layoffs have hit many of us this industry, especially in Miami. And while I was the
         last-dev-standing in my latest position, I am actively seeking employment. Interested parties should feel free
         to contact me at the email address and phone number listed above.
       </div>
-    </section>
+    </div>
   );
 };

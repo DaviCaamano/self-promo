@@ -1,5 +1,5 @@
 .greetingBox {
-  @apply absolute h-[10rem] w-[30rem] text-[4rem]  overflow-hidden;
+  @apply absolute h-[10rem] w-[30rem] text-[4rem] overflow-hidden;
   left: -13px;
   top: -27px;
   transform: rotate(335deg);
@@ -32,4 +32,62 @@
 .wave {
   @apply inline-block;
   transform: scaleX(-1);
+}
+//
+//.wageIcon {
+//  width: 75px;
+//  height: 75px;
+//  fill: #403A3E;
+//}
+
+.ripple {
+  position: absolute;
+  right: 50px;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
+  outline: none !important;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(#323c42, 0.7);
+    filter: blur(0);
+    transform-origin: 60%;
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &.activated {
+    &:before,
+    &:after {
+      border-color: transparent;
+      filter: blur(2px);
+      transform: scale(4);
+      opacity: 100%;
+      transition:
+        500ms transform ease,
+        1050ms blur ease,
+        450ms border-color ease;
+    }
+    &:after {
+      transition-delay: 100ms;
+    }
+  }
+}
+
+.rippleInner {
+  @apply relative w-full h-full;
 }

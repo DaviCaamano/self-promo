@@ -2,20 +2,27 @@ import { UserCircle, AddressBook, Browser } from 'phosphor-react';
 import { PropsWithChildren } from 'react';
 import styles from './navbar.module.scss';
 import colors from '@styles/colors';
-import Link from 'next/link';
-export const NavBar = () => {
+
+type JumpTo = (index: number) => void;
+interface NavBarProps {
+  jumpTo: JumpTo | undefined;
+}
+export const NavBar = ({ jumpTo }: NavBarProps) => {
+  const onClick = (index: number) => () => {
+    jumpTo?.(index);
+  };
   return (
     <div
       className={`navbar  ${styles.navbg}`}
       style={{ bottom: 0, left: '50%', transform: 'translateX(-50%)', backdropFilter: 'blur(10px)' }}
     >
-      <Item link={'/#about-me'}>
+      <Item onClick={onClick(0)}>
         <UserCircle size={66} color={colors.latte} weight='fill' />
       </Item>
-      <Item link={'/#experience'}>
+      <Item onClick={onClick(1)}>
         <AddressBook size={66} color={colors.latte} weight='fill' />
       </Item>
-      <Item link={'/#projects'}>
+      <Item onClick={onClick(2)}>
         <Browser size={66} color={colors.latte} weight='fill' />
       </Item>
     </div>
@@ -23,12 +30,15 @@ export const NavBar = () => {
 };
 
 interface ItemProps extends PropsWithChildren {
-  link: string;
+  onClick: () => void;
 }
-const Item = ({ children, link }: ItemProps) => {
+const Item = ({ children, onClick }: ItemProps) => {
   return (
-    <Link href={link}>
-      <div className={'w-[4rem] h-[4rem] rounded-xl bg-dim flex justify-center items-center'}>{children}</div>
-    </Link>
+    <div
+      className={'w-[4rem] h-[4rem] rounded-xl bg-dim flex justify-center items-center cursor-pointer'}
+      onClick={onClick}
+    >
+      {children}
+    </div>
   );
 };

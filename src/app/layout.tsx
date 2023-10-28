@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.scss';
+import 'keen-slider/keen-slider.min.css';
+
 import { montserratFont } from '@fonts/montserrat/montserrat.font';
 
 const inter = Inter({ subsets: ['latin'] });

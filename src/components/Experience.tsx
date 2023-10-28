@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export const Experience = () => {
   return (
-    <section id={'experience'} className={'max-w-[62.5rem] w-full'}>
+    <div id={'experience'} className={'min-w-screen w-full keen-slider__slide number-slide3'}>
       <div id={'about-me-title'} className={'text-[3rem] font-semibold'}>
         Experience
       </div>
@@ -14,7 +14,7 @@ export const Experience = () => {
           title={'Fullstack Developer && Team Lead'}
           name={'ORSINI IT'}
           thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
-          techs={['React', 'Typescript', 'Node', 'Sequelize', 'Docker', 'MYSQL', 'AWS']}
+          techs={['React', 'Typescript', 'Node', 'Express', 'Sequelize', 'Docker', 'MYSQL', 'AWS']}
         >
           Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in about
           three months where I managed the development of the company's front and backend.
@@ -32,7 +32,7 @@ export const Experience = () => {
           developer.
         </Job>
       </div>
-    </section>
+    </div>
   );
 };
 
