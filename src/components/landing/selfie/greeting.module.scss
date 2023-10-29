@@ -1,33 +1,19 @@
-.greetingBox {
-  @apply absolute h-[10rem] w-[30rem] text-[4rem] overflow-hidden;
-  left: -13px;
-  top: -27px;
-  transform: rotate(335deg);
+.greeting {
+  @apply absolute h-[6rem] w-[30rem] text-[4rem] text-latte overflow-hidden font-thin pl-[5.5px];
+  left: 120px;
+  top: 23px;
+  clip-path: polygon(0 0%, 362px 0%, 0 174px);
 }
+
 
 .greetingInner {
-  @apply relative h-full w-full;
-  transform: rotate(-335deg);
+  @apply absolute h-[6rem] w-[30rem] text-[4rem] text-latte overflow-hidden text-void;
+  left: 120px;
+  top: 23px;
+  font-weight: 300;
+  clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
 }
 
-.greeting {
-  @apply absolute w-full h-full;
-  top: 3rem;
-  left: 141px;
-}
-
-.greetingBoxAlt {
-  @apply absolute h-[10rem] w-[30rem] text-[4rem] overflow-hidden;
-  left: 250px;
-  top: 33px;
-  transform: rotate(335deg);
-}
-
-.greetingAlt {
-  @apply absolute w-full h-full text-void;
-  top: -13px;
-  left: -122px;
-}
 
 .wave {
   @apply inline-block;

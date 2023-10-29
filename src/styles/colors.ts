@@ -3,7 +3,7 @@ const colors = {
   latte: '#f6f3ec',
   mug: '#323C42',
 
-  void: '#625959',
+  void: '#2A2D31',
   dim: '#9F9F9FFF',
 };
 

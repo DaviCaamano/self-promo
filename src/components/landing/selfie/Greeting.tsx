@@ -7,17 +7,9 @@ const MotionDiv = motion.div;
 
 export const Greeting = () => (
   <>
-    <div className={styles.greetingBox}>
-      <div className={styles.greetingInner}>
-        <div className={styles.greeting}>It's Me, Davi</div>
-      </div>
-    </div>
-    <div className={styles.greetingBoxAlt}>
-      <div className={styles.greetingInner}>
-        <div className={styles.greetingAlt}>
-          It's Me, Davi <Wave />
-        </div>
-      </div>
+    <div className={styles.greeting}>It's Me, Davi</div>
+    <div className={styles.greetingInner}>
+      It's Me, Davi <Wave />
     </div>
   </>
 );

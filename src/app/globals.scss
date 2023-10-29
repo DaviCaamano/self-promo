@@ -4,7 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 html {
   scroll-behavior: smooth;
 }
@@ -16,5 +15,5 @@ body {
 
 body {
   background-size: 400px auto;
-  @apply text-latte;
+  @apply text-latte bg-void;
 }
