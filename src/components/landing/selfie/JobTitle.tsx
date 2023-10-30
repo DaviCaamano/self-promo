@@ -24,4 +24,3 @@ export const JobTitle = () => (
 );
 
 const InlineSpacer = () => <span className={'mr-[3px] inline-block '} />;
-const InlineSpacerLg = () => <span className={'mr-[4px] inline-block '} />;

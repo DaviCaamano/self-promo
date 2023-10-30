@@ -7,35 +7,41 @@ import { useSlide } from '@components/landing/hooks/useSlide';
 import { Slide } from '@components/landing/landing.interface';
 import { Projects } from '@components/landing/Projects';
 import { PropsWithChildren } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
 
 export const Landing = () => {
-  const { focusedProject, setFocusedProject, slide, setSlide, sliderRef } = useSlide();
+  const { setFocusedProject, slide, setSlide, splide } = useSlide();
+
   return (
-    <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center'>
-      <div id={'carousel'} ref={sliderRef} className={'keen-slider'}>
-        <CarouselFilter current={slide} slide={Slide.selfie}>
+    <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center overflow-hidden'>
+      <Splide {...splide}>
+        <Page current={slide} slide={Slide.selfie}>
           <Selfie />
-        </CarouselFilter>
-        <CarouselFilter current={slide} slide={Slide.about}>
+        </Page>
+        <Page current={slide} slide={Slide.about}>
           <AboutMe />
-        </CarouselFilter>
-        <CarouselFilter current={slide} slide={Slide.experience}>
+        </Page>
+        <Page current={slide} slide={Slide.experience}>
           <Experience setFocusedProject={setFocusedProject} />
-        </CarouselFilter>
-        <CarouselFilter current={slide} slide={Slide.projects}>
-          <Projects focusedProject={focusedProject} setFocusedProject={setFocusedProject} />
-        </CarouselFilter>
-      </div>
+        </Page>
+        <Page current={slide} slide={Slide.projects}>
+          <Projects />
+        </Page>
+      </Splide>
       <NavBar slide={slide} setSlide={setSlide} />
     </div>
   );
 };
 
 interface CarouselFilterProps extends PropsWithChildren {
-  slide: Slide;
   current: Slide;
+  slide: Slide;
 }
-const CarouselFilter = ({ children, current, slide }: CarouselFilterProps) => {
-  return <div className={`${current === slide ? 'max-h-[100dvh] overflow-hidden' : ''}`}>{children}</div>;
+const Page = ({ children, current, slide }: CarouselFilterProps) => {
+  return (
+    <SplideSlide>
+      <div className={`trimmer ${current !== slide && 'max-h-[100dvh] overflow-hidden'} h-auto`}>{children}</div>
+    </SplideSlide>
+  );
 };

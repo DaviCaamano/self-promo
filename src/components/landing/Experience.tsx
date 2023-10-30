@@ -1,4 +1,4 @@
-import { PropsWithChildren, useState } from 'react';
+import {PropsWithChildren, useState} from 'react';
 import Image from 'next/image';
 import styles from '@components/landing/styles/section.module.scss';
 import { Project } from '@components/landing/landing.interface';
@@ -9,8 +9,9 @@ interface ExperienceProps {
   setFocusedProject: Setter<Project | undefined>;
 }
 export const Experience = ({ setFocusedProject }: ExperienceProps) => {
+
   return (
-    <div id={'about-me'} className={`${styles.aboutMe} keen-slider__slide number-slide2`}>
+    <div id={'about-me'} className={styles.section}>
       <div className={styles.container}>
         <div id={'about-me-title'} className={styles.title}>
           Experience
@@ -25,7 +26,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             title={'Fullstack Developer && Team Lead'}
           >
             Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in
-            about three months where I managed the development of the company's front and backend.
+            about three months where I managed the development of the company&apos;s front and backend.
           </Job>
           <div className={'my-1'} />
           <Job

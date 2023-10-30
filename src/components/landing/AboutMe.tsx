@@ -5,7 +5,7 @@ import Link from 'next/link';
 import colors from '@styles/colors';
 export const AboutMe = () => {
   return (
-    <div id={'about-me'} className={`${sStyles.aboutMe} keen-slider__slide number-slide2`}>
+    <div id={'about-me'} className={sStyles.section}>
       <div className={sStyles.container}>
         <div id={'about-me-title'} className={sStyles.title}>
           About Me
@@ -21,7 +21,7 @@ export const AboutMe = () => {
             </span>
           </Link>
           <div className={'mb-3'} />
-          Never content with good enough, I've accelerated from entry-to-supervisor in every position I have held dating
+          Never content with good enough, I&apos;ve accelerated from entry-to-supervisor in every position I have held dating
           back to my first job as a cashier to my most recent position as developer lead. Working in my dream industry
           as a has done nothing to slow me down. Even outside my professional life where I am working on developing a
           small business for AI driven assistance for creative writing.

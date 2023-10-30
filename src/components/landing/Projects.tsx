@@ -10,14 +10,11 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.share
 import { ArrowSquareOut } from 'phosphor-react';
 import colors from '@styles/colors';
 
-interface ProjectsProps {
-  focusedProject: ProjectName | undefined;
-  setFocusedProject: Setter<ProjectName | undefined>;
-}
-export const Projects = ({ focusedProject, setFocusedProject }: ProjectsProps) => {
+export const Projects = () => {
   const router = useRouter();
+
   return (
-    <div id={'about-me'} className={`${sStyles.aboutMe} keen-slider__slide number-slide2`}>
+    <div id={'about-me'} className={sStyles.section}>
       <div className={sStyles.container}>
         <div id={'about-me-title'} className={sStyles.title}>
           Projects
@@ -137,7 +134,7 @@ const Project = ({ children, id, name, techs, thumbnails: { sm, lg }, url }: Pro
       <div className={'job-dates mb-1'}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
-        <JobThumbnail alt={'Project: ' + id} sm={sm} lg={lg} url={url} />
+        <ProjectThumbnail alt={'Project: ' + id} sm={sm} lg={lg} url={url} />
         <Technologies name={name} techs={techs} />
       </div>
     </section>
@@ -150,7 +147,7 @@ interface JobThumbnailProps {
   alt: string;
   url: string;
 }
-const JobThumbnail = ({ alt, lg, sm, url }: JobThumbnailProps) => {
+const ProjectThumbnail = ({ alt, lg, sm, url }: JobThumbnailProps) => {
   return (
     <Link href={url}>
       <div

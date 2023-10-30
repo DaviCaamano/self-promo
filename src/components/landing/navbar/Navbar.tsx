@@ -59,7 +59,6 @@ interface ItemProps extends PropsWithChildren {
   slide: Slide;
 }
 const Item = ({ children, index, onClick, slide }: ItemProps) => {
-  console.log('navbar:', index === slide, index, slide);
   return (
     <div
       className={

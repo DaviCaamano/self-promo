@@ -5,7 +5,7 @@ import styles from '../styles/selfie.module.scss';
 import { Wave } from '@components/landing/selfie/Wave';
 
 export const Selfie = () => (
-  <div className={`${styles.selfie} keen-slider__slide number-slide1`}>
+  <div className={styles.selfie}>
     <div className={styles.responsive}>
       <Portrait />
       <Greeting />
