@@ -1,36 +1,39 @@
 import { PropsWithChildren } from 'react';
 import Image from 'next/image';
+import styles from '@components/section.module.scss';
 
 export const Experience = () => {
   return (
-    <div id={'experience'} className={'min-w-screen w-full keen-slider__slide number-slide3'}>
-      <div id={'about-me-title'} className={'text-[3rem] font-semibold'}>
-        Experience
-      </div>
-      <div className={'h-[0.125rem] w-[500px] bg-latte mb-12'} />
-      <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
-        <Job
-          dates={'JAN 2019 ─ NOV 2020'}
-          title={'Fullstack Developer && Team Lead'}
-          name={'ORSINI IT'}
-          thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
-          techs={['React', 'Typescript', 'Node', 'Express', 'Sequelize', 'Docker', 'MYSQL', 'AWS']}
-        >
-          Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in about
-          three months where I managed the development of the company's front and backend.
-        </Job>
-        <div className={'my-4'} />
-        <Job
-          dates={'JAN 2021 ─ Oct 2023'}
-          title={'Fullstack/Mobile Developer && Team Lead'}
-          name={'QUELLIV'}
-          thumbnails={{ sm: '/images/thumbnails/quelliv-sm.webp', lg: '/images/thumbnails/quelliv-lg.webp' }}
-          techs={['NextJs', 'NestJs', 'Typescript', 'React-Native', 'Prisma', 'Docker', 'Postgres', 'AWS']}
-        >
-          Starting again as a junior developer, I was promoted after a year to team lead where I managed a team of 10.
-          In addition to this, I also expanded my skillset into mobile while continuing my work as a fullstack
-          developer.
-        </Job>
+    <div id={'about-me'} className={`${styles.aboutMe} keen-slider__slide number-slide2`}>
+      <div className={styles.container}>
+        <div id={'about-me-title'} className={styles.title}>
+          Experience
+        </div>
+        <div className={'h-[0.125rem] w-[500px] bg-latte mt-3 mb-6'} />
+        <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
+          <Job
+            dates={'JAN 2019 ─ NOV 2020'}
+            title={'Fullstack Developer && Team Lead'}
+            name={'ORSINI IT'}
+            thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
+            techs={['React', 'Typescript', 'Node', 'Express', 'Sequelize', 'Docker', 'MYSQL', 'AWS']}
+          >
+            Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in
+            about three months where I managed the development of the company's front and backend.
+          </Job>
+          <div className={'my-4'} />
+          <Job
+            dates={'JAN 2021 ─ Oct 2023'}
+            title={'Fullstack/Mobile Developer && Team Lead'}
+            name={'QUELLIV'}
+            thumbnails={{ sm: '/images/thumbnails/quelliv-sm.webp', lg: '/images/thumbnails/quelliv-lg.webp' }}
+            techs={['NextJs', 'NestJs', 'Typescript', 'React-Native', 'Prisma', 'Docker', 'Postgres', 'AWS']}
+          >
+            Starting again as a junior developer, I was promoted after a year to team lead where I managed a team of 10.
+            In addition to this, I also expanded my skillset into mobile while continuing my work as a fullstack
+            developer.
+          </Job>
+        </div>
       </div>
     </div>
   );
@@ -56,10 +59,10 @@ const Job = ({ dates, children, name, techs, title, thumbnails: { sm, lg } }: Jo
       </div>
       <div className={'job-title font-semibold text-[1.5rem]'}>{title}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
-      <div className={'flex flex-row mx-4 my-8'}>
-        <JobThumbnail alt={"Orsini-IT's website"} sm={sm} lg={lg} url={'https://oit.co/'} />
-        <Technologies name={name} techs={techs} />
-      </div>
+      {/*<div className={'flex flex-row mx-4 my-8'}>*/}
+      {/*  <JobThumbnail alt={"Orsini-IT's website"} sm={sm} lg={lg} url={'https://oit.co/'} />*/}
+      {/*  <Technologies name={name} techs={techs} />*/}
+      {/*</div>*/}
     </div>
   );
 };

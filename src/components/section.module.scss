@@ -1,0 +1,23 @@
+.aboutMe {
+  min-height: 100dvh;
+  @apply flex justify-center items-center font-thin;
+}
+
+.container {
+  @apply max-w-[52rem] mx-auto px-[2rem] py-[2rem] pb-[5.125rem] sm:pb-[7rem] text-white;
+  line-height: 2rem;
+  font-weight: 200;
+}
+
+.contactInfo {
+  @apply flex flex-col md:flex-row justify-between items-center text-[1rem] sm:text-[1.25rem] md:text-[1.5rem] mb-4;
+}
+
+.contactInfoField {
+  @apply font-medium text-[1rem] sm:text-[1.25rem] md:text-[1.5rem] inline-block mr-1;
+}
+
+.title {
+  @apply text-[1.5rem] sm:text-[2.25rem] md:text-[2.5rem];
+  font-weight: 400;
+}
