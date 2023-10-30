@@ -1,0 +1,49 @@
+.selfie {
+  @apply w-full flex flex-col justify-center items-center text-mug;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+}
+
+.responsive {
+  position: relative;
+  width: 400px;
+  min-width: 400px;
+  transform: scale(0.5833333333333333);
+
+  @media (min-width: 320px) {
+    transform: scale(0.625);
+    width: 400px;
+    min-width: 400px;
+  }
+
+  @media (min-width: 400px) {
+    transform: scale(0.83333333);
+    width: 400px;
+    min-width: 400px;
+  }
+
+  @media (min-width: 480px) {
+    transform: scale(0.48);
+    width: 62.5rem;
+    min-width: 62.5rem;
+  }
+
+  @media (min-width: 600px) {
+    transform: scale(0.58);
+    width: 62.5rem;
+    min-width: 62.5rem;
+  }
+
+  @media (min-width: 800px) {
+    transform: scale(0.78);
+    width: 62.5rem;
+    min-width: 62.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    transform: scale(1);
+    width: 62.5rem;
+    min-width: 62.5rem;
+  }
+}

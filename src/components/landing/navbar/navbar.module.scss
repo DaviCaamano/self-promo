@@ -1,8 +1,15 @@
 .navbg {
-  @apply fixed rounded-t-3xl h-[5rem] w-[20rem] flex flex-row justify-around items-center;
-  background: hsla(0,0%,100%,.08);
+  @apply fixed rounded-t-3xl h-[3.125rem]  sm:h-[5rem] w-[12.5rem] sm:w-[20rem] flex flex-row justify-around items-center;
+  background: hsla(0, 0%, 100%, 0.08);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0,0,0,.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(4.4px);
   -webkit-backdrop-filter: blur(4.4px);
+}
+
+.indicator {
+  @apply absolute;
+  left: 50%;
+  top: -16px;
+  transform: translateX(-50%);
 }

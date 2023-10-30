@@ -1,35 +1,41 @@
 .greeting {
-  @apply absolute h-[6rem] w-[30rem] text-[4rem] text-latte overflow-hidden font-thin pl-[5.5px];
-  left: 120px;
-  top: 23px;
-  clip-path: polygon(0 0%, 362px 0%, 0 174px);
-}
+  @apply absolute h-[6rem] text-latte overflow-hidden font-thin pl-[5.5px];
+  left: 12%;
+  top: 7%;
+  font-size: 2rem;
+  clip-path: polygon(0 0%, 166px 0%, 0 113px);
 
+  @media (min-width: 480px) {
+    left: 12%;
+    font-size: 4rem;
+    clip-path: polygon(0 0%, 362px 0%, 0 174px);
+  }
+}
 
 .greetingInner {
-  @apply absolute h-[6rem] w-[30rem] text-[4rem] text-latte overflow-hidden text-void;
-  left: 120px;
-  top: 23px;
-  font-weight: 300;
-  clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
-}
+  @apply absolute h-[6rem] text-void overflow-hidden;
+  left: 12%;
+  top: 7%;
+  font-size: 2rem;
+  font-weight: 400;
+  clip-path: polygon(167px 0%, 0 114px, 100% 100%, 100% 0);
 
+  @media (min-width: 480px) {
+    left: 12%;
+    font-size: 4rem;
+    clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+  }
+}
 
 .wave {
   @apply inline-block;
   transform: scaleX(-1);
 }
-//
-//.wageIcon {
-//  width: 75px;
-//  height: 75px;
-//  fill: #403A3E;
-//}
 
 .ripple {
   position: absolute;
-  right: 50px;
-  top: 0;
+  right: 32%;
+  top: 13%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -38,6 +44,11 @@
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important;
   -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important;
   outline: none !important;
+
+  @media (min-width: 480px) {
+    right: 44%;
+    top: 10%;
+  }
 
   &:before,
   &:after {
