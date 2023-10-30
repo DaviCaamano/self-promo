@@ -1,4 +1,4 @@
-import styles from './greeting.module.scss';
+import styles from '../styles/greeting.module.scss';
 
 export const Greeting = () => (
   <>

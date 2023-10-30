@@ -1,6 +1,6 @@
 import { AddressBook, Browser, Buildings, UserCircle, CaretDown } from 'phosphor-react';
 import { PropsWithChildren } from 'react';
-import styles from './navbar.module.scss';
+import styles from '../styles/navbar.module.scss';
 import colors from '@styles/colors';
 import { Slide } from '@components/landing/landing.interface';
 

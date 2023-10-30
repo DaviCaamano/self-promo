@@ -2,7 +2,7 @@ import { HandWaving } from 'phosphor-react';
 import colors from '@styles/colors';
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
-import styles from './greeting.module.scss';
+import styles from '../styles/greeting.module.scss';
 const MotionDiv = motion.div;
 
 export const Wave = () => {

@@ -1,4 +1,4 @@
-import styles from './job-title.module.scss';
+import styles from '../styles/job-title.module.scss';
 
 export const JobTitle = () => (
   <>
