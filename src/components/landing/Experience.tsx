@@ -1,4 +1,4 @@
-import {PropsWithChildren, useState} from 'react';
+import { PropsWithChildren, useState } from 'react';
 import Image from 'next/image';
 import styles from '@components/landing/styles/section.module.scss';
 import { Project } from '@components/landing/landing.interface';
@@ -9,7 +9,6 @@ interface ExperienceProps {
   setFocusedProject: Setter<Project | undefined>;
 }
 export const Experience = ({ setFocusedProject }: ExperienceProps) => {
-
   return (
     <div id={'about-me'} className={styles.section}>
       <div className={styles.container}>

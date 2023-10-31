@@ -1,11 +1,11 @@
 import { Landing } from '@components/landing/Landing';
 import { headers } from 'next/headers';
-import { detectMobile } from '@utils/mobile/detectMobile';
+import { useIsMobile } from '@hooks/mobile/useIsMobile';
 
 export default function Home() {
-  const isMobile = detectMobile(headers);
+  const isMobile = useIsMobile(headers);
   return (
-    <div id={'home-page'} className={'relative min-h-[100svh] w-[100%]'}>
+    <div id={'home-page'} className={'relative min-h-[100svh] w-[100vw]'}>
       <Landing isMobile={isMobile} />
     </div>
   );

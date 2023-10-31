@@ -1,18 +1,23 @@
+import styles from '../styles/selfie.module.scss';
 import { Portrait } from '@components/landing/selfie/Portrait';
 import { Greeting } from '@components/landing/selfie/Greeting';
 import { JobTitle } from '@components/landing/selfie/JobTitle';
-import styles from '../styles/selfie.module.scss';
 import { Wave } from '@components/landing/selfie/Wave';
 import { Socials } from '@components/landing/selfie/Socials';
 
-export const Selfie = () => (
-  <div className={styles.selfie}>
-    <div className={styles.responsive}>
-      <Portrait />
-      <Greeting />
-      <JobTitle />
-      <Wave />
+interface SelfieProps {
+  isLandscape: boolean;
+}
+export const Selfie = ({ isLandscape }: SelfieProps) => {
+  return (
+    <div className={styles.selfie}>
+      <div className={`${styles.responsive} ${isLandscape && styles.landscape}`}>
+        <Portrait isLandscape={isLandscape} />
+        <Greeting isLandscape={isLandscape} />
+        <JobTitle isLandscape={isLandscape} />
+        <Wave isLandscape={isLandscape} />
+      </div>
+      <Socials isLandscape={isLandscape} />
     </div>
-    <Socials />
-  </div>
-);
+  );
+};

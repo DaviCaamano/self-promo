@@ -9,6 +9,28 @@
     left: 10%;
     font-size: 4rem;
     clip-path: polygon(0 0%, 362px 0%, 0 174px);
+
+    &.landscape {
+      @apply absolute h-[6rem] text-latte overflow-hidden font-thin pl-[5.5px];
+      left: 12%;
+      top: 7%;
+      font-size: 2rem;
+      clip-path: polygon(0 0%, 166px 0%, 0 113px);
+
+      @media (min-height: 480px) {
+        left: 10%;
+        font-size: 4rem;
+        clip-path: polygon(0 0%, 362px 0%, 0 174px);
+      }
+    }
+  }
+
+  &.landscape {
+    @media (min-height: 480px) {
+      left: 10%;
+      font-size: 4rem;
+      clip-path: polygon(0 0%, 362px 0%, 0 174px);
+    }
   }
 }
 
@@ -24,12 +46,56 @@
     left: 9.75%;
     font-size: 4rem;
     clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+
+    &.landscape {
+      @apply absolute h-[6rem] text-void overflow-hidden;
+      left: 12.25%;
+      top: 7%;
+      font-size: 2rem;
+      font-weight: 400;
+      clip-path: polygon(167px 0%, 0 114px, 100% 100%, 100% 0);
+
+      @media (min-height: 480px) {
+        left: 9.75%;
+        font-size: 4rem;
+        clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+      }
+    }
+  }
+
+  &.landscape {
+    @media (min-height: 480px) {
+      left: 9.75%;
+      font-size: 4rem;
+      clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+    }
   }
 }
 
 .wave {
   @apply inline-block;
   transform: scaleX(-1);
+  font-size: 36px;
+
+  @media (min-width: 480px) {
+    font-size: 56px;
+
+    &.landscape {
+      font-size: 36px;
+
+      @media (min-height: 480px) {
+        font-size: 56px;
+      }
+    }
+  }
+
+  &.landscape {
+    font-size: 36px;
+
+    @media (min-height: 480px) {
+      font-size: 56px;
+    }
+  }
 }
 
 .ripple {
@@ -48,6 +114,23 @@
   @media (min-width: 480px) {
     right: 46.5%;
     top: 11.5%;
+
+    &.landscape {
+      right: 32%;
+      top: 13%;
+
+      @media (min-height: 480px) {
+        right: 46.5%;
+        top: 11.5%;
+      }
+    }
+  }
+
+  &.landscape {
+    @media (min-height: 480px) {
+      right: 46.5%;
+      top: 11.5%;
+    }
   }
 
   &:before,

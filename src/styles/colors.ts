@@ -4,7 +4,7 @@ const colors = {
   mug: '#505f69',
 
   shadow: '#505F69',
-  void: '#2A2D31',
+  void: '#191d1e',
   dim: '#9F9F9F',
 
   forest: '#c8cbb8',

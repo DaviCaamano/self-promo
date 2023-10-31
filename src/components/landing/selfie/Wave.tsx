@@ -5,7 +5,10 @@ import { useRef, useState } from 'react';
 import styles from '../styles/greeting.module.scss';
 const MotionDiv = motion.div;
 
-export const Wave = () => {
+interface WaveProps {
+  isLandscape: boolean;
+}
+export const Wave = ({ isLandscape }: WaveProps) => {
   const [highFive, setHighFive] = useState<boolean>(false);
   const [ripple, setRipple] = useState<boolean>(false);
   const activated = useRef<boolean>(false);
@@ -22,7 +25,10 @@ export const Wave = () => {
     }
   };
   return (
-    <div className={`${styles.ripple} ${ripple && styles.activated}`} onClick={onClick}>
+    <div
+      className={`${styles.ripple} ${ripple && styles.activated} ${isLandscape && styles.landscape}`}
+      onClick={onClick}
+    >
       <div className={styles.rippleInner}>
         <MotionDiv
           animate={highFive ? 'highFive' : 'standby'}
@@ -35,26 +41,13 @@ export const Wave = () => {
             repeatDelay: 10,
           }}
         >
-          <div className={'block sm:hidden'}>
-            <HandWaving
-              size={36}
-              color={colors.void}
-              weight='fill'
-              className={styles.wave}
-              onMouseEnter={() => setHighFive(true)}
-              onMouseLeave={() => setHighFive(false)}
-            />
-          </div>
-          <div className={'hidden sm:block'}>
-            <HandWaving
-              size={54}
-              color={colors.void}
-              weight='fill'
-              className={styles.wave}
-              onMouseEnter={() => setHighFive(true)}
-              onMouseLeave={() => setHighFive(false)}
-            />
-          </div>
+          <HandWaving
+            color={colors.void}
+            weight='fill'
+            className={`${styles.wave} ${isLandscape && styles.landscape}`}
+            onMouseEnter={() => setHighFive(true)}
+            onMouseLeave={() => setHighFive(false)}
+          />
         </MotionDiv>
       </div>
     </div>

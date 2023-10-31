@@ -9,18 +9,20 @@ import { Projects } from '@components/landing/Projects';
 import { PropsWithChildren } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
+import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
 
 interface LandingProps {
   isMobile: boolean;
 }
 export const Landing = ({ isMobile }: LandingProps) => {
   const { setFocusedProject, slide, setSlide, splide } = useSlide();
+  const isLandscape = useIsLandscape(isMobile);
 
   return (
     <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center overflow-hidden'>
       <Splide {...splide}>
         <Page current={slide} slide={Slide.socials}>
-          <Selfie />
+          <Selfie isLandscape={isLandscape} />
         </Page>
         <Page current={slide} slide={Slide.about}>
           <AboutMe />
@@ -32,7 +34,7 @@ export const Landing = ({ isMobile }: LandingProps) => {
           <Projects />
         </Page>
       </Splide>
-      <NavBar slide={slide} setSlide={setSlide} isMobile={isMobile} />
+      <NavBar slide={slide} setSlide={setSlide} isLandscape={isLandscape} isMobile={isMobile} />
     </div>
   );
 };

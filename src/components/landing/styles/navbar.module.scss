@@ -1,10 +1,45 @@
 .navbg {
-  @apply fixed rounded-t-3xl h-[3.125rem]  sm:h-[5rem] w-[12.5rem] sm:w-[20rem] flex flex-row justify-around items-center;
   background: hsla(100%, 100%, 100%, 0.15);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4.4px);
   -webkit-backdrop-filter: blur(4.4px);
+}
+
+.nav,
+.navbg {
+  @apply flex flex-row justify-around items-center;
+  height: 3.125rem;
+  width: 12.5rem;
+  font-size: 1.875rem;
+  border-radius: 16px 16px 0 0;
+
+  @media (min-width: 480px) {
+    height: 5rem;
+    width: 20rem;
+    font-size: 3.125rem;
+
+    &.landscape {
+      height: 3.125rem;
+      width: 12.5rem;
+      font-size: 1.875rem;
+
+      @media (min-height: 480px) {
+        height: 5rem;
+        width: 20rem;
+        font-size: 3.125rem;
+      }
+    }
+  }
+
+  @media (max-width: 479px) {
+    &.landscape {
+      @media (min-height: 480px) {
+        height: 5rem;
+        width: 20rem;
+        font-size: 1.875rem;
+      }
+    }
+  }
 }
 
 .indicator {
@@ -15,9 +50,60 @@
 }
 
 .navItem {
-  @apply w-[2.5rem] h-[2.5rem] sm:w-[3.5rem]
-  sm:h-[3.5rem]
-  relative rounded-xl bg-mug
-  flex justify-center items-center cursor-pointer;
-  box-shadow: 1px 1px 5px black;
+  @apply cursor-pointer transition-all duration-200 text-latte;
+
+  &:not(.smIcon) {
+    font-size: 1.875rem;
+  }
+  &.smIcon {
+    font-size: 1.875rem;
+  }
+
+  @media (min-width: 480px) {
+    &:not(.smIcon) {
+      font-size: 40px;
+    }
+    &.smIcon {
+      font-size: 36px;
+    }
+    &.landscape {
+      &:not(.smIcon) {
+        font-size: 1.875rem;
+      }
+      &.smIcon {
+        font-size: 1.875rem;
+      }
+      @media (min-height: 480px) {
+        &:not(.smIcon) {
+          font-size: 40px;
+        }
+        &.smIcon {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 479px) {
+    &.landscape {
+      @media (min-height: 480px) {
+        &:not(.smIcon) {
+          font-size: 40px;
+        }
+        &.smIcon {
+          font-size: 36px;
+        }
+      }
+    }
+  }
+
+  &:not(.mobile) {
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+
+  &.selected {
+    transform: scale(1.2) !important;
+  }
 }

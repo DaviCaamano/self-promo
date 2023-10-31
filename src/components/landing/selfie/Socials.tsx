@@ -1,21 +1,21 @@
 import colors from '@styles/colors';
 import Link from 'next/link';
 import { GithubLogo, LinkedinLogo, TwitterLogo } from 'phosphor-react';
-
-export const Socials = () => {
+import styles from '../styles/selfie.module.scss';
+interface SocialsProps {
+  isLandscape: boolean;
+}
+export const Socials = ({ isLandscape }: SocialsProps) => {
   return (
-    <div
-      className={'socials flex flex-row absolute'}
-      style={{ left: '50%', top: '2rem', transform: 'translateX(-50%)' }}
-    >
+    <div className={`socials ${styles.socialsContainer} ${isLandscape && styles.landscape}`}>
       <Link href={'https://github.com/DaviCaamano'} passHref target={'_blank'}>
-        <GithubLogo size={44} color={colors.latte} className={'mr-4 cursor-pointer'} />
+        <GithubLogo color={colors.latte} className={`${styles.gitHub} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link href={'https://www.linkedin.com/in/davi-caamano-8a440b157/'} passHref target={'_blank'}>
-        <LinkedinLogo size={48} color={colors.latte} className={'mr-4 cursor-pointer'} />
+        <LinkedinLogo color={colors.latte} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link href={'https://twitter.com/DaviSCaamano'} passHref target={'_blank'}>
-        <TwitterLogo size={48} color={colors.latte} className={'cursor-pointer'} />
+        <TwitterLogo color={colors.latte} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
     </div>
   );
