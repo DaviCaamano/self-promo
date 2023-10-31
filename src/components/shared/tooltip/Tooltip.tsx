@@ -61,7 +61,6 @@ export const Tooltip = ({
     onMouseLeave: () => setIsOpen(false),
   };
 
-  console.log('open', open, isOpen);
   return (
     <div className={`tooltip ${name} relative w-max h-max ${wrapper?.className}`} style={wrapper?.style} {...events}>
       {children}

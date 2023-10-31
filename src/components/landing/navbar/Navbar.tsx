@@ -6,10 +6,11 @@ import { Slide } from '@components/landing/landing.interface';
 import { Tooltip, ToolTipAnchor } from '@components/shared/tooltip/Tooltip';
 
 interface NavBarProps {
+  isMobile: boolean;
   slide: Slide;
   setSlide: Setter<Slide>;
 }
-export const NavBar = ({ slide, setSlide }: NavBarProps) => {
+export const NavBar = ({ isMobile, slide, setSlide }: NavBarProps) => {
   const onClick = (index: number) => () => {
     setSlide(index);
   };
@@ -18,7 +19,7 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
       className={`navbar  ${styles.navbg}`}
       style={{ bottom: 0, left: '50%', transform: 'translateX(-50%)', backdropFilter: 'blur(10px)' }}
     >
-      <Item onClick={onClick(0)} index={Slide.socials} slide={slide}>
+      <Item onClick={onClick(0)} index={Slide.socials} slide={slide} isMobile={isMobile}>
         <div className={'block sm:hidden'}>
           <UserCircle size={30} color={colors.latte} weight='fill' />
         </div>
@@ -26,7 +27,7 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
           <UserCircle size={50} color={colors.latte} weight='fill' />
         </div>
       </Item>
-      <Item onClick={onClick(1)} index={Slide.about} slide={slide}>
+      <Item onClick={onClick(1)} index={Slide.about} slide={slide} isMobile={isMobile}>
         <div className={'block sm:hidden'}>
           <AddressBook size={30} color={colors.latte} weight='fill' />
         </div>
@@ -34,7 +35,7 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
           <AddressBook size={50} color={colors.latte} weight='fill' />
         </div>
       </Item>
-      <Item onClick={onClick(2)} index={Slide.experience} slide={slide}>
+      <Item onClick={onClick(2)} index={Slide.experience} slide={slide} isMobile={isMobile}>
         <div className={'block sm:hidden'}>
           <Buildings size={30} color={colors.latte} weight='fill' />
         </div>
@@ -42,7 +43,7 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
           <Buildings size={50} color={colors.latte} weight='fill' />
         </div>
       </Item>
-      <Item onClick={onClick(3)} index={Slide.projects} slide={slide}>
+      <Item onClick={onClick(3)} index={Slide.projects} slide={slide} isMobile={isMobile}>
         <div className={'block sm:hidden'}>
           <Browser size={30} color={colors.latte} weight='fill' />
         </div>
@@ -56,13 +57,30 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
 
 interface ItemProps extends PropsWithChildren {
   index: Slide;
+  isMobile: boolean;
   onClick: () => void;
   slide: Slide;
 }
-const Item = ({ children, index, onClick, slide }: ItemProps) => {
+const Item = ({ children, index, isMobile, onClick, slide }: ItemProps) => {
   return (
-    <Tooltip content={<span>{Pages[index]}</span>} anchor={ToolTipAnchor.top} distance={'8px'}>
-      <div className={styles.navItem} onClick={onClick}>
+    <Tooltip
+      content={<span>{Pages[index]}</span>}
+      anchor={ToolTipAnchor.top}
+      distance={'8px'}
+      open={!isMobile ? undefined : false}
+    >
+      <div
+        className={styles.navItem}
+        onClick={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+          onClick?.();
+        }}
+        onTouchStart={(event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        }}
+      >
         <Indicator active={index === slide} />
         {children}
       </div>

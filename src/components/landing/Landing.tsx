@@ -10,7 +10,10 @@ import { PropsWithChildren } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 
-export const Landing = () => {
+interface LandingProps {
+  isMobile: boolean;
+}
+export const Landing = ({ isMobile }: LandingProps) => {
   const { setFocusedProject, slide, setSlide, splide } = useSlide();
 
   return (
@@ -29,7 +32,7 @@ export const Landing = () => {
           <Projects />
         </Page>
       </Splide>
-      <NavBar slide={slide} setSlide={setSlide} />
+      <NavBar slide={slide} setSlide={setSlide} isMobile={isMobile} />
     </div>
   );
 };

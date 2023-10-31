@@ -1,5 +1,5 @@
 .selfie {
-  @apply w-full flex flex-col justify-center items-center text-mug;
+  @apply relative w-full flex flex-col justify-center items-center text-mug;
   height: 100dvh;
   min-height: 100dvh;
   max-height: 100dvh;
@@ -7,8 +7,7 @@
 
 .responsive {
   position: relative;
-  width: 400px;
-  min-width: 400px;
+  @apply relative w-[25rem] min-w-[25rem] mb-24;
   transform: scale(0.5833333333333333);
 
   @media (min-width: 320px) {

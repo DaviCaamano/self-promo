@@ -22,6 +22,7 @@
     "phosphor-react": "^1.4.1",
     "prettier": "^3.0.3",
     "react": "^18",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18",
     "sass": "^1.69.5"
   },

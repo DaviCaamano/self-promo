@@ -3,6 +3,7 @@ import { Greeting } from '@components/landing/selfie/Greeting';
 import { JobTitle } from '@components/landing/selfie/JobTitle';
 import styles from '../styles/selfie.module.scss';
 import { Wave } from '@components/landing/selfie/Wave';
+import { Socials } from '@components/landing/selfie/Socials';
 
 export const Selfie = () => (
   <div className={styles.selfie}>
@@ -12,5 +13,6 @@ export const Selfie = () => (
       <JobTitle />
       <Wave />
     </div>
+    <Socials />
   </div>
 );
