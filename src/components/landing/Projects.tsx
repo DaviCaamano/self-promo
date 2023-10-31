@@ -82,8 +82,6 @@ export const Projects = () => {
             The site's AI assistant will then offer subscribed customers the option to generate additional articles set
             in the same fictional universe. Is there a dragon near the shire? Solace can generate an entire backstory
             for that dragon in seconds, making sure to include references to other parts of the author's work.
-            <div className={'mb-4'} />
-            This project is set within a NextJs/NestJs monorepo and is still in early development.
           </Project>
         </div>
       </div>
