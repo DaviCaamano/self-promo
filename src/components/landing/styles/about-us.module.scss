@@ -7,32 +7,24 @@
   clip-path: polygon(7% 29%, 26.5% 3%, 66% 2%, 100% 39%, 100% 39%, 62% 100%, 0 92%);
 }
 .downloadContainer {
-  @apply flex flex-col sm:flex-row justify-center sm:justify-around sm:items-center pt-4 w-full mb-4;
+  @apply flex flex-col-reverse items-center w-full mb-4;
 }
 
 .download {
-  @apply rounded-2xl text-void flex flex-col items-center
-  w-[12rem] md:w-[14rem]
-  h-[12rem] md:h-[14rem]
-  pt-4 pb-2 transition-all duration-200;
+  @apply border-b-latte border rounded-br-xl flex flex-row justify-between items-center
+  w-full bg-void-light hover:bg-void-highlight cursor-pointer px-4;
 
-  &:not(:hover) {
-    background: linear-gradient(to bottom, #c8cbb8, #dfeab8);
+  &.first {
+    @apply h-16 sm:h-12;
+    z-index: 1;
+    margin-bottom: -1rem;
   }
-  &:hover {
-    background: linear-gradient(to bottom, #dbdecf, #e3ecc5);
+
+  &:not(.first) {
+    @apply h-20 sm:h-16 pt-4;
   }
 }
 
 .downloadTitle {
-  @apply text-[1rem] md:text-[1.25rem]
-  leading-[1rem] md:leading-[1.25rem]
-  font-bold
-  md:my-1
-  text-center;
-}
-
-.downloadName {
-  @apply text-[1rem] md:text-[1.25rem] md:mb-3 text-center;
-  font-weight: 500;
+  @apply text-[1rem] sm:text-[1.1rem] leading-[1.5rem] md:my-1;
 }

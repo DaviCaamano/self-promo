@@ -5,6 +5,8 @@ const colors = {
 
   shadow: '#505F69',
   void: '#191d1e',
+  'void-light': '#272a2c',
+  'void-highlight': '#46494b',
   dim: '#9F9F9F',
 
   forest: '#c8cbb8',

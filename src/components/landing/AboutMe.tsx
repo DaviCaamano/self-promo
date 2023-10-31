@@ -1,6 +1,6 @@
 import sStyles from './styles/section.module.scss';
 import styles from './styles/about-us.module.scss';
-import { Files } from 'phosphor-react';
+import { DownloadSimple } from 'phosphor-react';
 import Link from 'next/link';
 import colors from '@styles/colors';
 export const AboutMe = () => {
@@ -26,19 +26,9 @@ export const AboutMe = () => {
           industry as a has done nothing to slow me down. Even outside my professional life where I am working on
           developing a small business for AI driven assistance for creative writing.
         </div>
-        <div className={'w-full flex flex-col mt-8 md:px-8 font-normal text-[1.25rem] justify-center'}>
-          <span>Letters of Recommendation:</span>
-          <div className={'h-[0.0625rem] bg-latte mt-2 mb-6'} />
 
-          <div className={styles.downloadContainer}>
-            <DownloadButton
-              url={'/pdfs/recommendations/steve-swanson.pdf'}
-              name={'Steve Swanson'}
-              title={'Engineering Dir.'}
-            />
-            <DownloadButton url={'/pdfs/recommendations/hines-trans.pdf'} name={'Hines Tran'} title={'Product Owner'} />
-          </div>
-        </div>
+        <Resume />
+        <Letters />
       </div>
     </div>
   );
@@ -61,17 +51,61 @@ const ContactInfo = () => (
   </div>
 );
 
+const Resume = () => (
+  <>
+    <div className={'mt-6 font-normal text-[1.25rem]'}>Downloads:</div>
+    <div className={'w-full flex flex-col md:px-8 font-normal text-[1.25rem] justify-center'}>
+      <div className={styles.downloadContainer}>
+        <Link
+          href={'/pdfs/resume/Davi Caamano - Resume.pdf'}
+          className={'w-full'}
+          target={'_blank'}
+          style={{ zIndex: 1 }}
+        >
+          <div className={'h-[0.125rem] bg-latte mt-2'} />
+          <div className={`${styles.download} ${styles.first}`}>
+            <div className={styles.downloadTitle}>Resume</div>
+            <DownloadSimple size={32} color={colors.latte} weight='regular' />
+          </div>
+        </Link>
+      </div>
+    </div>
+  </>
+);
+
+const Letters = () => (
+  <div className={'w-full flex flex-col mt-6 md:px-8 font-normal text-[1.25rem] justify-center'}>
+    <span>Letters of Recommendation:</span>
+    <div className={'h-[0.125rem] bg-latte mt-2'} />
+    <div className={styles.downloadContainer}>
+      <DownloadRow url={'/pdfs/recommendations/hines-trans.pdf'} name={'Hines Tran'} title={'Product Owner'} />
+      <DownloadRow
+        url={'/pdfs/recommendations/steve-swanson.pdf'}
+        name={'Steve Swanson'}
+        title={'Director of Engineering'}
+        first
+      />
+    </div>
+  </div>
+);
+
 interface DownloadButtonProps {
   name: string;
   title: string;
   url: string;
+  first?: boolean;
 }
-const DownloadButton = ({ name, title, url }: DownloadButtonProps) => (
-  <Link href={url} className={'flex justify-center mb-4 sm:mb-0'} target={'_blank'}>
-    <div className={styles.download}>
-      <div className={styles.downloadTitle}>{title}</div>
-      <div className={styles.downloadName}>{name}</div>
-      <Files size={200} color={colors.void} weight='fill' />
+const DownloadRow = ({ first, name, title, url }: DownloadButtonProps) => (
+  <Link href={url} className={'w-full'} target={'_blank'} style={first ? { zIndex: 1 } : undefined}>
+    <div className={`${styles.download} ${first && styles.first}`}>
+      <div className={'w-full h-full flex flex-col justify-center'}>
+        <div className={`${styles.downloadTitle} hidden sm:block`}>
+          {title}, {name}
+        </div>
+        <div className={`${styles.downloadTitle} block sm:hidden`}>{title},</div>
+        <div className={`${styles.downloadTitle} block sm:hidden`}>{name}</div>
+      </div>
+      <DownloadSimple size={32} color={colors.latte} weight='regular' />
     </div>
   </Link>
 );
