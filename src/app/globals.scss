@@ -9,9 +9,10 @@ body {
   @apply text-latte mx-auto;
   font-family: ui-sans-serif;
   scroll-behavior: smooth;
-  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-gutter: stable;
-  background: #191D1E !important;
+  background: #191d1e !important;
+  box-sizing: border-box;
 }
 
 body {
