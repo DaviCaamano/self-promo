@@ -19,3 +19,67 @@ body {
   width: 100% !important;
   scroll-behavior: smooth;
 }
+
+.fade_1 {
+  @apply transition-opacity;
+  transition-duration: 100ms;
+}
+.fade_2 {
+  @apply transition-opacity;
+  transition-duration: 200ms;
+}
+.fade_3 {
+  @apply transition-opacity;
+  transition-duration: 300ms;
+}
+.fade_4 {
+  @apply transition-opacity;
+  transition-duration: 400ms;
+}
+.fade_5 {
+  @apply transition-opacity;
+  transition-duration: 500ms;
+}
+.fade_6 {
+  @apply transition-opacity;
+  transition-duration: 600ms;
+}
+.fade_7 {
+  @apply transition-opacity;
+  transition-duration: 700ms;
+}
+.fade_8 {
+  @apply transition-opacity;
+  transition-duration: 800ms;
+}
+.fade_9 {
+  @apply transition-opacity;
+  transition-duration: 900ms;
+}
+.fade-1 {
+  @apply transition-opacity;
+  transition-duration: 1000ms;
+}
+.fade-2 {
+  @apply transition-opacity;
+  transition-duration: 2000ms;
+}
+.fade-3 {
+  @apply transition-opacity;
+  transition-duration: 3000ms;
+}
+.fade-4 {
+  @apply transition-opacity;
+  transition-duration: 4000ms;
+}
+.fade-5 {
+  @apply transition-opacity;
+  transition-duration: 5000ms;
+}
+
+.fadeOut {
+  @apply opacity-0;
+}
+.fadeIn {
+  @apply opacity-100;
+}

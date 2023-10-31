@@ -15,16 +15,16 @@ export const AboutMe = () => {
         <div className={'text-[1rem] md:text-[1.25rem]'}>
           {"Born in Brazil, raised in Miami, I have fallen in love with every job and team I've ever been a part " +
             'of. From what I can tell: '}
-          <Link href={'https://mega.nz/folder/159lWLoa#A1Yh7FVpfaoRLnU5HeihSA'}>
+          <Link href={'https://mega.nz/folder/159lWLoa#A1Yh7FVpfaoRLnU5HeihSA'} target={'_blank'}>
             <span className={'underline'} style={{ textUnderlineOffset: '4px', fontWeight: '300' }}>
               it does seem as though the feeling has been mutual.
             </span>
           </Link>
           <div className={'mb-3'} />
-          Never content with good enough, I&apos;ve accelerated from entry-to-supervisor in every position I have held dating
-          back to my first job as a cashier to my most recent position as developer lead. Working in my dream industry
-          as a has done nothing to slow me down. Even outside my professional life where I am working on developing a
-          small business for AI driven assistance for creative writing.
+          Never content with good enough, I&apos;ve accelerated from entry-to-supervisor in every position I have held
+          dating back to my first job as a cashier to my most recent position as developer lead. Working in my dream
+          industry as a has done nothing to slow me down. Even outside my professional life where I am working on
+          developing a small business for AI driven assistance for creative writing.
         </div>
         <div className={'w-full flex flex-col mt-8 md:px-8 font-normal text-[1.25rem] justify-center'}>
           <span>Letters of Recommendation:</span>
@@ -32,15 +32,11 @@ export const AboutMe = () => {
 
           <div className={styles.downloadContainer}>
             <DownloadButton
-              url={'https://mega.nz/file/p11hQCSR#CjrtrD-qhzBzvDHapQl7T8_-jYpULpKRymKJmajy1uY'}
+              url={'/pdfs/recommendations/steve-swanson.pdf'}
               name={'Steve Swanson'}
               title={'Engineering Dir.'}
             />
-            <DownloadButton
-              url={'https://mega.nz/file/A0FAFBxD#i5NyXfgp7oRU1oE0DyjuIyIj1ui_HFWVdORVscsKYPw'}
-              name={'Hines Tran'}
-              title={'Product Owner'}
-            />
+            <DownloadButton url={'/pdfs/recommendations/hines-trans.pdf'} name={'Hines Tran'} title={'Product Owner'} />
           </div>
         </div>
       </div>
@@ -71,7 +67,7 @@ interface DownloadButtonProps {
   url: string;
 }
 const DownloadButton = ({ name, title, url }: DownloadButtonProps) => (
-  <Link href={url} className={'flex justify-center mb-4 sm:mb-0'}>
+  <Link href={url} className={'flex justify-center mb-4 sm:mb-0'} target={'_blank'}>
     <div className={styles.download}>
       <div className={styles.downloadTitle}>{title}</div>
       <div className={styles.downloadName}>{name}</div>

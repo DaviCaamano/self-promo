@@ -5,14 +5,10 @@ import Image from 'next/image';
 import { PropsWithChildren, useState } from 'react';
 import { Project as ProjectName } from './landing.interface';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { ArrowSquareOut } from 'phosphor-react';
 import colors from '@styles/colors';
 
 export const Projects = () => {
-  const router = useRouter();
-
   return (
     <div id={'about-me'} className={sStyles.section}>
       <div className={sStyles.container}>
@@ -32,10 +28,7 @@ export const Projects = () => {
               A manager portal for a VOIP phone service start-up. I was involved in both the frontend, backend, and
               devops, bringing the company's linux hosted servers to AWS. I also served as the developer lead in a team
               of four and took part in various smaller solo projects such as a chat-bot, click-to-call chrome extension,
-              and an{' '}
-              <ProjectSubLink router={router} url={'https://heytaco.com/'}>
-                in-house version of HeyTaco.
-              </ProjectSubLink>
+              and an <ProjectSubLink url={'https://heytaco.com/'}>in-house version of HeyTaco.</ProjectSubLink>
             </span>
           </Project>
           <div className={'my-4'} />
@@ -48,7 +41,7 @@ export const Projects = () => {
           >
             Onboarding, purchases, offers, bookings, and subscriptions. I was tasked with starting and developing the
             initial NextJs/NestJs monorepo. Quelliv used{' '}
-            <ProjectSubLink router={router} url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}>
+            <ProjectSubLink url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}>
               Laserbiomodulation
             </ProjectSubLink>{' '}
             to aid with pain management, skincare, weight loss, and hair loss. The chat-bot, "Dr. A", used ChatGPT to
@@ -65,15 +58,12 @@ export const Projects = () => {
             techs={['React-Native', 'Typescript', 'Recoil']}
             url={'https://quelliv.com/'}
           >
-            Everything offered by{' '}
-            <ProjectSubLink router={router} url={'https://quelliv.com'}>
-              Quelliv.com
-            </ProjectSubLink>{' '}
-            and more. This was first mobile app I've developed in a professional setting, of which I was the sole
-            developer. One of the focuses for the team was to train customers to treat this app first and last point of
-            contact for our users, even going as far as trying to discourage users from using our webapp for the same
-            services. Because of the many hats this app had to wear, I am particularly proud of the way the designers
-            and I were able to keep this app accessible to the company's predominantly older clientele.
+            Everything offered by <ProjectSubLink url={'https://quelliv.com'}>Quelliv.com</ProjectSubLink> and more.
+            This was first mobile app I've developed in a professional setting, of which I was the sole developer. One
+            of the focuses for the team was to train customers to treat this app first and last point of contact for our
+            users, even going as far as trying to discourage users from using our webapp for the same services. Because
+            of the many hats this app had to wear, I am particularly proud of the way the designers and I were able to
+            keep this app accessible to the company's predominantly older clientele.
           </Project>
           <Project
             id={ProjectName.notesFromSolace}
@@ -122,7 +112,7 @@ const Project = ({ children, id, name, techs, thumbnails: { sm, lg }, url }: Pro
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <Link href={url}>
+      <Link href={url} passHref target={'_blank'}>
         <div
           className={`absolute ${hovered ? 'block' : 'hidden'} hover:bg-void rounded-[0.375rem] p-1`}
           style={{ top: '1rem', right: '2rem' }}
@@ -149,7 +139,7 @@ interface JobThumbnailProps {
 }
 const ProjectThumbnail = ({ alt, lg, sm, url }: JobThumbnailProps) => {
   return (
-    <Link href={url}>
+    <Link href={url} passHref target={'_blank'}>
       <div
         className={
           'job-thumbnails inline-flex justify-center items-center rounded-3xl md:rounded-2xl overflow-hidden mb-6 md:mb-0 md:mr-6'
@@ -183,13 +173,12 @@ const Technologies = ({ name, techs }: TechnologiesProps) => {
 
 interface ProjectSubLinkProps extends PropsWithChildren {
   url: string;
-  router: AppRouterInstance;
 }
-const ProjectSubLink = ({ children, router, url }: ProjectSubLinkProps) => (
+const ProjectSubLink = ({ children, url }: ProjectSubLinkProps) => (
   <span
     onClick={(event) => {
       event.preventDefault();
-      router.push(url);
+      window.open(url, '_ blank');
     }}
     className={'underline cursor-pointer'}
     style={{ textUnderlineOffset: '4px' }}

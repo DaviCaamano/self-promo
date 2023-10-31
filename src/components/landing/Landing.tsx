@@ -16,7 +16,7 @@ export const Landing = () => {
   return (
     <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center overflow-hidden'>
       <Splide {...splide}>
-        <Page current={slide} slide={Slide.selfie}>
+        <Page current={slide} slide={Slide.socials}>
           <Selfie />
         </Page>
         <Page current={slide} slide={Slide.about}>

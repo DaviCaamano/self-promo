@@ -1,5 +1,5 @@
 export enum Slide {
-  selfie,
+  socials,
   about,
   experience,
   projects,

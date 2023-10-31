@@ -6,7 +6,7 @@
   clip-path: polygon(0 0%, 166px 0%, 0 113px);
 
   @media (min-width: 480px) {
-    left: 12%;
+    left: 10%;
     font-size: 4rem;
     clip-path: polygon(0 0%, 362px 0%, 0 174px);
   }
@@ -14,14 +14,14 @@
 
 .greetingInner {
   @apply absolute h-[6rem] text-void overflow-hidden;
-  left: 12%;
+  left: 12.25%;
   top: 7%;
   font-size: 2rem;
   font-weight: 400;
   clip-path: polygon(167px 0%, 0 114px, 100% 100%, 100% 0);
 
   @media (min-width: 480px) {
-    left: 12%;
+    left: 9.75%;
     font-size: 4rem;
     clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
   }
@@ -46,8 +46,8 @@
   outline: none !important;
 
   @media (min-width: 480px) {
-    right: 44%;
-    top: 10%;
+    right: 46.5%;
+    top: 11.5%;
   }
 
   &:before,

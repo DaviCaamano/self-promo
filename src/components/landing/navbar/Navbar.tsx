@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import styles from '../styles/navbar.module.scss';
 import colors from '@styles/colors';
 import { Slide } from '@components/landing/landing.interface';
+import { Tooltip, ToolTipAnchor } from '@components/shared/tooltip/Tooltip';
 
 interface NavBarProps {
   slide: Slide;
@@ -17,7 +18,7 @@ export const NavBar = ({ slide, setSlide }: NavBarProps) => {
       className={`navbar  ${styles.navbg}`}
       style={{ bottom: 0, left: '50%', transform: 'translateX(-50%)', backdropFilter: 'blur(10px)' }}
     >
-      <Item onClick={onClick(0)} index={Slide.selfie} slide={slide}>
+      <Item onClick={onClick(0)} index={Slide.socials} slide={slide}>
         <div className={'block sm:hidden'}>
           <UserCircle size={30} color={colors.latte} weight='fill' />
         </div>
@@ -60,15 +61,12 @@ interface ItemProps extends PropsWithChildren {
 }
 const Item = ({ children, index, onClick, slide }: ItemProps) => {
   return (
-    <div
-      className={
-        'w-[2.5rem] h-[2.5rem] sm:w-[3.5rem] sm:h-[3.5rem] relative rounded-xl bg-dim flex justify-center items-center cursor-pointer'
-      }
-      onClick={onClick}
-    >
-      <Indicator active={index === slide} />
-      {children}
-    </div>
+    <Tooltip content={<span>{Pages[index]}</span>} anchor={ToolTipAnchor.top} distance={'8px'}>
+      <div className={styles.navItem} onClick={onClick}>
+        <Indicator active={index === slide} />
+        {children}
+      </div>
+    </Tooltip>
   );
 };
 
@@ -82,11 +80,17 @@ const Indicator = ({ active }: IndicatorProps) => {
   return (
     <div className={styles.indicator}>
       <div className={'block sm:hidden relative'} style={{ top: '0.3125rem' }}>
-        <CaretDown size={24} color={colors.latte} weight='fill' />
+        <CaretDown size={24} color={colors.forest} weight='fill' style={caretStyle} />
       </div>
       <div className={'hidden sm:block'}>
-        <CaretDown size={32} color={colors.latte} weight='fill' />
+        <CaretDown size={32} color={colors.forest} weight='fill' style={caretStyle} />
       </div>
     </div>
   );
 };
+
+const caretStyle = {
+  filter: 'drop-shadow(rgba(0, 0, 0, 1) 0 1px 3px)',
+};
+
+const Pages = ['Socials', 'About Me', 'Experience', 'Projects'];

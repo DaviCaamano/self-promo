@@ -1,8 +1,8 @@
 .navbg {
   @apply fixed rounded-t-3xl h-[3.125rem]  sm:h-[5rem] w-[12.5rem] sm:w-[20rem] flex flex-row justify-around items-center;
-  background: hsla(0, 0%, 100%, 0.08);
+  background: hsla(100%, 100%, 100%, 0.15);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4.4px);
   -webkit-backdrop-filter: blur(4.4px);
 }
@@ -12,4 +12,12 @@
   left: 50%;
   top: -16px;
   transform: translateX(-50%);
+}
+
+.navItem {
+  @apply w-[2.5rem] h-[2.5rem] sm:w-[3.5rem]
+  sm:h-[3.5rem]
+  relative rounded-xl bg-mug
+  flex justify-center items-center cursor-pointer;
+  box-shadow: 1px 1px 5px black;
 }

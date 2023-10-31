@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export const useSlide = () => {
   const router = useRouter();
-  const [slide, setSlide] = useState<Slide>(Slide.selfie);
+  const [slide, setSlide] = useState<Slide>(Slide.socials);
   const stickySlide = useRef<Slide>(0);
 
   const splideRef = useRef<SplideCore>(null);

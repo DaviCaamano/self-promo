@@ -1,0 +1,12 @@
+.backdrop {
+  @apply w-max
+  absolute inline-flex justify-center items-center
+  border-[1px] border-latte rounded-lg
+  text-latte text-[0.8rem] text-center
+  pointer-events-none
+  p-2;
+  background: hsla(100%, 100%, 100%, 0.15);
+  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4.4px);
+  -webkit-backdrop-filter: blur(4.4px);
+}

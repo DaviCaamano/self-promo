@@ -22,7 +22,7 @@ export const Wave = () => {
     }
   };
   return (
-    <button className={`${styles.ripple} ${ripple && styles.activated}`} onClick={onClick}>
+    <div className={`${styles.ripple} ${ripple && styles.activated}`} onClick={onClick}>
       <div className={styles.rippleInner}>
         <MotionDiv
           animate={highFive ? 'highFive' : 'standby'}
@@ -33,9 +33,6 @@ export const Wave = () => {
             // @ts-ignore
             repeat: 'infinity',
             repeatDelay: 10,
-          }}
-          style={{
-            cursor: 'pointer',
           }}
         >
           <div className={'block sm:hidden'}>
@@ -60,7 +57,7 @@ export const Wave = () => {
           </div>
         </MotionDiv>
       </div>
-    </button>
+    </div>
   );
 };
 
