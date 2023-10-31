@@ -264,7 +264,7 @@
 .socialsContainer {
   @apply flex flex-row justify-between absolute;
   top: 2rem;
-  right: 2%;
+  right: 2rem;
   transform: translateX(0);
   width: 7rem;
 
@@ -275,7 +275,7 @@
     width: 10.5rem;
 
     &.landscape {
-      right: 2% !important;
+      right: 2rem !important;
       left: unset;
       transform: translateX(0) !important;
       width: 7rem !important;
@@ -291,7 +291,7 @@
 
   @media (max-width: 479px) {
     &.landscape {
-      right: 2%;
+      right: 2rem;
       left: unset;
       transform: translateX(0);
       width: 7rem;
