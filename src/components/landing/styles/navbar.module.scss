@@ -3,29 +3,30 @@
   box-shadow: 0 4px 30px rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4.4px);
   -webkit-backdrop-filter: blur(4.4px);
+  @apply px-4;
 }
 
 .nav,
 .navbg {
-  @apply flex flex-row justify-around items-center;
+  @apply flex flex-row justify-around items-center px-2 sm:px-4;
   height: 3.125rem;
-  width: 12.5rem;
+  width: 13.5rem;
   font-size: 1.875rem;
   border-radius: 16px 16px 0 0;
 
   @media (min-width: 480px) {
     height: 5rem;
-    width: 20rem;
+    width: 22rem;
     font-size: 3.125rem;
 
     &.landscape {
       height: 3.125rem;
-      width: 12.5rem;
+      width: 13.5rem;
       font-size: 1.875rem;
 
       @media (min-height: 480px) {
         height: 5rem;
-        width: 20rem;
+        width: 22rem;
         font-size: 3.125rem;
       }
     }
@@ -35,7 +36,7 @@
     &.landscape {
       @media (min-height: 480px) {
         height: 5rem;
-        width: 20rem;
+        width: 22rem;
         font-size: 1.875rem;
       }
     }
@@ -105,5 +106,6 @@
 
   &.selected {
     transform: scale(1.2) !important;
+    @apply text-sea;
   }
 }

@@ -15,7 +15,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
         <div id={'about-me-title'} className={styles.title}>
           Experience
         </div>
-        <div className={'h-[0.125rem] bg-latte mt-3 mb-6'} />
+        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
         <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
           <Job
             dates={'JAN 2019 ─ NOV 2020'}
@@ -66,7 +66,7 @@ const Job = ({ dates, children, name, project, setFocusedProject, title }: JobHe
   const [hovered, setHovered] = useState<boolean>(false);
   return (
     <div
-      className={`text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${hovered && 'bg-mug'}`}
+      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${hovered && 'bg-mug'}`}
       onClick={() => setFocusedProject(project)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -81,12 +81,12 @@ const Job = ({ dates, children, name, project, setFocusedProject, title }: JobHe
         {name}
         <br className={'inline sm:hidden'} /> {dates}
       </div>
-      <div className={'job-title font-semibold text-[1.5rem]'}>
+      <div className={'job-title font-semibold  text-[1.25rem]  md:text-[1.5rem] '}>
         {titles[0]} <br className={'inline sm:hidden'} />
         {titles.length && '&&'}
         {titles[1]}
       </div>
-      <div className={'job-description text-[1rem] font-regular'}>{children}</div>
+      <div className={'job-description text-[1rem] md:text-[1.25rem] font-regular'}>{children}</div>
     </div>
   );
 };

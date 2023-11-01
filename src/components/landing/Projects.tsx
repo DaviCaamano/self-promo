@@ -15,7 +15,7 @@ export const Projects = () => {
         <div id={'about-me-title'} className={sStyles.title}>
           Projects
         </div>
-        <div className={'h-[0.0625rem] bg-latte mt-3 mb-6'} />
+        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
         <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
           <Project
             id={ProjectName.oit}
@@ -119,7 +119,7 @@ const Project = ({ children, id, name, techs, thumbnails: { sm, lg }, url }: Pro
         </div>
       </Link>
 
-      <div className={'job-dates mb-1'}>{name}</div>
+      <div className={'job-dates text-sea font-medium mb-1'}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
         <ProjectThumbnail alt={'Project: ' + id} sm={sm} lg={lg} url={url} />

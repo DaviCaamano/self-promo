@@ -1,5 +1,5 @@
 .jobTitle {
-  @apply absolute flex flex-col h-[9rem] overflow-hidden font-thin text-latte;
+  @apply absolute flex flex-col h-[9rem] overflow-hidden text-latte;
   left: 37%;
   bottom: -32%;
   font-size: 1.5rem;
@@ -14,7 +14,6 @@
     font-size: 2.5rem;
     line-height: 2.75rem;
     letter-spacing: 7px;
-    font-weight: 300;
     clip-path: polygon(0% 0%, 0 98px, 347px 0, 100% 0, 100% 100%, 0 100%);
 
     &.landscape {
@@ -24,7 +23,6 @@
       font-size: 1.5rem;
       line-height: 2rem;
       letter-spacing: 3px;
-      font-weight: 200;
       clip-path: polygon(100% 0, 111px 0, 0 65px, 0 100%, 100% 100%);
 
       @media (min-height: 480px) {
@@ -33,7 +31,6 @@
         font-size: 2.5rem;
         line-height: 2.75rem;
         letter-spacing: 7px;
-        font-weight: 300;
         clip-path: polygon(0% 0%, 0 98px, 347px 0, 100% 0, 100% 100%, 0 100%);
       }
     }

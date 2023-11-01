@@ -10,7 +10,7 @@ export const AboutMe = () => {
         <div id={'about-me-title'} className={sStyles.title}>
           About Me
         </div>
-        <div className={'h-[0.0625rem] bg-latte mt-3 mb-6'} />
+        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
         <ContactInfo />
         <div className={'text-[1rem] md:text-[1.25rem]'}>
           {"Born in Brazil, raised in Miami, I have fallen in love with every job and team I've ever been a part " +
@@ -65,7 +65,7 @@ const Resume = () => (
           <div className={'h-[0.125rem] bg-latte mt-2'} />
           <div className={`${styles.download} ${styles.first}`}>
             <div className={styles.downloadTitle}>Resume</div>
-            <DownloadSimple size={32} color={colors.latte} weight='regular' />
+            <DownloadSimple size={32} color={colors.sea} weight='regular' />
           </div>
         </Link>
       </div>
@@ -105,7 +105,7 @@ const DownloadRow = ({ first, name, title, url }: DownloadButtonProps) => (
         <div className={`${styles.downloadTitle} block sm:hidden`}>{title},</div>
         <div className={`${styles.downloadTitle} block sm:hidden`}>{name}</div>
       </div>
-      <DownloadSimple size={32} color={colors.latte} weight='regular' />
+      <DownloadSimple size={32} color={colors.sea} weight='regular' />
     </div>
   </Link>
 );

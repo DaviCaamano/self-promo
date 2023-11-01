@@ -11,7 +11,7 @@
 }
 
 .download {
-  @apply border-b-latte border rounded-br-xl flex flex-row justify-between items-center
+  @apply border-b-sea border-r-sea border rounded-br-xl flex flex-row justify-between items-center
   w-full bg-void-light hover:bg-void-highlight cursor-pointer px-4;
 
   &.first {

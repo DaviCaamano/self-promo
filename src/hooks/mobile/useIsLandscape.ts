@@ -1,32 +1,36 @@
 'use client';
 import { useEffect, useState } from 'react';
+import { useIsClient } from '@context/client.context';
 
 export const useIsLandscape = (isMobile: boolean) => {
-  const [orientation, setOrientation] = useState(getOrientation());
+  const isClient = useIsClient();
+  const [orientation, setOrientation] = useState(getOrientation(isClient));
 
   const updateOrientation = () => {
-    setOrientation(getOrientation());
+    setOrientation(getOrientation(isClient));
   };
 
   useEffect(() => {
-    window.addEventListener('orientationchange', updateOrientation);
-    return () => {
-      window.removeEventListener('orientationchange', updateOrientation);
-    };
-  }, []);
+    if (isClient) {
+      window.addEventListener('orientationchange', updateOrientation);
+      return () => {
+        window.removeEventListener('orientationchange', updateOrientation);
+      };
+    }
+  }, [isClient]);
 
   useEffect(() => {
-    const updatedOrientation = getOrientation();
+    const updatedOrientation = getOrientation(isClient);
     if (updatedOrientation !== orientation) {
       setOrientation(updatedOrientation);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [window?.screen?.orientation?.type]);
+  }, [isClient]);
 
   return isMobile && orientation.startsWith(MobileOrientation.landscape);
 };
 
-const getOrientation = () => window?.screen?.orientation?.type || '';
+const getOrientation = (isClient: boolean) => (isClient && window?.screen?.orientation?.type) || '';
 
 export enum MobileOrientation {
   landscape = 'landscape',

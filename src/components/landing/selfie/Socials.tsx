@@ -9,13 +9,13 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
   return (
     <div className={`socials ${styles.socialsContainer} ${isLandscape && styles.landscape}`}>
       <Link href={'https://github.com/DaviCaamano'} passHref target={'_blank'}>
-        <GithubLogo color={colors.latte} className={`${styles.gitHub} ${isLandscape && styles.landscape}`} />
+        <GithubLogo color={colors.sea} className={`${styles.gitHub} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link href={'https://www.linkedin.com/in/davi-caamano-8a440b157/'} passHref target={'_blank'}>
-        <LinkedinLogo color={colors.latte} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
+        <LinkedinLogo color={colors.sea} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link href={'https://twitter.com/DaviSCaamano'} passHref target={'_blank'}>
-        <TwitterLogo color={colors.latte} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
+        <TwitterLogo color={colors.sea} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
     </div>
   );

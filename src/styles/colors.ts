@@ -9,6 +9,8 @@ const colors = {
   'void-highlight': '#46494b',
   dim: '#9F9F9F',
 
+  ocean: '#263e79',
+  sea: '#9cb6ff',
   forest: '#c8cbb8',
   woods: '#dfeab8',
 };

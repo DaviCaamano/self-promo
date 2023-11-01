@@ -9,12 +9,13 @@
 }
 
 .technologyItem {
-  @apply h-[2.5rem] xs:h-[3rem] w-[5.5rem]
-  text-mug
+  @apply h-[2.5rem] xs:h-[3rem] w-[6rem]
+  text-sea
   text-[0.7rem] xs:text-[0.75rem] md:text-[0.8rem]
   leading-[0.7rem] xs:leading-[0.75rem] md:leading-[0.8rem]
   flex justify-center items-center
   rounded-3xl
-  font-semibold  m-1 py-1 text-center;
-  background: linear-gradient(to bottom, #c8cbb8, #dfeab8);
+  font-medium  m-1 py-1 text-center
+  border-[#263e79] border-b-sea border-r-sea border;
+  background: linear-gradient(135deg, #2c373a, #1f2b48);
 }
