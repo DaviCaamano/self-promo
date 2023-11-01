@@ -21,10 +21,10 @@ export const AboutMe = () => {
             </span>
           </Link>
           <div className={'mb-3'} />
-          Never content with good enough, I&apos;ve accelerated from entry-to-supervisor in every position I have held
+          Never content with good enough, I{"'"}ve accelerated from entry-to-supervisor in every position I have held
           dating back to my first job as a cashier to my most recent position as developer lead. Working in my dream
-          industry as a has done nothing to slow me down. Even outside my professional life where I am working on
-          developing a small business for AI driven assistance for creative writing.
+          industry has done nothing to slow me down. Even outside my professional life where I am working on developing
+          a small business for AI driven assistance for authors.
         </div>
 
         <Resume />
@@ -35,16 +35,16 @@ export const AboutMe = () => {
 };
 
 const ContactInfo = () => (
-  <div className={styles.contactInfo}>
+  <div className={`contact-info ${styles.contactInfo}`}>
     <div>
       <span className={styles.contactInfoField}>Email:</span>
-      <Link href={'mailto:DaviSantaCaamano@gmail.com'} style={{ fontWeight: '300' }}>
+      <Link href={'mailto:DaviSantaCaamano@gmail.com'} className={styles.contactInfoText}>
         DaviSantaCaamano@gmail.com
       </Link>
     </div>
     <div>
       <span className={styles.contactInfoField}>Phone:</span>
-      <a href={'tel:786-879-0802'} style={{ fontWeight: '300' }}>
+      <a href={'tel:786-879-0802'} className={styles.contactInfoText}>
         (786) 879-0802
       </a>
     </div>

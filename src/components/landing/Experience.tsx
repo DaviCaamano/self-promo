@@ -25,7 +25,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             title={'Fullstack Developer && Team Lead'}
           >
             Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in
-            about three months where I managed the development of the company&apos;s front and backend.
+            about three months where I managed the development of the company{"'"}s front and backend.
           </Job>
           <div className={'my-1'} />
           <Job
@@ -53,7 +53,6 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
 };
 
 interface JobHeaderProps extends PropsWithChildren {
-  children: string;
   dates: string;
   name: string;
   project: Project | undefined;

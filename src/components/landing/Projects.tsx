@@ -106,7 +106,7 @@ const Project = ({ children, id, name, techs, thumbnails: { sm, lg }, url }: Pro
   return (
     <section
       id={id}
-      className={'relative text-[1.5rem] p-4 rounded-2xl hover:bg-mug'}
+      className={'relative text-[1.5rem] p-4 rounded-2xl hover:bg-void-off'}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >

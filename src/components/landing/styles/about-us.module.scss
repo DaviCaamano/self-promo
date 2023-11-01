@@ -1,5 +1,14 @@
+.contactInfo {
+
+}
+
 .contactInfoField {
   @apply font-medium text-[1rem] md:text-[1.25rem] inline-block mr-1;
+}
+
+.contactInfoText {
+  @apply text-[1rem] md:text-[1.25rem];
+  font-weight: 300;
 }
 
 .notepads {
