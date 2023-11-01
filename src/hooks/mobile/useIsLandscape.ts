@@ -15,6 +15,14 @@ export const useIsLandscape = (isMobile: boolean) => {
     };
   }, []);
 
+  useEffect(() => {
+    const updatedOrientation = getOrientation();
+    if (updatedOrientation !== orientation) {
+      setOrientation(updatedOrientation);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [window?.screen?.orientation?.type]);
+
   return isMobile && orientation.startsWith(MobileOrientation.landscape);
 };
 
