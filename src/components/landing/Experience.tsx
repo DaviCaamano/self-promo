@@ -65,7 +65,7 @@ const Job = ({ dates, children, name, project, setFocusedProject, title }: JobHe
   const [hovered, setHovered] = useState<boolean>(false);
   return (
     <div
-      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${hovered && 'bg-mug'}`}
+      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${hovered && 'bg-void-off'}`}
       onClick={() => setFocusedProject(project)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}

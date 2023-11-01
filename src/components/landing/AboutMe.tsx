@@ -35,7 +35,7 @@ export const AboutMe = () => {
 };
 
 const ContactInfo = () => (
-  <div className={`contact-info ${styles.contactInfo}`}>
+  <div className={`contact-info`}>
     <div>
       <span className={styles.contactInfoField}>Email:</span>
       <Link href={'mailto:DaviSantaCaamano@gmail.com'} className={styles.contactInfoText}>
@@ -78,7 +78,7 @@ const Letters = () => (
     <span>Letters of Recommendation:</span>
     <div className={'h-[0.125rem] bg-latte mt-2'} />
     <div className={styles.downloadContainer}>
-      <DownloadRow url={'/pdfs/recommendations/hines-trans.pdf'} name={'Hines Tran'} title={'Product Owner'} />
+      <DownloadRow url={'/pdfs/recommendations/hines-tran.pdf'} name={'Hines Tran'} title={'Product Owner'} />
       <DownloadRow
         url={'/pdfs/recommendations/steve-swanson.pdf'}
         name={'Steve Swanson'}
