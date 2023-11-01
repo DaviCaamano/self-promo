@@ -38,9 +38,9 @@ const ContactInfo = () => (
   <div className={styles.contactInfo}>
     <div>
       <span className={styles.contactInfoField}>Email:</span>
-      <a href={'mailto:DaviSantaCaamano@gmail.com'} style={{ fontWeight: '300' }}>
+      <Link href={'mailto:DaviSantaCaamano@gmail.com'} style={{ fontWeight: '300' }}>
         DaviSantaCaamano@gmail.com
-      </a>
+      </Link>
     </div>
     <div>
       <span className={styles.contactInfoField}>Phone:</span>

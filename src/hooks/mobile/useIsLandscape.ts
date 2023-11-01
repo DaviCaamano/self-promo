@@ -1,3 +1,4 @@
+'use client';
 import { useEffect, useState } from 'react';
 
 export const useIsLandscape = (isMobile: boolean) => {
@@ -17,7 +18,7 @@ export const useIsLandscape = (isMobile: boolean) => {
   return isMobile && orientation.startsWith(MobileOrientation.landscape);
 };
 
-const getOrientation = () => window.screen.orientation.type;
+const getOrientation = () => window?.screen?.orientation?.type || '';
 
 export enum MobileOrientation {
   landscape = 'landscape',
