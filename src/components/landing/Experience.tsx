@@ -6,9 +6,10 @@ import { FlowArrow } from 'phosphor-react';
 import colors from '@styles/colors';
 
 interface ExperienceProps {
+  active: boolean;
   setFocusedProject: Setter<Project | undefined>;
 }
-export const Experience = ({ setFocusedProject }: ExperienceProps) => {
+export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
   return (
     <div id={'about-me'} className={styles.section}>
       <div className={styles.container}>
@@ -23,6 +24,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             project={Project.oit}
             setFocusedProject={setFocusedProject}
             title={'Fullstack Developer && Team Lead'}
+            tabIndex={active ? 1 : undefined}
           >
             Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
             about three months where I managed the development of the company{"'"}s front and backend.
@@ -34,10 +36,10 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             project={Project.quelliv}
             setFocusedProject={setFocusedProject}
             title={'Fullstack/Mobile Developer && Team Lead'}
+            tabIndex={active ? 2 : undefined}
           >
-            Starting again as a junior developer, I was promoted to team lead where I managed a team of 10.
-            In addition to this, I also expanded my skillset into mobile while continuing my work as a fullstack
-            developer.
+            Starting again as a junior developer, I was promoted to team lead where I managed a team of 10. In addition
+            to this, I also expanded my skillset into mobile while continuing my work as a fullstack developer.
           </Job>
           <div className={'mt-8 mx-auto'}>
             <picture>
@@ -57,18 +59,22 @@ interface JobHeaderProps extends PropsWithChildren {
   name: string;
   project: Project | undefined;
   setFocusedProject: Setter<Project | undefined>;
+  tabIndex: number | undefined;
   title: string;
 }
 
-const Job = ({ dates, children, name, project, setFocusedProject, title }: JobHeaderProps) => {
+const Job = ({ dates, children, name, project, setFocusedProject, tabIndex, title }: JobHeaderProps) => {
   const titles = title.split('&&');
   const [hovered, setHovered] = useState<boolean>(false);
   return (
     <div
-      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${hovered && 'bg-void-off'}`}
+      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${
+        hovered && 'bg-void-off'
+      }`}
       onClick={() => setFocusedProject(project)}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      tabIndex={tabIndex}
     >
       <div
         className={`absolute ${hovered ? 'opacity-100' : 'opacity-0'} transition-opacity`}

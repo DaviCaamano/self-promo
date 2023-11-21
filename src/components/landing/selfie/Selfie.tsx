@@ -6,9 +6,10 @@ import { Wave } from '@components/landing/selfie/Wave';
 import { Socials } from '@components/landing/selfie/Socials';
 
 interface SelfieProps {
+  active: boolean;
   isLandscape: boolean;
 }
-export const Selfie = ({ isLandscape }: SelfieProps) => {
+export const Selfie = ({ active, isLandscape }: SelfieProps) => {
   return (
     <div className={styles.selfie}>
       <div className={`${styles.responsive} ${isLandscape && styles.landscape}`}>
@@ -17,7 +18,7 @@ export const Selfie = ({ isLandscape }: SelfieProps) => {
         <JobTitle isLandscape={isLandscape} />
         <Wave isLandscape={isLandscape} />
       </div>
-      <Socials isLandscape={isLandscape} />
+      <Socials active={active} isLandscape={isLandscape} />
     </div>
   );
 };

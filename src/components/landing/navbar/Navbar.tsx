@@ -28,7 +28,7 @@ export const NavBar = ({ isLandscape, isMobile, setSlide, slide }: NavBarProps) 
   });
 
   const tooltipContent =
-    typeof tooltipText !== 'undefined' && Pages[tooltipText] ? <span>{Pages[tooltipText]}</span> : undefined;
+    typeof tooltipText !== 'undefined' && PageList[tooltipText] ? <span>{PageList[tooltipText]}</span> : undefined;
 
   return (
     <div
@@ -44,12 +44,14 @@ export const NavBar = ({ isLandscape, isMobile, setSlide, slide }: NavBarProps) 
               styles.smIcon
             }`}
             {...mouseOverEvents(0)}
+            tabIndex={navTabNum(slide, 0)}
           />
           <UserCircle
             onClick={onClick(1)}
             weight={slide === Slide.about ? 'fill' : 'light'}
             className={`${styles.navItem} ${isMobile && styles.mobile} ${slide === Slide.about && styles.selected}`}
             {...mouseOverEvents(1)}
+            tabIndex={navTabNum(slide, 1)}
           />
           <Briefcase
             onClick={onClick(2)}
@@ -58,6 +60,7 @@ export const NavBar = ({ isLandscape, isMobile, setSlide, slide }: NavBarProps) 
               slide === Slide.experience && styles.selected
             }`}
             {...mouseOverEvents(2)}
+            tabIndex={navTabNum(slide, 2)}
           />
           <Stack
             onClick={onClick(3)}
@@ -66,6 +69,7 @@ export const NavBar = ({ isLandscape, isMobile, setSlide, slide }: NavBarProps) 
               styles.smIcon
             }`}
             {...mouseOverEvents(3)}
+            tabIndex={navTabNum(slide, 3)}
           />
         </div>
       </Tooltip>{' '}
@@ -73,4 +77,21 @@ export const NavBar = ({ isLandscape, isMobile, setSlide, slide }: NavBarProps) 
   );
 };
 
-const Pages = ['Socials', 'About Me', 'Experience', 'Projects'];
+enum Pages {
+  socials = 'Socials',
+  aboutMe = 'About Me',
+  experience = 'Experience',
+  projects = 'Projects',
+}
+
+const PageList = [Pages.socials, Pages.aboutMe, Pages.experience, Pages.projects];
+
+/** Sets the tab index number based on which slide is being displayed */
+const tabDictionary = [
+  [4, 5, 6, 7], //socials page
+  [7, 8, 9, 10], //about me page
+  [3, 4, 5, 6], //experience page
+  [12, 13, 14, 15], //projects page
+];
+
+const navTabNum = (slide: Slide, tab: number) => tabDictionary[slide][tab];

@@ -22,16 +22,16 @@ export const Landing = ({ isMobile }: LandingProps) => {
     <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center overflow-hidden'>
       <Splide {...splide}>
         <Page current={slide} slide={Slide.socials}>
-          <Selfie isLandscape={isLandscape} />
+          <Selfie active={slide === Slide.socials} isLandscape={isLandscape} />
         </Page>
         <Page current={slide} slide={Slide.about}>
-          <AboutMe />
+          <AboutMe active={slide === Slide.about} />
         </Page>
         <Page current={slide} slide={Slide.experience}>
-          <Experience setFocusedProject={setFocusedProject} />
+          <Experience active={slide === Slide.experience} setFocusedProject={setFocusedProject} />
         </Page>
         <Page current={slide} slide={Slide.projects}>
-          <Projects />
+          <Projects active={slide === Slide.projects} />
         </Page>
       </Splide>
       <NavBar slide={slide} setSlide={setSlide} isLandscape={isLandscape} isMobile={isMobile} />
