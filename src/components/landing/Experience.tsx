@@ -24,7 +24,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             setFocusedProject={setFocusedProject}
             title={'Fullstack Developer && Team Lead'}
           >
-            Starting as an backend intern, I was promoted a fullstack developer and team lead of a four man team in
+            Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
             about three months where I managed the development of the company{"'"}s front and backend.
           </Job>
           <div className={'my-1'} />
@@ -35,7 +35,7 @@ export const Experience = ({ setFocusedProject }: ExperienceProps) => {
             setFocusedProject={setFocusedProject}
             title={'Fullstack/Mobile Developer && Team Lead'}
           >
-            Starting again as a junior developer, I was promoted after a year to team lead where I managed a team of 10.
+            Starting again as a junior developer, I was promoted to team lead where I managed a team of 10.
             In addition to this, I also expanded my skillset into mobile while continuing my work as a fullstack
             developer.
           </Job>

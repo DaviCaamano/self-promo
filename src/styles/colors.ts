@@ -12,7 +12,7 @@ const colors = {
 
   ocean: '#263e79',
   sea: '#9cb6ff',
-  'sea-light': '#b1c5fd',
+  'sea-light': '#c5d2f6',
 
   forest: '#c8cbb8',
   woods: '#dfeab8',

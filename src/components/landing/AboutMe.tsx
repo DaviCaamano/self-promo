@@ -13,7 +13,7 @@ export const AboutMe = () => {
         <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
         <ContactInfo />
         <div className={'text-[1rem] md:text-[1.25rem]'}>
-          {"Born in Brazil, raised in Miami, I have fallen in love with every job and team I've ever been a part " +
+          {"Born in Brazil, raised in Miami, I have fallen in love with every team I've ever been a part " +
             'of. From what I can tell: '}
           <Link href={'https://mega.nz/folder/159lWLoa#A1Yh7FVpfaoRLnU5HeihSA'} target={'_blank'}>
             <span className={'underline'} style={{ textUnderlineOffset: '4px', fontWeight: '300' }}>
