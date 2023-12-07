@@ -17,7 +17,7 @@ export const useIsLandscape = (isMobile: boolean) => {
         window.removeEventListener('orientationchange', updateOrientation);
       };
     }
-  }, [isClient]);
+  }, [isClient, updateOrientation]);
 
   useEffect(() => {
     const updatedOrientation = getOrientation(isClient);
