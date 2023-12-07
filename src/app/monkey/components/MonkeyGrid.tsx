@@ -2,6 +2,7 @@ import { MonkeyCell } from './MonkeyCell';
 import styles from '../styles/monkey.module.scss';
 import { useMonkeyPosition } from '../hooks/useMonkeyPosition';
 import { getAxis, GRID_INDEX_DIGIT_MAX, monkeyGridCells, sumDigits } from '../constants/grid';
+import { ArrowCircleDown, ArrowCircleLeft, ArrowCircleRight, ArrowCircleUp } from 'phosphor-react';
 
 /**
  * Display a grid of values where each cell in the grid is color coded
@@ -22,14 +23,25 @@ export const MonkeyGrid = () => {
 
   return (
     <div className={`monkey-grid ${styles.monkeyGridContainer}`}>
-      <div className={`monkey-grid ${styles.monkeyGridIndex}`}>
-        {`(${cellX}, ${cellY}) - sum: `} {sumIndicator}
+      <div className={`monkey-grid ${styles.monkeyGridIndex} mb-2`}>
+        {`(${cellX}, ${cellY}) - SUM:`}&nbsp;{sumIndicator}
       </div>
       <div className={`monkey-grid ${styles.monkeyGrid}`}>
         {monkeyGridCells.map((enabled, index) => (
           <MonkeyCell key={`monkey-cell-${index}`} monkey={monkey === index} enabled={enabled} />
         ))}
       </div>
+      <Instructions />
     </div>
   );
 };
+
+const Instructions = () => (
+  <div className={`monkey-grid ${styles.monkeyGridIndex} mt-4`}>
+    Move the selected cell with&nbsp;<span className={'text-[#b0483b]'}>WASD</span>&nbsp;or&nbsp;
+    <ArrowCircleUp size={20} color='#b0483b' />
+    <ArrowCircleRight size={20} color='#b0483b' />
+    <ArrowCircleDown size={20} color='#b0483b' />
+    <ArrowCircleLeft size={20} color='#b0483b' /> &nbsp;keys.
+  </div>
+);
