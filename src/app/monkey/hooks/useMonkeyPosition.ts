@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GRID_CENTER, GRID_COLUMNS, TTL_CELLS } from '../constants/grid';
+import { CellStatus, getMonkeyGrid, GRID_CENTER, GRID_COLUMNS, TTL_CELLS } from '../constants/grid';
 
 enum Direction {
   up,
@@ -8,28 +8,42 @@ enum Direction {
   left,
 }
 
+interface GridPaths {
+  grid: CellStatus[];
+  validCells: number | undefined;
+}
 /**
  * Hook for State and event handling for Monkey Position.
  */
-export const useMonkeyPosition = (): number => {
+export const useMonkeyPosition = (): [number, CellStatus[], number | undefined] => {
   const [pos, setPos] = useState<number>(GRID_CENTER);
+  const [{ grid, validCells }, setGrid] = useState<GridPaths>({ grid: [], validCells: undefined });
 
   /**
    * Handle keyboard inputs to let the user move the monkey.
    */
   useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
+    const handleKey = (event: KeyboardEvent) => {
       move(getDirection(event.key), setPos);
     };
-    window.addEventListener('keydown', handleEsc);
+    window.addEventListener('keydown', handleKey);
 
     return () => {
-      window.removeEventListener('keydown', handleEsc);
+      window.removeEventListener('keydown', handleKey);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return pos;
+  /**
+   * Handle keyboard inputs to let the user move the monkey.
+   */
+  useEffect(() => {
+    const updatedGrid = getMonkeyGrid();
+    setGrid(updatedGrid);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return [pos, grid, validCells];
 };
 
 const keys = {

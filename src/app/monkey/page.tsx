@@ -1,5 +1,4 @@
 'use client';
-
 import { MonkeyGrid } from './components/MonkeyGrid';
 
 export default function Home() {

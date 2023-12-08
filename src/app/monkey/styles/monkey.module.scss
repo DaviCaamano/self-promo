@@ -3,13 +3,11 @@
 }
 
 .monkeyGridIndex {
-  @apply w-full h-6 flex justify-center items-center text-black;
+  @apply w-full flex justify-center items-center text-black;
 }
 
 .monkeyGrid {
-  @apply w-[40rem] h-[40rem] grid;
-  grid-template-columns: repeat(100, minmax(0, 1fr));
-  grid-template-rows: repeat(100, minmax(0, 1fr));
+  @apply w-[62.5rem] h-[62.5rem];
 }
 
 .monkeyGridSum {

@@ -1,8 +1,6 @@
-import { MonkeyCell } from './MonkeyCell';
 import styles from '../styles/monkey.module.scss';
 import { useMonkeyPosition } from '../hooks/useMonkeyPosition';
-import { getAxis, GRID_INDEX_DIGIT_MAX, monkeyGridCells, sumDigits } from '../constants/grid';
-import { ArrowCircleDown, ArrowCircleLeft, ArrowCircleRight, ArrowCircleUp } from 'phosphor-react';
+import { MonkeyCanvas } from './MonkeyCanvas';
 
 /**
  * Display a grid of values where each cell in the grid is color coded
@@ -14,34 +12,40 @@ import { ArrowCircleDown, ArrowCircleLeft, ArrowCircleRight, ArrowCircleUp } fro
  *      red: an unselected cell IF the digits of the absolute value of the X and Y axis DO exceed 18.
  */
 export const MonkeyGrid = () => {
-  const monkey = useMonkeyPosition();
-  const [cellX, cellY] = getAxis(monkey);
-  const sum = sumDigits('' + Math.abs(cellX) + Math.abs(cellY));
-  const sumIndicator = (
-    <span className={`${styles.monkeyGridSum} ${sum >= GRID_INDEX_DIGIT_MAX && styles.over}`}>{sum}</span>
-  );
+  const [monkey, grid, validCells] = useMonkeyPosition();
 
   return (
     <div className={`monkey-grid ${styles.monkeyGridContainer}`}>
-      <div className={`monkey-grid ${styles.monkeyGridIndex} mb-2`}>
-        {`(${cellX}, ${cellY}) - SUM:`}&nbsp;{sumIndicator}
+      <div className={`monkey-grid ${styles.monkeyGridIndex} mt-4 mb-2 text-xl font-medium`}>
+        {validCells ? <Count count={validCells} /> : ''}
       </div>
-      <div className={`monkey-grid ${styles.monkeyGrid}`}>
-        {monkeyGridCells.map((enabled, index) => (
-          <MonkeyCell key={`monkey-cell-${index}`} monkey={monkey === index} enabled={enabled} />
-        ))}
+      <div className={`monkey-grid-colors ${styles.monkeyGridIndex} mt-4 mb-2 text-10`}>
+        {!grid?.length ? 'Please stand-by while we draw our monkey a map...' : <ColorCodes />}
       </div>
-      <Instructions />
+      <MonkeyCanvas grid={grid} monkey={monkey} />
     </div>
   );
 };
 
-const Instructions = () => (
-  <div className={`monkey-grid ${styles.monkeyGridIndex} mt-4`}>
-    Move the selected cell with&nbsp;<span className={'text-[#b0483b]'}>WASD</span>&nbsp;or&nbsp;
-    <ArrowCircleUp size={20} color='#b0483b' />
-    <ArrowCircleRight size={20} color='#b0483b' />
-    <ArrowCircleDown size={20} color='#b0483b' />
-    <ArrowCircleLeft size={20} color='#b0483b' /> &nbsp;keys.
+interface CountProps {
+  count: number | undefined;
+}
+const Count = ({ count }: CountProps) => (
+  <span>
+    Our monkey can access <span className={'text-green-500 font-semibold'}>{count}</span> cells.
+  </span>
+);
+const ColorCodes = () => (
+  <div className={'color-codes w-full'}>
+    <div>
+      Our monkey can reach all <span className={'text-green-500 font-semibold'}>green</span> squares.
+    </div>
+    <div>
+      Our monkey is forbidden to enter any <span className={'text-red-500 font-semibold'}>red</span> squares.
+    </div>
+    <div>
+      Our monkey is allowed in <span className={'text-gray-500 font-semibold'}>gray</span> squares, but{' '}
+      <span className={'text-red-500 font-semibold'}>red</span> squares block their path.
+    </div>
   </div>
 );
