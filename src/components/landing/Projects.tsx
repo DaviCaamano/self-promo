@@ -85,6 +85,22 @@ export const Projects = ({ active }: ProjectsProps) => {
           </Project>
           <Project
             active={active}
+            id={ProjectName.legitscript}
+            name={'Merchant Monitoring/Onboarding/Xray'}
+            thumbnails={{
+              sm: '/images/thumbnails/legit-script-sm.webp',
+              lg: '/images/thumbnails/legit-script-lg.webp',
+            }}
+            techs={['ReactJs', 'Typescript', 'Angular', 'Sequelize', 'MobX', 'Postgres']}
+            url={'https://www.legitscript.com/'}
+            tabIndexes={[10, 11]}
+          >
+            <span>3 Projects built in a combination of React Js and Angular. These projects employed advanced usage of
+            AI to scrape merchant pages/sites to determine if the merchant was a potential risk to the host seller's
+            business.</span>
+          </Project>
+          <Project
+            active={active}
             id={ProjectName.notesFromSolace}
             name={'Personal: Notes From Solace'}
             thumbnails={{
@@ -93,7 +109,7 @@ export const Projects = ({ active }: ProjectsProps) => {
             }}
             techs={['NextJs', 'NestJs', 'Typescript', 'Prisma', 'Redux', 'Postgres']}
             url={'https://www.notefromsolace.com/'}
-            tabIndexes={[10, 11]}
+            tabIndexes={[12, 13]}
           >
             Being a long time amateur writer, I've seen the incredible potential language models have for fiction
             writers. The intention behind this site is to allow authors to submit their works of fiction and use ChatGPT
@@ -157,7 +173,7 @@ const Project = ({ active, children, id, name, tabIndexes, techs, thumbnails: { 
         </div>
       </Link>
 
-      <div className={'job-dates text-sea font-medium mb-1'}>{name}</div>
+      <div className={'job-dates text-sea font-medium mb-1 uppercase'}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
         <ProjectThumbnail

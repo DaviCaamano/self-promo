@@ -19,19 +19,20 @@ export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
         <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
         <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
           <Job
-            dates={'JAN 2019 ─ NOV 2020'}
-            name={'ORSINI IT'}
-            project={Project.oit}
+            dates={'JUNE 2024 ─ CURRENT'}
+            name={'LEGIT SCRIPT'}
+            project={Project.legitscript}
             setFocusedProject={setFocusedProject}
-            title={'Fullstack Developer && Team Lead'}
-            tabIndex={active ? 1 : undefined}
+            title={'Fullstack Developer'}
+            tabIndex={active ? 3 : undefined}
           >
-            Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
-            about three months where I managed the development of the company{"'"}s front and backend.
+            Joining the team as a fullstack developer, I helped build 3 new products from the ground up. Merchant Xray,
+            Merchant Monitoring, and Merchant Onboarding. These AI powered products helped clients track problematic
+            merchants and onboard new ones.
           </Job>
           <div className={'my-1'} />
           <Job
-            dates={'JAN 2021 ─ Oct 2023'}
+            dates={'JAN 2021 ─ NOV 2023'}
             name={'QUELLIV'}
             project={Project.quelliv}
             setFocusedProject={setFocusedProject}
@@ -40,6 +41,18 @@ export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
           >
             Starting again as a junior developer, I was promoted to team lead where I managed a team of 10. In addition
             to this, I also expanded my skillset into mobile while continuing my work as a fullstack developer.
+          </Job>
+          <div className={'my-1'} />
+          <Job
+            dates={'JAN 2019 ─ OCT 2020'}
+            name={'ORSINI IT'}
+            project={Project.oit}
+            setFocusedProject={setFocusedProject}
+            title={'Fullstack Developer && Team Lead'}
+            tabIndex={active ? 1 : undefined}
+          >
+            Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
+            about three months where I managed the development of the company{"'"}s front and backend.
           </Job>
           <div className={'mt-8 mx-auto'}>
             <picture>
