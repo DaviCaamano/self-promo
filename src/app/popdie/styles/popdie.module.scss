@@ -1,0 +1,9 @@
+.popDieContainer {
+  background-color: #323c42;
+  width: 500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  clip-path: circle(50% at 50% 50%);
+}
