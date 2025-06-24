@@ -32,7 +32,7 @@ export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
           </Job>
           <div className={'my-1'} />
           <Job
-            dates={'JAN 2021 ─ NOV 2023'}
+            dates={'JAN 2021 ─ MAR 2024'}
             name={'QUELLIV'}
             project={Project.quelliv}
             setFocusedProject={setFocusedProject}
