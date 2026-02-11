@@ -36,7 +36,7 @@ export const AboutMe = ({ active }: AboutMeProps) => {
         </div>
 
         <Resume active={active} />
-        <Letters active={active} />
+        <Letters />
       </div>
     </div>
   );
@@ -76,7 +76,7 @@ const Resume = ({ active }: { active: boolean }) => (
           tabIndex={active ? 4 : undefined}
         >
           <div className={'h-[0.125rem] bg-latte mt-2'} />
-          <div className={`${styles.download} ${styles.first}`}>
+          <div className={`${styles.download} ${styles.last}`}>
             <div className={styles.downloadTitle}>Resume</div>
             <DownloadSimple size={32} color={colors.sea} weight='regular' />
           </div>
@@ -86,44 +86,50 @@ const Resume = ({ active }: { active: boolean }) => (
   </>
 );
 
-const Letters = ({ active }: { active: boolean }) => (
+const Letters = () => (
   <div className={'w-full flex flex-col mt-6 md:px-8 font-normal text-[1.25rem] justify-center'}>
     <span>Letters of Recommendation:</span>
     <div className={'h-[0.125rem] bg-latte mt-2'} />
     <div className={styles.downloadContainer}>
       <DownloadRow
+        url={'/pdfs/recommendations/aaron-everly.pdf'}
+        name={'Aaron Everly'}
+        title={'Legit Script: UI Designer'}
+        tabIndex={8}
+        last
+      />
+      <DownloadRow
+        url={'/pdfs/recommendations/andrei-budoi.pdf'}
+        name={'Andrei Budoi'}
+        title={'Legit Script: Team Lead'}
+        tabIndex={7}
+      />
+      <DownloadRow
         url={'/pdfs/recommendations/hines-tran.pdf'}
         name={'Hines Tran'}
-        title={'Product Owner'}
-        active={active}
+        title={'Shift Pixy: Product Owner'}
+        tabIndex={6}
       />
       <DownloadRow
         url={'/pdfs/recommendations/steve-swanson.pdf'}
         name={'Steve Swanson'}
-        title={'Director of Engineering'}
-        first
-        active={active}
+        title={'Shift Pixy: Director of Engineering'}
+        tabIndex={5}
       />
     </div>
   </div>
 );
 
 interface DownloadButtonProps {
-  active: boolean;
   name: string;
+  last?: boolean;
+  tabIndex: number;
   title: string;
   url: string;
-  first?: boolean;
 }
-const DownloadRow = ({ active, first, name, title, url }: DownloadButtonProps) => (
-  <Link
-    href={url}
-    className={'w-full'}
-    target={'_blank'}
-    style={first ? { zIndex: 1 } : undefined}
-    tabIndex={active ? (first ? 6 : 5) : undefined}
-  >
-    <div className={`${styles.download} ${first && styles.first}`}>
+const DownloadRow = ({ name, last, tabIndex, title, url }: DownloadButtonProps) => (
+  <Link href={url} className={'w-full'} target={'_blank'} tabIndex={tabIndex}>
+    <div className={`${styles.download}${last ? ' ' + styles.last: ''}`}>
       <div className={'w-full h-full flex flex-col justify-center'}>
         <div className={`${styles.downloadTitle} hidden sm:block`}>
           {title}, {name}

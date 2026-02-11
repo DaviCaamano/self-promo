@@ -13,22 +13,17 @@
   @apply float-right mt-36 bg-red-950;
   clip-path: polygon(7% 29%, 26.5% 3%, 66% 2%, 100% 39%, 100% 39%, 62% 100%, 0 92%);
 }
+
 .downloadContainer {
   @apply flex flex-col-reverse items-center w-full mb-4;
 }
 
 .download {
-  @apply border-b-sea border-r-sea border rounded-br-xl flex flex-row justify-between items-center
+  @apply h-12 border-b-sea border-r-sea border flex flex-row justify-between items-center
   w-full bg-void-light hover:bg-void-highlight cursor-pointer px-4;
 
-  &.first {
-    @apply h-16 sm:h-12;
-    z-index: 1;
-    margin-bottom: -1rem;
-  }
-
-  &:not(.first) {
-    @apply h-20 sm:h-16 pt-4;
+  &.last {
+    @apply rounded-br-xl;
   }
 }
 

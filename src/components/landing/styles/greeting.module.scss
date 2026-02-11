@@ -6,19 +6,19 @@
   clip-path: polygon(0 0%, 166px 0%, 0 113px);
 
   @media (min-width: 480px) {
-    left: 10%;
+    left: calc(10% + 3px);
     font-size: 4rem;
     clip-path: polygon(0 0%, 362px 0%, 0 174px);
 
     &.landscape {
       @apply absolute h-[6rem] text-latte overflow-hidden font-thin pl-[5.5px];
-      left: 12%;
+      left: calc(12% + 3px);
       top: 7%;
       font-size: 2rem;
       clip-path: polygon(0 0%, 166px 0%, 0 113px);
 
       @media (min-height: 480px) {
-        left: 10%;
+        left: calc(10% + 3px);
         font-size: 4rem;
         clip-path: polygon(0 0%, 362px 0%, 0 174px);
       }
@@ -27,7 +27,7 @@
 
   &.landscape {
     @media (min-height: 480px) {
-      left: 10%;
+      left: calc(10% + 3px);
       font-size: 4rem;
       clip-path: polygon(0 0%, 362px 0%, 0 174px);
     }
