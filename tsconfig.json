@@ -1,10 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js",
-  "include": ["**/*.ts", "**/*.tsx", "**/*.d.ts", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.d.ts",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "noEmit": true,
     "incremental": true,
@@ -33,19 +44,46 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "paths": {
-      "@components/*": ["./src/components/*"],
-      "@constants/*": ["./src/constants/*"],
-      "@context/*": ["./src/context/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@interface/*": ["./src/interface/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@tests/*": ["./src/tests/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@pages/*": ["./pages/*"],
-      "@images/*": ["./public/images/*"],
-      "@svg/*": ["./public/svg/*"],
-      "@fonts/*": ["./public/fonts/*"],
-      "@public/*": ["./src/public/*"]
-    }
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@constants/*": [
+        "./src/constants/*"
+      ],
+      "@context/*": [
+        "./src/context/*"
+      ],
+      "@hooks/*": [
+        "./src/hooks/*"
+      ],
+      "@interface/*": [
+        "./src/interface/*"
+      ],
+      "@styles/*": [
+        "./src/styles/*"
+      ],
+      "@tests/*": [
+        "./src/tests/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
+      ],
+      "@pages/*": [
+        "./pages/*"
+      ],
+      "@images/*": [
+        "./public/images/*"
+      ],
+      "@svg/*": [
+        "./public/svg/*"
+      ],
+      "@fonts/*": [
+        "./public/fonts/*"
+      ],
+      "@public/*": [
+        "./src/public/*"
+      ]
+    },
+    "target": "ES2017"
   }
 }
