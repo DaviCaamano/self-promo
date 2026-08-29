@@ -61,11 +61,24 @@
   animation-delay: calc(min(var(--i, 0), 3) * 80ms);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .section[data-reveal-scope] .reveal,
-  .section[data-reveal-scope] .reveal[data-revealed='true'] {
-    animation: none;
+
+/* Reduced motion asks for no movement, not for no sequence: swapping only the
+   keyframes keeps every delay and stagger while dropping the travel. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
     opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section[data-reveal-scope] .reveal {
     transform: none;
+  }
+
+  .section[data-reveal-scope] .reveal[data-revealed='true'] {
+    animation-name: fadeIn;
   }
 }

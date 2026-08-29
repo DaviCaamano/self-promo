@@ -432,10 +432,13 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
   clip-path: $portrait-circle;
 }
 
+/* Top left wherever the icons sit in a corner, because the hamburger owns the
+   top right below the tablet breakpoint. Centred once there is room for it. */
 .socialsContainer {
   @apply flex flex-row justify-between absolute;
   top: 2rem;
-  right: 2rem;
+  left: 2rem;
+  right: unset;
   transform: translateX(0);
   width: 7rem;
 
@@ -446,8 +449,8 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
     width: 10.5rem;
 
     &.landscape {
-      right: 2rem !important;
-      left: unset;
+      left: 2rem !important;
+      right: unset;
       transform: translateX(0) !important;
       width: 7rem !important;
 
@@ -462,8 +465,8 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
 
   @media (max-width: 479px) {
     &.landscape {
-      right: 2rem;
-      left: unset;
+      left: 2rem;
+      right: unset;
       transform: translateX(0);
       width: 7rem;
     }
@@ -510,11 +513,23 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
   }
 }
 
+
+/* Reduced motion asks for no movement, not for no sequence: swapping only the
+   keyframes keeps every delay and stagger while dropping the travel. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .portrait,
-  .name,
+  /* portraitIn only moves opacity already, so the picture and its caption keep
+     the animation they have. */
   .socialLink {
-    animation: none;
+    animation-name: fadeIn;
   }
 }
 

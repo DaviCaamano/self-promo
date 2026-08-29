@@ -4,7 +4,7 @@
 }
 
 .trigger {
-  @apply fixed left-4 top-4 z-[60] flex justify-center items-center w-11 h-11 rounded-xl
+  @apply fixed right-4 top-4 z-[60] flex justify-center items-center w-11 h-11 rounded-xl
   text-latte border border-[#263e79] border-b-sea cursor-pointer;
   font-size: 1.625rem;
   background: hsla(100%, 100%, 100%, 0.15);

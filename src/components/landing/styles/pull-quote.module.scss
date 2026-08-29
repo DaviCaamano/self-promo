@@ -183,21 +183,30 @@
   }
 }
 
-/* Everything above is decoration; hand back a plain, readable quote. */
+
+/* Reduced motion asks for no movement, not for no sequence: swapping only the
+   keyframes keeps every delay and stagger while dropping the travel. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .glow,
   .word,
   .mark,
-  .rule,
   .attribution,
   .cue {
-    animation: none;
-    opacity: 1;
-    transform: none;
-    filter: none;
+    animation-name: fadeIn;
   }
 
+  /* Drawn full width from the start; only its opacity is left to animate. */
   .rule {
+    animation-name: fadeIn;
     transform: scaleX(1);
   }
 }
