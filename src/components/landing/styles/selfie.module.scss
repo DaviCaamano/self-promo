@@ -387,6 +387,19 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
   }
 }
 
+/**
+ * Sits just under the drawn circle, whose bottom edge is at 51.39% + 47.41% of
+ * the stage. Scales with the artwork like the greeting and the job title do,
+ * and fades in with the picture rather than waiting for the sequence.
+ */
+.name {
+  @apply absolute left-0 right-0 text-center text-dim uppercase pointer-events-none;
+  top: 100%;
+  font-size: 1.25rem;
+  letter-spacing: 0.22em;
+  animation: portraitIn var(--intro-portrait) ease-out;
+}
+
 /* First thing on the page and the only one that does not wait for the sequence:
    it is already downloaded by the time this runs, so it just fades up. */
 @keyframes portraitIn {
@@ -499,6 +512,7 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
 
 @media (prefers-reduced-motion: reduce) {
   .portrait,
+  .name,
   .socialLink {
     animation: none;
   }

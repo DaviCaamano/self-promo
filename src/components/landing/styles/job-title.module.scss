@@ -30,7 +30,9 @@
    this block moves the text without dragging the colour seam with it. */
 .jobTitle {
   @apply absolute flex flex-col whitespace-nowrap;
-  left: 80%;
+  /* 4px in from where the fraction alone puts it. Subtracted here rather than
+     folded into the percentage so the offset stays fixed as the stage scales. */
+  left: calc(80% - 4px);
   top: 51.39%;
   transform: translateY(-50%);
   /* Air between the lines, added as a gap rather than to the line-height so the

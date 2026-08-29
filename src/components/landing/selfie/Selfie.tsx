@@ -25,6 +25,10 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
             the clip can be written once as a fraction of this box. */}
         <div className={`${styles.stage} ${isLandscape && styles.landscape}`}>
           <Portrait />
+          {/* Inside the stage, not the column below it: the stage is what the
+              artwork is measured against, so the name stays glued under the
+              circle at every breakpoint instead of drifting with the scale. */}
+          <span className={styles.name}>Davi Caamano</span>
           <Greeting isLandscape={isLandscape} />
           <JobTitle isLandscape={isLandscape} />
           {/* Hidden on purpose while we see whether the page reads cleaner
