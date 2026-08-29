@@ -1,11 +1,103 @@
+/* Bottom padding matches the other sections', so every screen of the page
+   leaves the same gap under its last line. */
 .selfie {
-  @apply relative w-full flex flex-col justify-center items-center text-mug py-[2rem];
-  min-height: 100dvh;
+  @apply relative w-full flex flex-col items-center text-mug pt-[2rem] pb-[5.125rem] sm:pb-[7rem];
+  /* `safe`, so a column taller than the screen anchors to the top rather than
+     overflowing equally at both ends and carrying the picture off the top. */
+  justify-content: safe center;
+  /**
+   * svh, not dvh. This column is vertically centred, so anything that changes
+   * the section's height moves the portrait — and dvh does exactly that on a
+   * phone every time the browser's toolbar slides away. svh is the height with
+   * that toolbar showing, which is what the page loads at, so the first screen
+   * is unchanged and the picture then stays put for the rest of the scroll.
+   */
+  min-height: 100svh;
+
+  /**
+   * One intro timeline for the whole page, inherited by every piece of it. The
+   * portrait fades in on its own; everything else waits for --intro-start and
+   * then arrives in reading order — socials, greeting, job title, quote, credit.
+   * Each step is expressed against --intro-start, so shifting the whole
+   * sequence is a single edit.
+   *
+   * Only opacity and transform are ever animated. Anything that changed a box
+   * would re-centre this column mid-run and drag the portrait with it.
+   */
+  --intro-portrait: 250ms;
+  /* The fade ends at 250ms and the picture then has the screen to itself for
+     half a second, which is what puts the rest of the sequence at 750ms. */
+  --intro-start: 750ms;
+  --intro-socials: var(--intro-start);
+  --intro-greeting: calc(var(--intro-start) + 280ms);
+  --intro-job-title: calc(var(--intro-start) + 540ms);
+  --intro-quote: calc(var(--intro-start) + 900ms);
+  --intro-credit: calc(var(--intro-start) + 1700ms);
+
+  /**
+   * The portrait's rendered width: `.stage` is a fraction of `.responsive`,
+   * which is then scaled down. Both change at every breakpoint below, so this
+   * ladder has to mirror theirs — it is what the pull quote is measured
+   * against, and a stale value here shows up as a quote wider than the picture.
+   */
+  --portrait-width: calc(25rem * 0.5833 * 0.92);
+
+  @media (min-width: 320px) {
+    --portrait-width: calc(400px * 0.625 * 0.92);
+  }
+
+  @media (min-width: 400px) {
+    --portrait-width: calc(400px * 0.83333 * 0.92);
+  }
+
+  @media (min-width: 480px) {
+    --portrait-width: calc(62.5rem * 0.48 * 0.5);
+  }
+
+  @media (min-width: 600px) {
+    --portrait-width: calc(62.5rem * 0.58 * 0.5);
+  }
+
+  @media (min-width: 800px) {
+    --portrait-width: calc(62.5rem * 0.78 * 0.5);
+  }
+
+  @media (min-width: 1024px) {
+    --portrait-width: calc(62.5rem * 1 * 0.5);
+  }
+
+  /* Landscape drops the width ladder entirely and sizes off the height, exactly
+     as `.responsive` and `.stage` do for the picture itself. */
+  &.landscape {
+    --portrait-width: calc(25rem * 0.5833 * 0.92);
+
+    @media (min-height: 320px) {
+      --portrait-width: calc(400px * 0.625 * 0.92);
+    }
+
+    @media (min-height: 480px) {
+      --portrait-width: calc(62.5rem * 0.48 * 0.5);
+    }
+
+    @media (min-height: 600px) {
+      --portrait-width: calc(62.5rem * 0.58 * 0.5);
+    }
+
+    @media (min-height: 800px) {
+      --portrait-width: calc(62.5rem * 0.78 * 0.5);
+    }
+
+    @media (min-height: 1024px) {
+      --portrait-width: calc(62.5rem * 1 * 0.5);
+    }
+  }
 }
 
 .responsive {
   position: relative;
-  @apply relative w-[25rem] min-w-[25rem] mb-24;
+  /* mb-12, not mb-24: the job title is positioned below this box and needs
+     roughly half of it back to keep a gap above the quote. */
+  @apply relative w-[25rem] min-w-[25rem] mb-12;
   transform: scale(0.5833333333333333);
 
   @media (min-width: 320px) {
@@ -261,6 +353,72 @@
   }
 }
 
+/**
+ * The portrait is a circle drawn inside a square canvas with transparent
+ * corners: centre (540, 555), radius 512, in 1080x1080. The stage is that same
+ * square, so anything clipped with $portrait-circle has its seam land exactly
+ * on the drawn edge - at any size, because the numbers are fractions of the
+ * box rather than the pixel polygons the old diamond artwork needed at each
+ * breakpoint. Change the artwork and this one value is what moves.
+ */
+$portrait-circle: circle(47.41% at 50% 51.39%);
+
+.stage {
+  @apply relative mx-auto;
+  width: 92%;
+  aspect-ratio: 1 / 1;
+
+  @media (min-width: 480px) {
+    width: 50%;
+
+    &.landscape {
+      width: 92%;
+
+      @media (min-height: 480px) {
+        width: 50%;
+      }
+    }
+  }
+
+  &.landscape {
+    @media (min-height: 480px) {
+      width: 50%;
+    }
+  }
+}
+
+/* First thing on the page and the only one that does not wait for the sequence:
+   it is already downloaded by the time this runs, so it just fades up. */
+@keyframes portraitIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.portrait {
+  animation: portraitIn var(--intro-portrait) ease-out;
+}
+
+.portrait {
+  @apply absolute inset-0 h-full w-full;
+}
+
+/* Both halves of a two-tone caption are full-stage layers holding identically
+   positioned text. The light one sits underneath; the dark one is painted over
+   it and clipped to the circle, so a glyph crossing the edge changes colour
+   mid-stroke. Identical metrics in both copies is what keeps that seam
+   invisible - the old pair diverged and needed hand-kerning to line up. */
+.layer {
+  @apply pointer-events-none absolute inset-0;
+}
+
+.clipped {
+  clip-path: $portrait-circle;
+}
+
 .socialsContainer {
   @apply flex flex-row justify-between absolute;
   top: 2rem;
@@ -299,6 +457,24 @@
   }
 }
 
+/* Opens the sequence proper. The container is absolutely positioned, so the
+   icons can move here without disturbing anything else. */
+@keyframes socialIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.6rem) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.socialLink {
+  animation: socialIn 420ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+  animation-delay: calc(var(--intro-socials) + var(--i) * 90ms);
+}
+
 .socials {
   @apply cursor-pointer;
   font-size: 32px;
@@ -318,6 +494,13 @@
     &.landscape {
       font-size: 32px;
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait,
+  .socialLink {
+    animation: none;
   }
 }
 

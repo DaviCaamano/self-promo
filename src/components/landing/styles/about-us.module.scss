@@ -1,7 +1,24 @@
+/**
+ * Centred by default so that once the pair wraps onto two lines each one sits
+ * under the heading instead of hugging the left edge; pushed to the edges only
+ * above the width where both still share a line. 34rem is measured, not a
+ * standard breakpoint: it clears the phone text size with room to spare, and
+ * the tablet-up size bump lands well inside 48rem.
+ */
+.contactInfo {
+  @apply flex flex-row flex-wrap justify-center items-center gap-x-8 gap-y-1;
 
+  @media (min-width: 34rem) {
+    @apply justify-between;
+  }
+}
 
-.contactInfoField {
-  @apply font-medium text-[1rem] md:text-[1.25rem] inline-block mr-1;
+.contactItem {
+  @apply flex flex-row items-center gap-2 text-latte hover:text-sea transition-colors;
+}
+
+.contactIcon {
+  @apply text-sea shrink-0;
 }
 
 .contactInfoText {
@@ -14,19 +31,137 @@
   clip-path: polygon(7% 29%, 26.5% 3%, 66% 2%, 100% 39%, 100% 39%, 62% 100%, 0 92%);
 }
 
-.downloadContainer {
-  @apply flex flex-col-reverse items-center w-full mb-4;
+/* No horizontal padding: every page lines its body up with its own title rule. */
+.group {
+  @apply w-full flex flex-col mt-8;
 }
 
-.download {
-  @apply h-12 border-b-sea border-r-sea border flex flex-row justify-between items-center
-  w-full bg-void-light hover:bg-void-highlight cursor-pointer px-4;
+/* Tighter than `.group`: the resume card reads as part of the contact block
+   directly above it rather than as a section of its own. */
+.resumeGroup {
+  @apply w-full flex flex-col mt-2;
+}
 
-  &.last {
-    @apply rounded-br-xl;
+.groupTitle {
+  @apply font-normal text-[1.25rem];
+}
+
+/**
+ * The card face every preview trigger shares. The dialog repeats this border so
+ * the two read as one surface when framer-motion grows one into the other.
+ */
+.card {
+  @apply flex bg-void-light hover:bg-void-highlight transition-colors cursor-pointer text-left
+  border border-[#263e79] border-b-sea border-r-sea;
+}
+
+.resumeCard {
+  @extend .card;
+  @apply flex-row items-center gap-3 w-full px-5 py-4;
+}
+
+.resumeTitle {
+  @apply text-latte text-[1.125rem] sm:text-[1.25rem] font-medium;
+}
+
+.cardHint {
+  @apply text-sea-light text-[0.8125rem] sm:text-[0.875rem] mr-auto;
+  font-weight: 300;
+  line-height: 1.25rem;
+}
+
+.cardIcon {
+  @apply text-sea shrink-0;
+}
+
+.letterGrid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-4;
+}
+
+/**
+ * Sized so the longest quote still breathes, and stretched by the grid so a
+ * row's cards match. min-height covers the single-column case, where there is
+ * no taller sibling to stretch against.
+ */
+.letterCard {
+  @extend .card;
+  @apply flex-col justify-between gap-4 h-full min-h-[13rem] px-5 py-4;
+}
+
+.quote {
+  @apply flex flex-row items-start gap-2;
+}
+
+/* Same face as the landing pull quote, so a visitor arriving from it lands on
+   type they recognise. */
+.quoteText {
+  @apply text-latte text-[1.0625rem] sm:text-[1.1875rem];
+  font-family: var(--font-instrument-serif), 'Iowan Old Style', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* Nudged onto the first and last text lines rather than the flex box's edges. */
+.quoteMark {
+  @apply text-sea shrink-0 mt-1;
+}
+
+.quoteMarkClose {
+  @apply self-end mt-0 mb-1;
+  transform: rotate(180deg);
+}
+
+.attribution {
+  @apply flex flex-col items-end text-right;
+}
+
+.company {
+  @apply text-sea text-[0.875rem] sm:text-[0.9375rem] font-medium uppercase tracking-wide;
+  line-height: 1.25rem;
+}
+
+.role {
+  @apply text-sea-light text-[0.8125rem] sm:text-[0.875rem];
+  font-weight: 300;
+  line-height: 1.25rem;
+}
+
+.author {
+  @apply text-latte text-[0.9375rem] sm:text-[1rem];
+  line-height: 1.5rem;
+}
+
+/**
+ * Arrival flash for the card the landing quote came from: two slow beats and
+ * done. Colours are animated rather than transforms so this cannot fight
+ * framer-motion's layout projection on the same element.
+ */
+.flashing {
+  animation: letterFlash 1800ms ease-in-out 2;
+}
+
+@keyframes letterFlash {
+  0%,
+  100% {
+    border-color: #263e79;
+    background-color: theme('colors.void-light');
+    box-shadow: 0 0 0 0 rgba(156, 182, 255, 0);
+  }
+  50% {
+    border-color: theme('colors.sea');
+    background-color: theme('colors.void-highlight');
+    box-shadow:
+      0 0 0 2px rgba(156, 182, 255, 0.45),
+      0 0 34px 2px rgba(156, 182, 255, 0.28);
   }
 }
 
-.downloadTitle {
-  @apply text-[1rem] sm:text-[1.1rem] leading-[1.5rem] md:my-1;
+@media (prefers-reduced-motion: reduce) {
+  /* Still mark the card, just hold it lit instead of pulsing. */
+  .flashing {
+    animation: none;
+    border-color: theme('colors.sea');
+    background-color: theme('colors.void-highlight');
+  }
 }

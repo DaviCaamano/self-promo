@@ -2,79 +2,79 @@
 import sStyles from './styles/section.module.scss';
 import styles from './styles/project.module.scss';
 import Image from 'next/image';
-import { PropsWithChildren, useState } from 'react';
-import { Project as ProjectName } from './landing.interface';
+import { CSSProperties, PropsWithChildren, useState } from 'react';
+import { Project as ProjectName, Section, sectionIds } from './landing.interface';
+import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
+import { TechBadge } from '@components/landing/technologies/TechBadge';
+import { TechDrawer } from '@components/landing/technologies/TechDrawer';
+import { TechName, techIcons } from '@components/landing/technologies/tech-icons';
 import Link from 'next/link';
 import { ArrowSquareOut } from 'phosphor-react';
 import colors from '@styles/colors';
 
-interface ProjectsProps {
-  active: boolean;
-}
-export const Projects = ({ active }: ProjectsProps) => {
+export const Projects = () => {
+  const ref = useScrollReveal<HTMLDivElement>(sStyles.reveal);
+  /** The badge whose write-up is open, shared by every project's tech list. */
+  const [opened, setOpened] = useState<TechName | undefined>(undefined);
+
   return (
-    <div id={'about-me'} className={sStyles.section}>
+    <div id={sectionIds[Section.projects]} ref={ref} data-reveal-scope='' className={sStyles.section}>
       <div className={sStyles.container}>
-        <div id={'about-me-title'} className={sStyles.title}>
+        <div className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
           Projects
         </div>
-        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
-        <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
+        <div className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`} style={{ '--i': 1 } as CSSProperties} />
+        {/* Stretched, not centred: the cards carry a negative margin and need a
+            definite width to bleed evenly on both sides. */}
+        <div className={'flex flex-col justify-between text-[1.5rem] mb-3'}>
           <Project
-            active={active}
-            id={ProjectName.oit}
-            name={'ORSINI IT'}
-            thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
-            techs={['React', 'Typescript', 'Node', 'Express', 'Sequelize', 'Recoil', 'MYSQL']}
-            url={'https://oit.co/'}
-            tabIndexes={[1, 3]}
+            onOpen={setOpened}
+            id={ProjectName.waterwriting}
+            name={'Water Writing'}
+            thumbnails={{
+              sm: '/images/thumbnails/water-writing-sm.webp',
+              lg: '/images/thumbnails/water-writing-lg.webp',
+            }}
+            techs={['next', 'nestjs', 'typescript', 'prisma', 'redux', 'postgres']}
+            url={'https://www.WaterWriting.com/'}
+            index={2}
           >
-            <span>
-              A manager portal for a VOIP phone service start-up. I was involved in both the frontend, backend, and
-              devops, bringing the company's linux hosted servers to AWS. I also served as the developer lead in a team
-              of four and took part in various smaller solo projects such as a chat-bot, click-to-call chrome extension,
-              and an{' '}
-              <ProjectSubLink url={'https://heytaco.com/'} tabIndex={active ? 2 : undefined}>
-                in-house version of HeyTaco.
-              </ProjectSubLink>
-            </span>
-          </Project>
-          <div className={'my-4'} />
-          <Project
-            active={active}
-            id={ProjectName.quelliv}
-            name={'QUELLIV'}
-            thumbnails={{ sm: '/images/thumbnails/quelliv-sm.webp', lg: '/images/thumbnails/quelliv-lg.webp' }}
-            techs={['NextJs', 'NestJs', 'Typescript', 'Prisma', 'Redux', 'Postgres']}
-            url={'https://quelliv.com/'}
-            tabIndexes={[4, 6]}
-          >
-            Onboarding, purchases, offers, bookings, and subscriptions. I was tasked with starting and developing the
-            initial NextJs/NestJs monorepo. Quelliv used{' '}
-            <ProjectSubLink
-              url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}
-              tabIndex={active ? 5 : undefined}
-            >
-              Laserbiomodulation
-            </ProjectSubLink>{' '}
-            to aid with pain management, skincare, weight loss, and hair loss. The chat-bot, "Dr. A", used ChatGPT to
-            direct clients towards the onboarding flow after helping them select which of Quelliv's services they were
-            looking for.
+            Being a long time amateur writer, I've seen the incredible potential language models have for fiction
+            writers. It's this potential Water Writing seeks to leverage in it's objective to provide a scalable method
+            for fiction authors to convert entire bodies of work into an expansive labrinth of wiki articles. What
+            used to take thousands of fans months to build, Water Writing finishes in minutes with a level of quality
+            and depth best selling authors dream about.
           </Project>
           <Project
-            active={active}
+            onOpen={setOpened}
+            id={ProjectName.legitscript}
+            name={'Merchant Monitoring/Onboarding/Xray'}
+            thumbnails={{
+              sm: '/images/thumbnails/legit-script-sm.webp',
+              lg: '/images/thumbnails/legit-script-lg.webp',
+            }}
+            techs={['react', 'typescript', 'angular', 'sequelize', 'mobx', 'postgres']}
+            url={'https://www.legitscript.com/'}
+            index={3}
+          >
+            <span>3 Projects built in a combination of React Js and Angular. These projects employed advanced usage of
+            AI to scrape merchant pages/sites to determine if the merchant was a potential risk to the host seller's
+            business.</span>
+          </Project>
+          <Project
+            onOpen={setOpened}
             id={ProjectName.quellivMobile}
             name={'QUELLIV (MOBILE)'}
             thumbnails={{
               sm: '/images/thumbnails/quelliv-mobile-sm.webp',
               lg: '/images/thumbnails/quelliv-mobile-lg.webp',
             }}
-            techs={['React-Native', 'Typescript', 'Recoil']}
+            techs={['reactnative', 'typescript', 'recoil']}
             url={'https://quelliv.com/'}
-            tabIndexes={[7, 9]}
+            index={4}
           >
             Everything offered by{' '}
-            <ProjectSubLink url={'https://quelliv.com'} tabIndex={active ? 8 : undefined}>
+            <ProjectSubLink url={'https://quelliv.com'} tabIndex={0}>
               Quelliv.com
             </ProjectSubLink>{' '}
             and more. This was first mobile app I've developed in a professional setting, of which I was the sole
@@ -84,53 +84,61 @@ export const Projects = ({ active }: ProjectsProps) => {
             and I were able to keep this app accessible to the company's predominantly older clientele.
           </Project>
           <Project
-            active={active}
-            id={ProjectName.legitscript}
-            name={'Merchant Monitoring/Onboarding/Xray'}
-            thumbnails={{
-              sm: '/images/thumbnails/legit-script-sm.webp',
-              lg: '/images/thumbnails/legit-script-lg.webp',
-            }}
-            techs={['ReactJs', 'Typescript', 'Angular', 'Sequelize', 'MobX', 'Postgres']}
-            url={'https://www.legitscript.com/'}
-            tabIndexes={[10, 11]}
+            onOpen={setOpened}
+            id={ProjectName.quelliv}
+            name={'QUELLIV'}
+            thumbnails={{ sm: '/images/thumbnails/quelliv-sm.webp', lg: '/images/thumbnails/quelliv-lg.webp' }}
+            techs={['next', 'nestjs', 'typescript', 'prisma', 'redux', 'postgres']}
+            url={'https://quelliv.com/'}
+            index={5}
           >
-            <span>3 Projects built in a combination of React Js and Angular. These projects employed advanced usage of
-            AI to scrape merchant pages/sites to determine if the merchant was a potential risk to the host seller's
-            business.</span>
+            Onboarding, purchases, offers, bookings, and subscriptions. I was tasked with starting and developing the
+            initial NextJs/NestJs monorepo. Quelliv used{' '}
+            <ProjectSubLink
+              url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}
+              tabIndex={0}
+            >
+              Laserbiomodulation
+            </ProjectSubLink>{' '}
+            to aid with pain management, skincare, weight loss, and hair loss. The chat-bot, "Dr. A", used ChatGPT to
+            direct clients towards the onboarding flow after helping them select which of Quelliv's services they were
+            looking for.
           </Project>
           <Project
-            active={active}
-            id={ProjectName.notesFromSolace}
-            name={'Personal: Notes From Solace'}
-            thumbnails={{
-              sm: '/images/thumbnails/notes-sm.webp',
-              lg: '/images/thumbnails/notes-lg.webp',
-            }}
-            techs={['NextJs', 'NestJs', 'Typescript', 'Prisma', 'Redux', 'Postgres']}
-            url={'https://www.notefromsolace.com/'}
-            tabIndexes={[12, 13]}
+            onOpen={setOpened}
+            id={ProjectName.oit}
+            name={'ORSINI IT'}
+            thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
+            techs={['react', 'typescript', 'node', 'express', 'sequelize', 'recoil', 'mysql']}
+            url={'https://oit.co/'}
+            index={6}
           >
-            Being a long time amateur writer, I've seen the incredible potential language models have for fiction
-            writers. The intention behind this site is to allow authors to submit their works of fiction and use ChatGPT
-            to generate an entire wiki about their fictional universe.
-            <div className={'mb-4'} />
-            The site's AI assistant will then offer subscribed customers the option to generate additional articles set
-            in the same fictional universe. Is there a dragon near the shire? Solace can generate an entire backstory
-            for that dragon in seconds, making sure to include references to other parts of the author's work.
+            <span>
+              A manager portal for a VOIP phone service start-up. I was involved in both the frontend, backend, and
+              devops, bringing the company's linux hosted servers to AWS. I also served as the developer lead in a team
+              of four and took part in various smaller solo projects such as a chat-bot, click-to-call chrome extension,
+              and an{' '}
+              <ProjectSubLink url={'https://heytaco.com/'} tabIndex={0}>
+                in-house version of HeyTaco.
+              </ProjectSubLink>
+            </span>
           </Project>
         </div>
       </div>
+
+      <TechDrawer tech={opened} onClose={() => setOpened(undefined)} />
     </div>
   );
 };
 
 interface ProjectProps extends PropsWithChildren {
-  active: boolean;
   id: ProjectName;
+  /** Opens a technology's write-up in the shared drawer. */
+  onOpen: (tech: TechName) => void;
+  /** This card's place in the section's stagger. */
+  index: number;
   name: string;
-  tabIndexes: [number, number];
-  techs: string[];
+  techs: TechName[];
   thumbnails: {
     sm: string;
     lg: string;
@@ -138,14 +146,17 @@ interface ProjectProps extends PropsWithChildren {
   url: string;
 }
 
-const Project = ({ active, children, id, name, tabIndexes, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
+const Project = ({ children, id, index, name, onOpen, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
   const [hovered, setHovered] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);
 
   return (
     <section
       id={id}
-      className={'relative text-[1.5rem] p-4 rounded-2xl hover:bg-void-off'}
+      /* -mx-4 cancels the p-4 so the text lines up with the section rule; the
+         hover panel is what bleeds outward, not the copy. */
+      className={`relative text-[1.5rem] p-4 -mx-4 rounded-2xl hover:bg-void-off ${sStyles.reveal}`}
+      style={{ '--i': index } as CSSProperties}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -153,7 +164,6 @@ const Project = ({ active, children, id, name, tabIndexes, techs, thumbnails: { 
         href={url}
         passHref
         target={'_blank'}
-        tabIndex={active ? tabIndexes[0] : undefined}
         onFocus={() => {
           setHovered(true);
           setFocused(true);
@@ -176,14 +186,8 @@ const Project = ({ active, children, id, name, tabIndexes, techs, thumbnails: { 
       <div className={'job-dates text-sea font-medium mb-1 uppercase'}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
-        <ProjectThumbnail
-          alt={'Project: ' + id}
-          sm={sm}
-          lg={lg}
-          url={url}
-          tabIndex={active ? tabIndexes[1] : undefined}
-        />
-        <Technologies name={name} techs={techs} />
+        <ProjectThumbnail alt={'Project: ' + id} sm={sm} lg={lg} url={url} />
+        <Technologies techs={techs} onOpen={onOpen} />
       </div>
     </section>
   );
@@ -193,10 +197,9 @@ interface JobThumbnailProps {
   alt: string;
   lg: string;
   sm: string;
-  tabIndex: number | undefined;
   url: string;
 }
-const ProjectThumbnail = ({ alt, lg, sm, tabIndex, url }: JobThumbnailProps) => {
+const ProjectThumbnail = ({ alt, lg, sm, url }: JobThumbnailProps) => {
   return (
     <Link href={url} passHref target={'_blank'}>
       <div
@@ -204,7 +207,7 @@ const ProjectThumbnail = ({ alt, lg, sm, tabIndex, url }: JobThumbnailProps) => 
           'job-thumbnails inline-flex justify-center items-center rounded-3xl md:rounded-2xl overflow-hidden mb-6 md:mb-0 md:mr-6'
         }
       >
-        <picture tabIndex={tabIndex}>
+        <picture>
           <source media={'(min-width: 1024px)'} srcSet={lg} width={500} height={282} />
           <source media={'(min-width: 480px)'} srcSet={lg} width={400} height={256.6} />
           <Image src={sm} alt={alt} width={280} height={158} priority />
@@ -215,24 +218,23 @@ const ProjectThumbnail = ({ alt, lg, sm, tabIndex, url }: JobThumbnailProps) => 
 };
 
 interface TechnologiesProps {
-  name: string;
-  techs: string[];
+  onOpen: (tech: TechName) => void;
+  techs: TechName[];
 }
-const Technologies = ({ name, techs }: TechnologiesProps) => {
+/** The same badges the Technologies section uses, opening the same drawer. */
+const Technologies = ({ onOpen, techs }: TechnologiesProps) => {
   return (
     <div className={`technologies ${styles.technology}`}>
-      {techs.map((tech: string, index: number) => (
-        <div className={`technology-item ${styles.technologyItem}`} key={`${name}-${index}`}>
-          {tech}
-        </div>
+      {techs.map((tech) => (
+        <TechBadge key={tech} icon={techIcons[tech]} onClick={() => onOpen(tech)} />
       ))}
     </div>
   );
 };
 
 interface ProjectSubLinkProps extends PropsWithChildren {
+  tabIndex: number;
   url: string;
-  tabIndex: number | undefined;
 }
 const ProjectSubLink = ({ children, tabIndex, url }: ProjectSubLinkProps) => (
   <span

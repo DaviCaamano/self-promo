@@ -1,0 +1,104 @@
+.scrim {
+  @apply fixed inset-0 z-[80] bg-void/70 opacity-0 pointer-events-none transition-opacity duration-200;
+  backdrop-filter: blur(2px);
+
+  &[data-open='true'] {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+/**
+ * Slides in off the right edge. Full width on a phone, where there is nothing
+ * to sit beside; a panel from the tablet up.
+ *
+ * Translated rather than unmounted so it animates both ways, and hidden from
+ * assistive technology and the tab order while it is off screen.
+ */
+.drawer {
+  @apply fixed right-0 top-0 bottom-0 z-[81] w-full md:w-[26rem] flex flex-col
+  border-l border-l-sea;
+  background: rgba(25, 29, 30, 0.97);
+  backdrop-filter: blur(10px);
+  transform: translateX(100%);
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 300ms;
+  visibility: hidden;
+
+  &[data-open='true'] {
+    transform: none;
+    visibility: visible;
+  }
+}
+
+.header {
+  @apply flex flex-row items-center gap-3 px-5 py-4 border-b border-b-[#263e79] shrink-0;
+}
+
+/* Sized here rather than on the svg so the mark matches the title's cap height. */
+.mark {
+  @apply flex justify-center items-center shrink-0;
+
+  svg {
+    @apply w-7 h-7;
+  }
+}
+
+.heading__group {
+  @apply flex-1 min-w-0 flex flex-col;
+}
+
+.title {
+  @apply min-w-0 truncate text-latte text-[1.125rem] font-medium;
+}
+
+/* Sits under the name rather than beside it, so a long name still truncates
+   against the close button instead of squeezing the year out. */
+.released {
+  @apply text-sea text-[0.75rem] uppercase;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+}
+
+.close {
+  @apply flex justify-center items-center w-9 h-9 shrink-0 rounded-lg text-sea
+  hover:text-latte hover:bg-void-highlight transition-colors cursor-pointer;
+}
+
+.body {
+  @apply flex-1 min-h-0 overflow-y-auto px-5 py-5;
+}
+
+.summary {
+  @apply text-latte text-[1rem];
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.heading {
+  @apply mt-6 mb-2 text-sea text-[0.75rem] uppercase;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+}
+
+.role {
+  @apply text-latte text-[0.9375rem];
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.links {
+  @apply flex flex-col gap-1;
+}
+
+.link {
+  @apply inline-flex flex-row items-center gap-2 py-1 text-sea-light text-[0.9375rem]
+  hover:text-latte transition-colors;
+  font-weight: 300;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer {
+    transition: visibility 300ms;
+  }
+}

@@ -19,4 +19,3 @@ const colors = {
 };
 
 export default colors;
-//            tabIndex={slide === Slide.about ? 5 : undefined}

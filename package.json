@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "build:tech-icons": "node scripts/build-tech-icons.mjs"
   },
   "dependencies": {
-    "@splidejs/react-splide": "^0.7.12",
     "@svgr/webpack": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "cross-env": "^7.0.3",
@@ -28,13 +28,16 @@
     "sass": "^1.69.5"
   },
   "devDependencies": {
+    "@lobehub/icons-static-svg": "^1.94.0",
     "@types/node": "^24",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10",
+    "devicon": "^2.17.0",
     "eslint": "^8",
     "eslint-config-next": "^15.1.0",
     "postcss": "^8",
+    "simple-icons": "^16.28.0",
     "tailwindcss": "^3",
     "typescript": "^5"
   }

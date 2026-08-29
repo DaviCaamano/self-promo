@@ -1,52 +1,61 @@
 'use client';
+import { useEffect, useState } from 'react';
 import { Selfie } from '@components/landing/selfie/Selfie';
 import { AboutMe } from '@components/landing/AboutMe';
-import { NavBar } from '@components/landing/navbar/Navbar';
 import { Experience } from '@components/landing/Experience';
-import { useSlide } from '@components/landing/hooks/useSlide';
-import { Slide } from '@components/landing/landing.interface';
 import { Projects } from '@components/landing/Projects';
-import { PropsWithChildren } from 'react';
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/react-splide/css';
+import { Technologies } from '@components/landing/Technologies';
+import { SideNav } from '@components/landing/navbar/SideNav';
+import { MobileNav } from '@components/landing/navbar/MobileNav';
+import { scrollToSection, useActiveSection } from '@components/landing/hooks/useActiveSection';
+import { Section, sectionIds } from '@components/landing/landing.interface';
 import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
+import { letterAnchorId } from '@components/landing/letters';
 
 interface LandingProps {
+  /** Section the requested route opens the page scrolled to. */
+  initialSection: Section;
   isMobile: boolean;
 }
-export const Landing = ({ isMobile }: LandingProps) => {
-  const { setFocusedProject, slide, setSlide, splide } = useSlide();
+export const Landing = ({ initialSection, isMobile }: LandingProps) => {
   const isLandscape = useIsLandscape(isMobile);
+  const active = useActiveSection(initialSection);
+
+  /** Which letter card the About section should flash, set by the landing quote. */
+  const [highlighted, setHighlighted] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if (initialSection === Section.socials) return;
+
+    /* Jumped, not glided: the page has only just appeared, so there is nothing
+       yet for a smooth scroll to read as movement through. It has to be
+       `instant` — `auto` defers to the stylesheet, which sets scroll-behavior
+       to smooth for the whole document. */
+    document.getElementById(sectionIds[initialSection])?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const showLetter = (id: string) => {
+    setHighlighted(id);
+    document.getElementById(letterAnchorId(id))?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  };
 
   return (
-    <div id={'landing'} className='min-w-screen min-h-screen flex justify-center items-center overflow-hidden'>
-      <Splide {...splide}>
-        <Page current={slide} slide={Slide.socials}>
-          <Selfie active={slide === Slide.socials} isLandscape={isLandscape} />
-        </Page>
-        <Page current={slide} slide={Slide.about}>
-          <AboutMe active={slide === Slide.about} />
-        </Page>
-        <Page current={slide} slide={Slide.experience}>
-          <Experience active={slide === Slide.experience} setFocusedProject={setFocusedProject} />
-        </Page>
-        <Page current={slide} slide={Slide.projects}>
-          <Projects active={slide === Slide.projects} />
-        </Page>
-      </Splide>
-      <NavBar slide={slide} setSlide={setSlide} isLandscape={isLandscape} isMobile={isMobile} />
+    /* Left padding clears the fixed rail, so the sections centre in the space
+       beside it rather than sliding underneath. */
+    <div id={'landing'} className={'w-full md:pl-[4.5rem]'}>
+      <Selfie
+        isLandscape={isLandscape}
+        onScrollDown={() => scrollToSection(Section.about)}
+        onShowLetter={showLetter}
+      />
+      <AboutMe highlighted={highlighted} setHighlighted={setHighlighted} />
+      <Technologies />
+      <Experience />
+      <Projects />
+
+      <SideNav active={active} isMobile={isMobile} onSelect={scrollToSection} />
+      <MobileNav active={active} onSelect={scrollToSection} />
     </div>
-  );
-};
-
-interface CarouselFilterProps extends PropsWithChildren {
-  current: Slide;
-  slide: Slide;
-}
-const Page = ({ children, current, slide }: CarouselFilterProps) => {
-  return (
-    <SplideSlide>
-      <div className={`trimmer ${current !== slide && 'max-h-[100dvh] overflow-hidden'} h-auto`}>{children}</div>
-    </SplideSlide>
   );
 };

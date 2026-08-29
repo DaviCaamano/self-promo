@@ -1,0 +1,43 @@
+/**
+ * Pinned to the bottom of the landing screen rather than placed in its column:
+ * the section's contents are vertically centred, so anything in the flow would
+ * move the composition it is meant to sit underneath.
+ */
+.cue {
+  @apply absolute left-1/2 z-30 flex justify-center items-center w-11 h-11 rounded-full
+  text-sea cursor-pointer;
+  bottom: 1.5rem;
+  font-size: 1.75rem;
+  /* Held at the shown transform so only opacity moves between states; the
+     bobbing below then runs on top of it. */
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+
+  &[data-shown='true'] {
+    opacity: 1;
+    pointer-events: auto;
+    animation: bob 1800ms ease-in-out infinite;
+  }
+
+  &:hover {
+    @apply text-latte;
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, 0.375rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cue[data-shown='true'] {
+    animation: none;
+  }
+}

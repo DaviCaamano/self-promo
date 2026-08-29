@@ -1,0 +1,96 @@
+/* Above the fixed nav, whose rail, hamburger and drawer all sit below z-100. */
+.backdrop {
+  @apply fixed inset-0 z-[100] bg-void/80;
+  backdrop-filter: blur(4px);
+}
+
+/* The padding IS the dialog's margin from the screen edge — the frame below
+   simply fills whatever is left. */
+.positioner {
+  @apply fixed inset-0 z-[101] flex justify-center items-center p-4 sm:p-8 lg:p-10 pointer-events-none;
+}
+
+/**
+ * Same border treatment as the cards that open it, so the frame reads as the
+ * card itself having grown rather than as a new surface.
+ */
+.frame {
+  @apply pointer-events-auto flex flex-col overflow-hidden w-full h-full max-w-[1800px]
+  bg-void-light border border-[#263e79] border-b-sea border-r-sea;
+}
+
+.inner {
+  @apply flex flex-col w-full h-full min-h-0;
+}
+
+.header {
+  @apply flex flex-row justify-between items-center gap-4 px-4 sm:px-5 py-3 border-b border-b-[#263e79] shrink-0;
+}
+
+.heading {
+  @apply flex flex-col min-w-0;
+}
+
+.title {
+  @apply text-latte text-[1rem] sm:text-[1.125rem] font-medium truncate;
+  line-height: 1.5rem;
+}
+
+.subtitle {
+  @apply text-sea-light text-[0.8125rem] sm:text-[0.875rem] truncate;
+  font-weight: 300;
+  line-height: 1.25rem;
+}
+
+.actions {
+  @apply flex flex-row items-center gap-1 shrink-0;
+}
+
+.action {
+  @apply flex justify-center items-center w-10 h-10 rounded-br-lg text-sea
+  hover:text-latte hover:bg-void-highlight transition-colors;
+}
+
+/* Holds the zoom bar over the page instead of inside the scroller, so the
+   controls stay put while the page pans under them. */
+.viewport {
+  @apply relative flex-1 min-h-0;
+}
+
+/* What pans once the page has been zoomed wider than the frame. Vertical
+   scrolling is left to the PDF viewer inside the iframe, which is already
+   paging the document. */
+.scroller {
+  @apply flex w-full h-full overflow-x-auto overflow-y-hidden;
+  /* `safe` keeps a page narrower than the frame centred without pushing a wider
+     one's left edge out of scroll reach. */
+  justify-content: safe center;
+}
+
+/* Its own background: a PDF page is white, and the dark frame behind it shows
+   through the letterboxing while the viewer is still laying out. Width is set
+   inline, per zoom step; stretching for the height keeps the iframe clear of
+   the horizontal scrollbar the wider zooms bring in. */
+.viewer {
+  @apply shrink-0 self-stretch bg-void-off border-0;
+}
+
+.zoomBar {
+  @apply absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-row items-center gap-1
+  rounded-full p-1 bg-void/90 border border-[#263e79];
+  backdrop-filter: blur(6px);
+}
+
+.zoomButton {
+  @apply flex justify-center items-center w-10 h-10 rounded-full text-sea
+  hover:text-latte hover:bg-void-highlight transition-colors
+  disabled:text-mug disabled:bg-transparent disabled:cursor-default;
+}
+
+/* Doubles as the reset, which is why it is a button and not a bare readout.
+   Tabular figures so the bar does not twitch as the number changes width. */
+.zoomLevel {
+  @apply min-w-[3.25rem] px-1 text-center tabular-nums text-sea text-[0.8125rem]
+  hover:text-latte transition-colors;
+  font-weight: 500;
+}

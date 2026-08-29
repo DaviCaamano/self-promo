@@ -1,0 +1,110 @@
+/* Puts the expand-all control on the section's title line, hard right. */
+.header {
+  @apply flex flex-row justify-between items-center gap-4;
+}
+
+.expandAll {
+  @apply flex justify-center items-center w-10 h-10 shrink-0 rounded-xl text-sea
+  border border-[#263e79] border-b-sea transition-colors cursor-pointer;
+  font-size: 1.375rem;
+
+  &:hover {
+    @apply text-latte bg-void-highlight;
+  }
+
+  svg {
+    @apply transition-transform duration-200;
+  }
+
+  &:hover svg {
+    transform: scale(1.12);
+  }
+}
+
+/**
+ * Jumps to this job's write-up further down the page. It only appears while the
+ * entry is hovered, so it has to read as a control the instant it does — hence
+ * a bordered plate rather than a bare glyph, and its own hover state on top.
+ * Centred on the entry with translateY, which every transform here must repeat.
+ */
+.jump {
+  @apply absolute flex justify-center items-center w-10 h-10 rounded-xl
+  text-sea bg-void-light border border-[#263e79] border-b-sea
+  opacity-0 pointer-events-none cursor-pointer;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  transition:
+    opacity 200ms ease,
+    color 200ms ease,
+    background-color 200ms ease,
+    transform 200ms ease;
+
+  &:hover {
+    @apply text-latte bg-void-highlight;
+    transform: translateY(-50%) scale(1.12);
+  }
+}
+
+.jumpVisible {
+  @apply opacity-100 pointer-events-auto;
+}
+
+/* The whole heading block is the toggle, so the hit target is the entry itself
+   rather than an icon someone has to aim at. */
+.summary {
+  @apply flex flex-row items-center gap-3 w-full text-left cursor-pointer;
+}
+
+/**
+ * A plus turned a quarter of the way round is a cross, so open and closed are
+ * the same glyph at two angles rather than two icons swapped over. The stroke
+ * travels between the states instead of popping.
+ */
+.toggleIcon {
+  @apply shrink-0 text-sea transition-transform duration-300;
+  font-size: 1.25rem;
+}
+
+.open {
+  transform: rotate(45deg);
+}
+
+/**
+ * Height animation without a magic number. The row is animated between 0fr and
+ * 1fr, and `1fr` resolves to the copy's own height, so a long entry and a short
+ * one both open at their real size and neither jumps when the transition ends.
+ * `max-height` would need a guessed ceiling and would ease at the wrong rate.
+ */
+.reveal {
+  @apply grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 220ms ease;
+
+  &[data-open='true'] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+}
+
+/* The grid row's own child has to hide its overflow, or the copy spills out of
+   the collapsed row instead of being clipped by it. */
+.revealInner {
+  @apply overflow-hidden;
+}
+
+.reveal[data-open='true'] .revealInner {
+  @apply pt-2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .toggleIcon,
+  .expandAll svg {
+    transition: none;
+  }
+}

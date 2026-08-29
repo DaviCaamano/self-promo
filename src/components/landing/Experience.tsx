@@ -1,66 +1,102 @@
-import { PropsWithChildren, useState } from 'react';
+import { CSSProperties, PropsWithChildren, useState } from 'react';
 import Image from 'next/image';
 import styles from '@components/landing/styles/section.module.scss';
-import { Project } from '@components/landing/landing.interface';
-import { FlowArrow } from 'phosphor-react';
-import colors from '@styles/colors';
+import jobStyles from '@components/landing/styles/experience.module.scss';
+import { Project, Section, sectionIds } from '@components/landing/landing.interface';
+import { ArrowsInLineVertical, ArrowsOutLineVertical, FlowArrow, Plus } from 'phosphor-react';
+import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
 
-interface ExperienceProps {
-  active: boolean;
-  setFocusedProject: Setter<Project | undefined>;
-}
-export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
+/** Ids of every collapsible write-up, in page order. */
+const JOBS = [Project.waterwriting, Project.legitscript, Project.quelliv, Project.oit];
+
+export const Experience = () => {
+  const ref = useScrollReveal<HTMLDivElement>(styles.reveal);
+
+  /** The write-ups currently open. Empty is the resting state — all collapsed. */
+  const [open, setOpen] = useState<Project[]>([]);
+  const allOpen = open.length === JOBS.length;
+
+  const toggle = (job: Project) =>
+    setOpen((current) => (current.includes(job) ? current.filter((id) => id !== job) : [...current, job]));
+
   return (
-    <div id={'about-me'} className={styles.section}>
+    <div id={sectionIds[Section.experience]} ref={ref} data-reveal-scope='' className={styles.section}>
       <div className={styles.container}>
-        <div id={'about-me-title'} className={styles.title}>
-          Experience
+        <div className={`${jobStyles.header} ${styles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
+          <span className={styles.title}>Experience</span>
+          <button
+            type={'button'}
+            className={jobStyles.expandAll}
+            onClick={() => setOpen(allOpen ? [] : [...JOBS])}
+            aria-label={allOpen ? 'Collapse all roles' : 'Expand all roles'}
+            aria-expanded={allOpen}
+          >
+            {allOpen ? <ArrowsInLineVertical weight={'bold'} /> : <ArrowsOutLineVertical weight={'bold'} />}
+          </button>
         </div>
-        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
-        <div className={'flex flex-col justify-between items-center text-[1.5rem] mb-3'}>
+        <div className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${styles.reveal}`} style={{ '--i': 1 } as CSSProperties} />
+        {/* Stretched, not centred: the cards carry a negative margin and need a
+            definite width to bleed evenly on both sides. */}
+        <div className={'flex flex-col justify-between text-[1.5rem] mb-3'}>
           <Job
-            dates={'JUNE 2024 ─ CURRENT'}
+            dates={'JAN 2026 ─ CURRENT'}
+            name={'WATER WRITING'}
+            project={Project.waterwriting}
+            title={'Founder & Product Manager'}
+            index={2}
+            open={open.includes(Project.waterwriting)}
+            onToggle={() => toggle(Project.waterwriting)}
+          >
+            I founded Water Writing, a solo-developed platform that automatically generates comprehensive wikis for
+            authors' bodies of work. As the sole engineer and product owner, I independently managed all facets of the
+            project, including full-stack development, cloud hosting, and project roadmap. This experience allowed me to
+            build a scalable, end-to-end software product completely from scratch.
+          </Job>
+          <div className={'my-1'} />
+          <Job
+            dates={'JUN 2024 ─ OCT 2025'}
             name={'LEGIT SCRIPT'}
             project={Project.legitscript}
-            setFocusedProject={setFocusedProject}
             title={'Fullstack Developer'}
-            tabIndex={active ? 3 : undefined}
+            index={3}
+            open={open.includes(Project.legitscript)}
+            onToggle={() => toggle(Project.legitscript)}
           >
             Joining the team as a fullstack developer, I helped build 3 new products from the ground up. Merchant Xray,
             Merchant Monitoring, and Merchant Onboarding. These AI powered products helped clients track problematic
             merchants and onboard new ones.
           </Job>
-          <div className={'my-1'} />
-          <Job
-            dates={'JAN 2021 ─ MAR 2024'}
-            name={'QUELLIV'}
-            project={Project.quelliv}
-            setFocusedProject={setFocusedProject}
-            title={'Fullstack/Mobile Developer && Team Lead'}
-            tabIndex={active ? 2 : undefined}
-          >
-            Starting again as a junior developer, I was promoted to team lead where I managed a team of 10. In addition
-            to this, I also expanded my skillset into mobile while continuing my work as a fullstack developer.
-          </Job>
-          <div className={'my-1'} />
-          <Job
-            dates={'JAN 2019 ─ OCT 2020'}
-            name={'ORSINI IT'}
-            project={Project.oit}
-            setFocusedProject={setFocusedProject}
-            title={'Fullstack Developer && Team Lead'}
-            tabIndex={active ? 1 : undefined}
-          >
-            Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
-            about three months where I managed the development of the company{"'"}s front and backend.
-          </Job>
-          <div className={'mt-8 mx-auto'}>
+          <div className={`my-8 flex justify-center ${styles.reveal}`} style={{ '--i': 4 } as CSSProperties}>
             <picture>
               <source media={'(min-width: 768px)'} srcSet={'/images/desktop-lg.webp'} width={800} height={297} />
               <source media={'(min-width: 480px)'} srcSet={'/images/desktop-sm.webp'} width={460} height={171} />
               <Image src={'/images/desktop-xs.webp'} alt={'My Desktop!'} width={280} height={104} priority />
             </picture>
           </div>
+          <Job
+            dates={'JAN 2021 ─ MAR 2024'}
+            name={'QUELLIV'}
+            project={Project.quelliv}
+            title={'Fullstack/Mobile Developer && Team Lead'}
+            index={5}
+            open={open.includes(Project.quelliv)}
+            onToggle={() => toggle(Project.quelliv)}
+          >
+            Starting again as a junior developer, I was promoted to team lead where I managed a team of 10. In addition
+            to this, I also expanded my skillset into mobile while continuing my work as a fullstack developer.
+          </Job>
+          <Job
+            dates={'JAN 2019 ─ OCT 2020'}
+            name={'ORSINI IT'}
+            project={Project.oit}
+            title={'Fullstack Developer && Team Lead'}
+            index={6}
+            open={open.includes(Project.oit)}
+            onToggle={() => toggle(Project.oit)}
+          >
+            Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
+            about three months where I managed the development of the company{"'"}s front and backend.
+          </Job>
         </div>
       </div>
     </div>
@@ -69,42 +105,77 @@ export const Experience = ({ active, setFocusedProject }: ExperienceProps) => {
 
 interface JobHeaderProps extends PropsWithChildren {
   dates: string;
+  /** This card's place in the section's stagger. */
+  index: number;
   name: string;
-  project: Project | undefined;
-  setFocusedProject: Setter<Project | undefined>;
-  tabIndex: number | undefined;
+  /** Whether this card's write-up is showing, owned by the section. */
+  open: boolean;
+  onToggle: () => void;
+  /** The write-up further down the page that this job produced. */
+  project: Project;
   title: string;
 }
 
-const Job = ({ dates, children, name, project, setFocusedProject, tabIndex, title }: JobHeaderProps) => {
+const Job = ({ dates, children, index, name, onToggle, open, project, title }: JobHeaderProps) => {
   const titles = title.split('&&');
   const [hovered, setHovered] = useState<boolean>(false);
+
+  /* The project cards carry their own id, so this is a scroll down the page
+     rather than the slide change it used to be. */
+  const showProject = () =>
+    document.getElementById(project)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
   return (
     <div
-      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 cursor-pointer ${
+      /* -mx-4 cancels the p-4 so the text lines up with the section rule; the
+         hover panel is what bleeds outward, not the copy. */
+      className={`text-[1.25rem]  md:text-[1.5rem] relative font-thin rounded-2xl p-4 -mx-4 ${styles.reveal} ${
         hovered && 'bg-void-off'
       }`}
-      onClick={() => setFocusedProject(project)}
+      style={{ '--i': index } as CSSProperties}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      tabIndex={tabIndex}
     >
-      <div
-        className={`absolute ${hovered ? 'opacity-100' : 'opacity-0'} transition-opacity`}
-        style={{ right: '2rem', top: '1rem' }}
+      {/* Follows the job through to its write-up further down the page. Its own
+          control now, because the card body toggles the summary instead. */}
+      <button
+        type={'button'}
+        onClick={showProject}
+        className={`${jobStyles.jump} ${hovered ? jobStyles.jumpVisible : ''}`}
+        aria-label={`Jump to the ${name} project`}
+        tabIndex={hovered ? undefined : -1}
       >
-        <FlowArrow size={48} color={colors.latte} weight='fill' />
+        <FlowArrow weight={'fill'} />
+      </button>
+
+      <button type={'button'} onClick={onToggle} className={jobStyles.summary} aria-expanded={open}>
+        <Plus className={`${jobStyles.toggleIcon} ${open ? jobStyles.open : ''}`} weight={'bold'} aria-hidden />
+        <span>
+          <span className={'job-dates mb-1 block'}>
+            {name}
+            <br className={'inline sm:hidden'} /> {dates}
+          </span>
+          <span className={'job-title font-semibold text-[1.25rem] md:text-[1.5rem] block'}>
+            {titles[0]}
+            {titles.length > 1 && (
+              <>
+                <br className={'inline sm:hidden'} />
+                {'&&'}
+                {titles[1]}
+              </>
+            )}
+          </span>
+        </span>
+      </button>
+
+      {/* Animated on a grid row rather than max-height: `1fr` resolves to the
+          copy's real height, so the open state never guesses and tall entries
+          do not snap at the end of the transition. */}
+      <div className={jobStyles.reveal} data-open={open}>
+        <div className={jobStyles.revealInner}>
+          <div className={'job-description text-[1rem] md:text-[1.25rem] font-regular'}>{children}</div>
+        </div>
       </div>
-      <div className={'job-dates mb-1'}>
-        {name}
-        <br className={'inline sm:hidden'} /> {dates}
-      </div>
-      <div className={'job-title font-semibold  text-[1.25rem]  md:text-[1.5rem] '}>
-        {titles[0]} <br className={'inline sm:hidden'} />
-        {titles.length && '&&'}
-        {titles[1]}
-      </div>
-      <div className={'job-description text-[1rem] md:text-[1.25rem] font-regular'}>{children}</div>
     </div>
   );
 };

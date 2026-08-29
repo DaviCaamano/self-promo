@@ -2,10 +2,19 @@
   @apply flex flex-col md:flex-row justify-center items-center mx-4 my-8;
 }
 
+/* Badges are sized off these on the Technologies section too; the write-ups
+   are a different tree, so they carry the small scale themselves. */
 .technology {
-  @apply w-full flex flex-row flex-wrap flex-1 items-start justify-center
+  --badge-size: 4.5rem;
+  --label-size: 0.5625rem;
+  @apply w-full flex flex-row flex-wrap flex-1 items-start justify-center gap-2
   min-w-[16.875rem]
   max-w-[15.625rem] xs:max-w-[18.75rem] sm:max-w-[31.25rem];
+
+  @media (min-width: 400px) {
+    --badge-size: 5.25rem;
+    --label-size: 0.625rem;
+  }
 }
 
 .technologyItem {

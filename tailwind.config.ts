@@ -23,6 +23,7 @@ module.exports = {
         sans: ['var(--font-montserrat)', ...defaultTheme.fontFamily.sans],
         montserrat: ['var(--font-montserrat)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-montserrat)', ...defaultTheme.fontFamily.mono],
+        display: ['var(--font-instrument-serif)', ...defaultTheme.fontFamily.serif],
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

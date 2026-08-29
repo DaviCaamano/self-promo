@@ -1,0 +1,63 @@
+/* Hidden from the tablet up, where the left rail takes over. */
+.mobileNav {
+  @apply md:hidden;
+}
+
+.trigger {
+  @apply fixed left-4 top-4 z-[60] flex justify-center items-center w-11 h-11 rounded-xl
+  text-latte border border-[#263e79] border-b-sea cursor-pointer;
+  font-size: 1.625rem;
+  background: hsla(100%, 100%, 100%, 0.15);
+  backdrop-filter: blur(4.4px);
+  -webkit-backdrop-filter: blur(4.4px);
+}
+
+.scrim {
+  @apply fixed inset-0 z-40 bg-void/70 opacity-0 pointer-events-none transition-opacity duration-200;
+
+  &[data-open='true'] {
+    @apply opacity-100 pointer-events-auto;
+  }
+}
+
+/**
+ * Comes down over the top of the page. Translated rather than unmounted so it
+ * animates both ways, and pushed the full height of its own box plus a margin
+ * so no edge of it is left showing while it is shut.
+ */
+.drawer {
+  @apply fixed left-0 right-0 top-0 z-50 flex flex-col gap-1 px-3 pt-20 pb-4
+  border-b border-b-sea;
+  background: rgba(25, 29, 30, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transform: translateY(-100%);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+
+  &[data-open='true'] {
+    transform: none;
+  }
+}
+
+.item {
+  @apply flex flex-row items-center gap-3 w-full px-3 py-3 rounded-xl text-left
+  text-latte text-[1rem] font-medium transition-colors cursor-pointer;
+
+  &:hover {
+    @apply bg-void-highlight;
+  }
+
+  &.selected {
+    @apply text-sea bg-void-off;
+  }
+}
+
+.icon {
+  font-size: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer {
+    transition: none;
+  }
+}

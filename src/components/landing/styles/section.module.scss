@@ -1,5 +1,7 @@
 .section {
-  min-height: 100dvh;
+  /* Matches the landing section: svh holds still while a phone's toolbar comes
+     and goes, where dvh resizes every section under the reader mid-scroll. */
+  min-height: 100svh;
   @apply flex justify-center items-center font-thin;
 }
 
@@ -16,4 +18,54 @@
 .title {
   @apply text-[1.5rem] sm:text-[2.25rem] md:text-[2.5rem];
   font-weight: 400;
+}
+
+/**
+ * The scroll entrance, shared by every section below the landing one.
+ *
+ * Each piece marked `.reveal` waits displaced until it personally reaches the
+ * viewport, then arrives. Only opacity and transform ever move: a property that
+ * changed a box would resize the page mid-animation and shove whatever the
+ * reader is looking at.
+ *
+ * The held state is scoped to `[data-reveal-scope]`, which is static markup and
+ * so is present in the server-rendered HTML — the pieces are hidden from the
+ * first paint rather than flashing visible and then being hidden on hydration.
+ * Nothing here may be left unreachable, so `useScrollReveal` shows everything
+ * outright when the browser has no IntersectionObserver.
+ */
+@keyframes revealIn {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.section[data-reveal-scope] .reveal {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+/**
+ * `--i` still staggers the pieces that arrive together — a section's heading,
+ * rule and first rows cross the fold in one go. It is capped because pieces
+ * further down now trigger on their own, and an uncapped index would leave a
+ * lone card sitting blank for most of a second after the reader reached it.
+ */
+.section[data-reveal-scope] .reveal[data-revealed='true'] {
+  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+  animation-delay: calc(min(var(--i, 0), 3) * 80ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section[data-reveal-scope] .reveal,
+  .section[data-reveal-scope] .reveal[data-revealed='true'] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

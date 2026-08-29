@@ -1,73 +1,53 @@
-.greeting {
-  @apply absolute h-[6rem] text-sea overflow-hidden font-thin pl-[5.5px];
-  left: 12%;
-  top: 7%;
-  font-size: 2rem;
-  clip-path: polygon(0 0%, 166px 0%, 0 113px);
-
-  @media (min-width: 480px) {
-    left: calc(10% + 3px);
-    font-size: 4rem;
-    clip-path: polygon(0 0%, 362px 0%, 0 174px);
-
-    &.landscape {
-      @apply absolute h-[6rem] text-latte overflow-hidden font-thin pl-[5.5px];
-      left: calc(12% + 3px);
-      top: 7%;
-      font-size: 2rem;
-      clip-path: polygon(0 0%, 166px 0%, 0 113px);
-
-      @media (min-height: 480px) {
-        left: calc(10% + 3px);
-        font-size: 4rem;
-        clip-path: polygon(0 0%, 362px 0%, 0 174px);
-      }
-    }
+/**
+ * The greeting is drawn twice and stacked, the dark copy clipped to the
+ * portrait's circle, so it starts light against the page and turns dark as it
+ * crosses onto the artwork. Both copies therefore run the SAME animation on
+ * the SAME delay — give them different timing and the halves visibly come
+ * apart mid-travel.
+ */
+@keyframes greetingIn {
+  from {
+    opacity: 0;
+    transform: translate(-1.5rem, 0.75rem);
   }
-
-  &.landscape {
-    @media (min-height: 480px) {
-      left: calc(10% + 3px);
-      font-size: 4rem;
-      clip-path: polygon(0 0%, 362px 0%, 0 174px);
-    }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
 
-.greetingInner {
-  @apply absolute h-[6rem] text-void overflow-hidden;
-  left: 12.25%;
-  top: 7%;
-  font-size: 2rem;
-  font-weight: 400;
-  clip-path: polygon(167px 0%, 0 114px, 100% 100%, 100% 0);
+.greeting {
+  @apply absolute whitespace-nowrap;
+  /**
+   * Placed by its last word, not by its own left edge: "Davi" is meant to sit
+   * over the middle of the circle, above the face. 4.893em is where that word's
+   * centre falls inside this line, measured once — and because it is in `em` it
+   * tracks the font size, so the same one line holds at every breakpoint the
+   * greeting is resized at.
+   */
+  left: calc(50% - 4.893em);
+  /* 5px above the old resting position. */
+  top: calc(8% - 5px);
+  font-size: 1.75rem;
+  /* Same weight as the job title below it — the two read as one caption. */
+  font-weight: 500;
+  animation: greetingIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--intro-greeting) backwards;
 
   @media (min-width: 480px) {
-    left: 9.75%;
-    font-size: 4rem;
-    clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+    font-size: 3rem;
 
     &.landscape {
-      @apply absolute h-[6rem] text-void overflow-hidden;
-      left: 12.25%;
-      top: 7%;
-      font-size: 2rem;
-      font-weight: 400;
-      clip-path: polygon(167px 0%, 0 114px, 100% 100%, 100% 0);
+      font-size: 1.75rem;
 
       @media (min-height: 480px) {
-        left: 9.75%;
-        font-size: 4rem;
-        clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+        font-size: 3rem;
       }
     }
   }
 
   &.landscape {
     @media (min-height: 480px) {
-      left: 9.75%;
-      font-size: 4rem;
-      clip-path: polygon(369px 0%, 0 175px, 100% 100%, 100% 0);
+      font-size: 3rem;
     }
   }
 }
@@ -75,33 +55,37 @@
 .wave {
   @apply inline-block;
   transform: scaleX(-1);
-  font-size: 36px;
+  font-size: 24px;
 
   @media (min-width: 480px) {
-    font-size: 56px;
+    font-size: 40px;
 
     &.landscape {
-      font-size: 36px;
+      font-size: 24px;
 
       @media (min-height: 480px) {
-        font-size: 56px;
+        font-size: 40px;
       }
     }
   }
 
   &.landscape {
-    font-size: 36px;
+    font-size: 24px;
 
     @media (min-height: 480px) {
-      font-size: 56px;
+      font-size: 40px;
     }
   }
 }
 
+/* Sits just past the end of the greeting and inside the circle — the hand is
+   drawn in `void`, so it would disappear against the page background. */
 .ripple {
   position: absolute;
-  right: 32%;
-  top: 13%;
+  /* Arrives with the greeting it belongs to, on the same curve. */
+  animation: greetingIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--intro-greeting) backwards;
+  left: 44%;
+  top: 13.7%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -112,24 +96,24 @@
   outline: none !important;
 
   @media (min-width: 480px) {
-    right: 46.5%;
-    top: 11.5%;
+    left: 56.4%;
+    top: 13.6%;
 
     &.landscape {
-      right: 32%;
-      top: 13%;
+      left: 44%;
+      top: 13.7%;
 
       @media (min-height: 480px) {
-        right: 46.5%;
-        top: 11.5%;
+        left: 56.4%;
+        top: 13.6%;
       }
     }
   }
 
   &.landscape {
     @media (min-height: 480px) {
-      right: 46.5%;
-      top: 11.5%;
+      left: 62%;
+      top: 8.8%;
     }
   }
 
@@ -169,5 +153,12 @@
 }
 
 .rippleInner {
-  @apply relative w-full h-full;
+  @apply relative h-full w-full;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .greeting,
+  .ripple {
+    animation: none;
+  }
 }

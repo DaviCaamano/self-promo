@@ -1,0 +1,35 @@
+/**
+ * The desktop rail. Fixed to the left edge and centred on the viewport, so it
+ * holds still while the page scrolls under it.
+ */
+.rail {
+  @apply hidden md:flex fixed left-0 top-1/2 z-50 flex-col items-center gap-2 py-4 px-2
+  rounded-r-2xl border border-l-0 border-[#263e79] border-b-sea;
+  transform: translateY(-50%);
+  background: hsla(100%, 100%, 100%, 0.15);
+  backdrop-filter: blur(4.4px);
+  -webkit-backdrop-filter: blur(4.4px);
+}
+
+.item {
+  @apply flex justify-center items-center w-11 h-11 rounded-xl text-latte
+  transition-all duration-200 cursor-pointer;
+  font-size: 1.75rem;
+
+  &:hover {
+    @apply bg-void-highlight;
+    transform: scale(1.15);
+  }
+
+  &.selected {
+    @apply text-sea;
+    transform: scale(1.15);
+  }
+}
+
+/* The tooltip renders on the flat page rather than on a panel, so it carries
+   its own plate. */
+.tip {
+  @apply block whitespace-nowrap rounded-lg px-2 py-1 bg-void-light text-latte text-[0.8125rem]
+  border border-[#263e79];
+}

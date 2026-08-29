@@ -55,6 +55,9 @@ export const Wave = ({ isLandscape }: WaveProps) => {
 };
 
 const animations = {
-  standby: { rotate: [0, 30, 0, 30, 0] },
-  highFive: { rotate: -30 },
+  /* standby has to name `y` even though it is the resting value: framer leaves
+     a property wherever it last landed when a variant omits it, so without this
+     the hand would stay raised after the first high five. */
+  standby: { rotate: [0, 30, 0, 30, 0], y: 0 },
+  highFive: { rotate: -20, y: -14 },
 };

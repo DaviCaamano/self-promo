@@ -1,0 +1,205 @@
+.layout {
+  @apply flex flex-col items-center gap-8 md:flex-row md:items-start md:gap-6;
+}
+
+.prose {
+  @apply w-full text-center md:w-1/2 md:text-left;
+}
+
+/**
+ * Same display face as the landing pull quote and the letter cards, so every
+ * quotation on the site speaks in one voice. Instrument Serif ships a single
+ * weight, so 400 here rather than the 300 the sans face used, and a unitless
+ * line-height because the serif's metrics no longer suit a fixed 2.5rem.
+ */
+.quote {
+  @apply flex flex-col text-[1.5rem] sm:text-[1.75rem] md:text-[2rem];
+  /* No unadjusted serif behind it: next/font's paired fallback is metric
+     matched to Instrument Serif, so the quote cannot re-wrap onto a different
+     number of lines when the real face finishes loading. */
+  font-family: var(--font-instrument-serif), serif;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+/**
+ * The same quotation marks the landing pull quote uses: set in the accent
+ * colour a size up from the text, with the line box collapsed so they hang off
+ * the quote rather than opening up the line they sit on. The landing copy also
+ * animates these in; here the whole blockquote arrives as one piece, so only
+ * the lettering carries over.
+ */
+.mark {
+  @apply inline-block text-sea;
+  font-size: 1.15em;
+  line-height: 0;
+  vertical-align: -0.08em;
+  margin-right: 4px;
+}
+
+/* Carries its gap on the side that faces the text. */
+.markClose {
+  margin-right: 0;
+  margin-left: 4px;
+}
+
+/* Stays on Montserrat: the attribution is a label, not part of the quotation. */
+.attribution {
+  @apply text-sea text-[1rem] md:text-[1.125rem] not-italic mt-2;
+  font-family: theme('fontFamily.sans');
+  line-height: 1.75rem;
+}
+
+.description {
+  @apply text-[0.9375rem] sm:text-[1rem] md:text-[1.125rem] mt-6;
+  font-weight: 200;
+  line-height: 1.75rem;
+}
+
+/* The turn at the end of the paragraph above. On its own line and in the
+   quote attribution's colour, because it is the joke and not the setup. */
+.punchline {
+  @apply text-sea text-[0.9375rem] sm:text-[1rem] md:text-[1.125rem] mt-3;
+  font-weight: 200;
+  line-height: 1.75rem;
+}
+
+/**
+ * One knob drives the whole grid: every badge and its label are sized off
+ * --badge-large, so the two groups keep their proportions at every width.
+ */
+.stack {
+  --badge-large: 6rem;
+  --badge-small: calc(var(--badge-large) * 0.75);
+  --badge-gap: 0.625rem;
+  --label-large: 0.6875rem;
+  --label-small: 0.5625rem;
+  @apply w-full flex flex-col items-center;
+
+  @media (min-width: 400px) {
+    --badge-large: 7rem;
+    --label-large: 0.75rem;
+    --label-small: 0.625rem;
+  }
+
+  @media (min-width: 768px) {
+    --badge-large: 5.5rem;
+    --badge-gap: 0.5rem;
+    --label-large: 0.6875rem;
+    --label-small: 0.5625rem;
+  }
+
+  @media (min-width: 1024px) {
+    --badge-large: 6rem;
+    --badge-gap: 0.625rem;
+    --label-large: 0.75rem;
+    --label-small: 0.625rem;
+  }
+}
+
+/**
+ * Phones get the counts per row spelled out; from the tablet up the badges just
+ * wrap and centre, which keeps a short final row balanced under its neighbours.
+ */
+.group {
+  display: grid;
+  gap: var(--badge-gap);
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+  }
+}
+
+.large {
+  --badge-size: var(--badge-large);
+  --label-size: var(--label-large);
+  grid-template-columns: repeat(2, var(--badge-size));
+
+  @media (min-width: 768px) {
+    @apply w-1/2 self-start;
+  }
+
+  /* Two per row leaves an odd count's last badge alone; centre it rather than
+     letting it hang off the left edge. */
+  @media (max-width: 767px) {
+    > :last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+      justify-self: center;
+    }
+  }
+}
+
+.small {
+  --badge-size: var(--badge-small);
+  --label-size: var(--label-small);
+  grid-template-columns: repeat(3, var(--badge-size));
+  @apply w-full;
+
+  /* Below the tablet breakpoint this group hides behind the expand button. */
+  @media (max-width: 767px) {
+    @apply overflow-hidden opacity-0;
+    max-height: 0;
+    transition:
+      max-height 350ms ease,
+      opacity 250ms ease;
+
+    &.expanded {
+      @apply opacity-100 mt-4;
+      max-height: 60rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    @apply mt-4;
+  }
+}
+
+.badge {
+  @apply flex flex-col justify-center items-center bg-void-off transition-colors cursor-pointer
+  border border-[#263e79] border-b-sea border-r-sea rounded-br-lg;
+  width: var(--badge-size);
+  aspect-ratio: 1;
+  /* Sized off the badge, not a percentage: percentage padding resolves against
+     the containing block's width, which here is the whole badge column. */
+  padding: calc(var(--badge-size) * 0.08);
+  gap: calc(var(--badge-size) * 0.06);
+
+  svg {
+    width: calc(var(--badge-size) * 0.36);
+    height: calc(var(--badge-size) * 0.36);
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    @apply bg-void-highlight;
+  }
+}
+
+.label {
+  @apply text-sea-light font-medium text-center;
+  font-size: var(--label-size);
+  line-height: 1.2;
+  /* break-word, not anywhere: multi word names may wrap at the space, but
+     "TypeScript" must never come out as "TypeScr / ipt". */
+  overflow-wrap: break-word;
+}
+
+.expand {
+  @apply md:hidden flex flex-row items-center self-center gap-2 mt-6
+  text-[0.9375rem] text-sea-light font-medium px-4 py-2
+  bg-void-light hover:bg-void-highlight transition-colors
+  border border-[#263e79] border-b-sea border-r-sea rounded-br-xl;
+}
+
+.caret {
+  @apply transition-transform duration-200;
+  font-size: 1.125rem;
+}
+
+.flipped {
+  transform: rotate(180deg);
+}

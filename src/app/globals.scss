@@ -6,8 +6,9 @@
 
 html,
 body {
-  @apply text-latte mx-auto;
-  font-family: ui-sans-serif;
+  /* font-sans resolves to the Montserrat variable; a literal family here would
+     outrank the font class the layout puts on <html>. */
+  @apply text-latte mx-auto font-sans;
   scroll-behavior: smooth;
   overflow-x: hidden;
   scrollbar-gutter: stable;
@@ -15,13 +16,12 @@ body {
   box-sizing: border-box;
 }
 
+/* Not a 100vw calculation: 100vw counts the scrollbar, so a hand rolled
+   allowance for it has to guess the scrollbar's width and lands the page off
+   centre when it guesses wrong. `scrollbar-gutter: stable` above already
+   reserves the track, and the page fills whatever is left of it. */
 body {
-  width: calc(100vw - 34px);
-}
-
-.splide {
-  width: 100% !important;
-  scroll-behavior: smooth;
+  width: 100%;
 }
 
 .fade_1 {

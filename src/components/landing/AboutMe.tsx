@@ -1,143 +1,173 @@
+'use client';
+import { CSSProperties, useEffect, useState } from 'react';
 import sStyles from './styles/section.module.scss';
 import styles from './styles/about-us.module.scss';
-import { DownloadSimple } from 'phosphor-react';
-import Link from 'next/link';
-import colors from '@styles/colors';
+import { EnvelopeSimple, MagnifyingGlassPlus, Phone, Quotes } from 'phosphor-react';
+import { MotionButton } from '@components/shared/motion';
+import { PdfDialog, pdfFrameStyle, pdfLayoutId } from '@components/shared/pdf-dialog/PdfDialog';
+import { Letter, LETTERS, letterAnchorId, letterUrl } from '@components/landing/letters';
+import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
+import { sectionIds, Section } from '@components/landing/landing.interface';
+
+const RESUME_ID = 'resume';
+const RESUME_URL = '/pdfs/resume/Davi Caamano - Resume.pdf';
+
+/**
+ * Two pulses of `letterFlash` at 1800ms each. Clearing the flag any earlier
+ * would cut the second pulse short, so this has to track that animation.
+ */
+const FLASH_MS = 3600;
 
 interface AboutMeProps {
-  active: boolean;
+  /** Id of the letter the landing quote sent us to, or undefined for none. */
+  highlighted: string | undefined;
+  setHighlighted: Setter<string | undefined>;
 }
-export const AboutMe = ({ active }: AboutMeProps) => {
-  return (
-    <div id={'about-me'} className={sStyles.section}>
-      <div className={sStyles.container}>
-        <div id={'about-me-title'} className={sStyles.title}>
-          About Me
-        </div>
-        <div className={'h-[0.0625rem] bg-sea mt-3 mb-6'} />
-        <ContactInfo active={active} />
-        <div className={'text-[1rem] md:text-[1.25rem]'}>
-          {"Born in Brazil, raised in Miami, I have fallen in love with every team I've ever been a part " +
-            'of. From what I can tell: '}
-          <Link href={'https://mega.nz/folder/159lWLoa#A1Yh7FVpfaoRLnU5HeihSA'} target={'_blank'}>
-            <span
-              className={'underline'}
-              style={{ textUnderlineOffset: '4px', fontWeight: '300' }}
-              tabIndex={active ? 3 : undefined}
-            >
-              it does seem as though the feeling has been mutual.
-            </span>
-          </Link>
-          <div className={'mb-3'} />
-          Never content with good enough, I{"'"}ve accelerated from entry-to-supervisor in every position I have held
-          dating back to my first job as a cashier to my most recent position as developer lead. Working in my dream
-          industry has done nothing to slow me down. Even outside my professional life where I am working on developing
-          a small business for AI driven assistance for authors.
-        </div>
+export const AboutMe = ({ highlighted, setHighlighted }: AboutMeProps) => {
+  /** Only one preview is ever open, so the open card's id is the whole state. */
+  const [preview, setPreview] = useState<string | undefined>(undefined);
+  const close = () => setPreview(undefined);
 
-        <Resume active={active} />
-        <Letters />
+  const ref = useScrollReveal<HTMLDivElement>(sStyles.reveal);
+
+  /**
+   * `setHighlighted` is a useState setter and so is referentially stable; a
+   * handler rebuilt each render would restart this timer on every parent
+   * re-render and the flash would outlive its ceiling.
+   */
+  useEffect(() => {
+    if (!highlighted) return;
+    const timer = setTimeout(() => setHighlighted(undefined), FLASH_MS);
+    return () => clearTimeout(timer);
+  }, [highlighted, setHighlighted]);
+
+  return (
+    <div id={sectionIds[Section.about]} ref={ref} data-reveal-scope='' className={sStyles.section}>
+      <div className={sStyles.container}>
+        <div className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
+          About
+        </div>
+        <div
+          className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`}
+          style={{ '--i': 1 } as CSSProperties}
+        />
+        <ContactInfo />
+        <Resume onOpen={setPreview} />
+        <Letters onOpen={setPreview} highlighted={highlighted} />
       </div>
+
+      <PdfDialog
+        id={RESUME_ID}
+        open={preview === RESUME_ID}
+        onClose={close}
+        title={'Resume'}
+        subtitle={'Davi Caamano'}
+        url={RESUME_URL}
+      />
+      {LETTERS.map((letter) => (
+        <PdfDialog
+          key={letter.id}
+          id={letter.id}
+          open={preview === letter.id}
+          onClose={close}
+          title={'Letter of Recommendation'}
+          subtitle={`${letter.name} — ${letter.title}, ${letter.company}`}
+          url={letterUrl(letter.name)}
+        />
+      ))}
     </div>
   );
 };
 
-const ContactInfo = ({ active }: { active: boolean }) => (
-  <div className={'contact-info'}>
-    <div>
-      <span className={styles.contactInfoField}>Email:</span>
-      <Link
-        href={'mailto:DaviSantaCaamano@gmail.com'}
-        className={styles.contactInfoText}
-        tabIndex={active ? 1 : undefined}
-      >
-        DaviSantaCaamano@gmail.com
-      </Link>
-    </div>
-    <div>
-      <span className={styles.contactInfoField}>Phone:</span>
-      <a href={'tel:786-879-0802'} className={styles.contactInfoText} tabIndex={active ? 2 : undefined}>
-        (786) 879-0802
-      </a>
-    </div>
+const ContactInfo = () => (
+  <div className={`${styles.contactInfo} ${sStyles.reveal}`} style={{ '--i': 2 } as CSSProperties}>
+    {/* A plain anchor, not next/link: Link routes through the client router,
+        which has nothing to do with a mailto and swallowed the click. */}
+    <a
+      href={'mailto:DaviSantaCaamano@gmail.com'}
+      className={styles.contactItem}
+      aria-label={'Email DaviSantaCaamano@gmail.com'}
+    >
+      <EnvelopeSimple className={styles.contactIcon} size={22} weight={'regular'} aria-hidden />
+      <span className={styles.contactInfoText}>DaviSantaCaamano@gmail.com</span>
+    </a>
+    <a href={'tel:786-879-0802'} className={styles.contactItem} aria-label={'Call (786) 879-0802'}>
+      <Phone className={styles.contactIcon} size={22} weight={'regular'} aria-hidden />
+      <span className={styles.contactInfoText}>(786) 879-0802</span>
+    </a>
   </div>
 );
 
-const Resume = ({ active }: { active: boolean }) => (
-  <>
-    <div className={'mt-6 font-normal text-[1.25rem]'}>Downloads:</div>
-    <div className={'w-full flex flex-col md:px-8 font-normal text-[1.25rem] justify-center'}>
-      <div className={styles.downloadContainer}>
-        <Link
-          href={'/pdfs/resume/Davi Caamano - Resume.pdf'}
-          className={'w-full'}
-          target={'_blank'}
-          style={{ zIndex: 1 }}
-          tabIndex={active ? 4 : undefined}
-        >
-          <div className={'h-[0.125rem] bg-latte mt-2'} />
-          <div className={`${styles.download} ${styles.last}`}>
-            <div className={styles.downloadTitle}>Resume</div>
-            <DownloadSimple size={32} color={colors.sea} weight='regular' />
-          </div>
-        </Link>
-      </div>
-    </div>
-  </>
-);
-
-const Letters = () => (
-  <div className={'w-full flex flex-col mt-6 md:px-8 font-normal text-[1.25rem] justify-center'}>
-    <span>Letters of Recommendation:</span>
-    <div className={'h-[0.125rem] bg-latte mt-2'} />
-    <div className={styles.downloadContainer}>
-      <DownloadRow
-        url={'/pdfs/recommendations/aaron-everly.pdf'}
-        name={'Aaron Everly'}
-        title={'Legit Script: UI Designer'}
-        tabIndex={8}
-        last
-      />
-      <DownloadRow
-        url={'/pdfs/recommendations/andrei-budoi.pdf'}
-        name={'Andrei Budoi'}
-        title={'Legit Script: Team Lead'}
-        tabIndex={7}
-      />
-      <DownloadRow
-        url={'/pdfs/recommendations/hines-tran.pdf'}
-        name={'Hines Tran'}
-        title={'Shift Pixy: Product Owner'}
-        tabIndex={6}
-      />
-      <DownloadRow
-        url={'/pdfs/recommendations/steve-swanson.pdf'}
-        name={'Steve Swanson'}
-        title={'Shift Pixy: Director of Engineering'}
-        tabIndex={5}
-      />
-    </div>
+/* No heading above it: the card says "Resume" itself. It sits directly under
+   the contact details it belongs with. */
+const Resume = ({ onOpen }: { onOpen: (id: string) => void }) => (
+  <div className={`${styles.resumeGroup} ${sStyles.reveal}`} style={{ '--i': 3 } as CSSProperties}>
+    <MotionButton
+      type={'button'}
+      layoutId={pdfLayoutId(RESUME_ID)}
+      style={pdfFrameStyle}
+      className={styles.resumeCard}
+      onClick={() => onOpen(RESUME_ID)}
+      aria-label={'Preview my resume'}
+    >
+      <span className={styles.resumeTitle}>Resume</span>
+      <span className={styles.cardHint}>Preview &amp; download</span>
+      <MagnifyingGlassPlus className={styles.cardIcon} size={32} weight={'regular'} aria-hidden />
+    </MotionButton>
   </div>
 );
 
-interface DownloadButtonProps {
-  name: string;
-  last?: boolean;
-  tabIndex: number;
-  title: string;
-  url: string;
+interface LettersProps {
+  highlighted: string | undefined;
+  onOpen: (id: string) => void;
 }
-const DownloadRow = ({ name, last, tabIndex, title, url }: DownloadButtonProps) => (
-  <Link href={url} className={'w-full'} target={'_blank'} tabIndex={tabIndex}>
-    <div className={`${styles.download}${last ? ' ' + styles.last: ''}`}>
-      <div className={'w-full h-full flex flex-col justify-center'}>
-        <div className={`${styles.downloadTitle} hidden sm:block`}>
-          {title}, {name}
-        </div>
-        <div className={`${styles.downloadTitle} block sm:hidden`}>{title},</div>
-        <div className={`${styles.downloadTitle} block sm:hidden`}>{name}</div>
-      </div>
-      <DownloadSimple size={32} color={colors.sea} weight='regular' />
+const Letters = ({ highlighted, onOpen }: LettersProps) => (
+  <div className={styles.group}>
+    <span className={`${styles.groupTitle} ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties}>
+      Letters of Recommendation
+    </span>
+    <div className={`h-[0.125rem] bg-latte mt-2 mb-4 ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties} />
+    <div className={styles.letterGrid}>
+      {LETTERS.map((letter, index) => (
+        <LetterCard
+          key={letter.id}
+          letter={letter}
+          onOpen={onOpen}
+          /* Picks up where the fixed pieces above left off, so the cards keep
+             arriving in the same rhythm rather than restarting it. */
+          index={5 + index}
+          flashing={highlighted === letter.id}
+        />
+      ))}
     </div>
-  </Link>
+  </div>
+);
+
+interface LetterCardProps {
+  flashing: boolean;
+  index: number;
+  letter: Letter;
+  onOpen: (id: string) => void;
+}
+const LetterCard = ({ flashing, index, letter, onOpen }: LetterCardProps) => (
+  <MotionButton
+    type={'button'}
+    id={letterAnchorId(letter.id)}
+    layoutId={pdfLayoutId(letter.id)}
+    style={{ ...pdfFrameStyle, '--i': index } as CSSProperties}
+    className={`${styles.letterCard} ${sStyles.reveal}${flashing ? ' ' + styles.flashing : ''}`}
+    onClick={() => onOpen(letter.id)}
+    aria-label={`Preview the letter of recommendation from ${letter.name}, ${letter.title} at ${letter.company}`}
+  >
+    <blockquote className={styles.quote}>
+      <Quotes className={styles.quoteMark} size={20} weight={'fill'} aria-hidden />
+      <span className={styles.quoteText}>{letter.quote}</span>
+      <Quotes className={`${styles.quoteMark} ${styles.quoteMarkClose}`} size={20} weight={'fill'} aria-hidden />
+    </blockquote>
+    <div className={styles.attribution}>
+      <span className={styles.company}>{letter.company}</span>
+      <span className={styles.role}>{letter.title}</span>
+      <span className={styles.author}>{letter.name}</span>
+    </div>
+  </MotionButton>
 );
