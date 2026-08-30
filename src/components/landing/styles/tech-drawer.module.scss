@@ -20,14 +20,24 @@
   background: rgba(25, 29, 30, 0.97);
   backdrop-filter: blur(10px);
   transform: translateX(100%);
+  /**
+   * `visibility` is switched, never eased. Easing it left the panel hidden for
+   * the whole opening transition, and focus cannot be moved into a hidden
+   * element — so the dialog opened with focus still out on the page behind it.
+   * Opening flips it visible at once; closing holds it until the slide is done,
+   * so it is out of the tab order and the accessibility tree only once gone.
+   */
+  visibility: hidden;
   transition:
     transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 300ms;
-  visibility: hidden;
+    visibility 0s linear 300ms;
 
   &[data-open='true'] {
     transform: none;
     visibility: visible;
+    transition:
+      transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s;
   }
 }
 

@@ -35,9 +35,9 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
   return (
     <div id={sectionIds[Section.projects]} ref={ref} data-reveal-scope='' className={sStyles.section}>
       <div className={sStyles.container}>
-        <div className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
+        <h2 className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
           Projects
-        </div>
+        </h2>
         <div className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`} style={{ '--i': 1 } as CSSProperties} />
         {/* Stretched, not centred: the cards carry a negative margin and need a
             definite width to bleed evenly on both sides. */}
@@ -92,7 +92,7 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
             index={4}
           >
             Everything offered by{' '}
-            <ProjectSubLink url={'https://quelliv.com'} tabIndex={0}>
+            <ProjectSubLink url={'https://quelliv.com'}>
               Quelliv.com
             </ProjectSubLink>{' '}
             and more. This was first mobile app I've developed in a professional setting, of which I was the sole
@@ -113,10 +113,7 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
           >
             Onboarding, purchases, offers, bookings, and subscriptions. I was tasked with starting and developing the
             initial NextJs/NestJs monorepo. Quelliv used{' '}
-            <ProjectSubLink
-              url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}
-              tabIndex={0}
-            >
+            <ProjectSubLink url={'https://genesisonelaser.com/2022/09/08/photobiomodulation/'}>
               Laserbiomodulation
             </ProjectSubLink>{' '}
             to aid with pain management, skincare, weight loss, and hair loss. The chat-bot, "Dr. A", used ChatGPT to
@@ -138,7 +135,7 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
               devops, bringing the company's linux hosted servers to AWS. I also served as the developer lead in a team
               of four and took part in various smaller solo projects such as a chat-bot, click-to-call chrome extension,
               and an{' '}
-              <ProjectSubLink url={'https://heytaco.com/'} tabIndex={0}>
+              <ProjectSubLink url={'https://heytaco.com/'}>
                 in-house version of HeyTaco.
               </ProjectSubLink>
             </span>
@@ -225,19 +222,24 @@ const Technologies = ({ onOpen, techs }: TechnologiesProps) => {
 };
 
 interface ProjectSubLinkProps extends PropsWithChildren {
-  tabIndex: number;
   url: string;
 }
-const ProjectSubLink = ({ children, tabIndex, url }: ProjectSubLinkProps) => (
-  <span
-    onClick={(event) => {
-      event.preventDefault();
-      window.open(url, '_ blank');
-    }}
-    className={'underline cursor-pointer'}
+/**
+ * A real anchor, not a span with a click handler. The span version was
+ * unreachable by keyboard — Enter fires nothing on a span — and announced as
+ * plain text, so nobody using a screen reader knew it went anywhere.
+ *
+ * The underline stays: inside running prose, colour alone does not distinguish
+ * a link for anyone who cannot see that hue shift.
+ */
+const ProjectSubLink = ({ children, url }: ProjectSubLinkProps) => (
+  <a
+    href={url}
+    target={'_blank'}
+    rel={'noreferrer'}
+    className={'underline'}
     style={{ textUnderlineOffset: '4px' }}
-    tabIndex={tabIndex}
   >
     {children}
-  </span>
+  </a>
 );

@@ -16,6 +16,36 @@ body {
   box-sizing: border-box;
 }
 
+/**
+ * The focus ring is the keyboard user's pointer, so every focusable thing gets a
+ * visible one. An `outline` rather than a Tailwind ring: rings are box-shadows,
+ * and Windows High Contrast strips box-shadows, which would leave keyboard users
+ * there with no indicator at all.
+ *
+ * `:focus-visible` rather than `:focus`, so it shows for keyboard interaction
+ * without flashing on every mouse click.
+ */
+:focus-visible {
+  outline: 2px solid theme('colors.sea');
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/**
+ * Hidden until focused, then pinned to the top left over everything. It has to
+ * be the first focusable element in the document, so it lives at the top of the
+ * body rather than inside the page.
+ */
+.skip-link {
+  @apply fixed left-4 z-[200] rounded-lg px-4 py-2 bg-void-light text-latte
+  border border-sea;
+  top: -100%;
+
+  &:focus {
+    top: 1rem;
+  }
+}
+
 /* Not a 100vw calculation: 100vw counts the scrollbar, so a hand rolled
    allowance for it has to guess the scrollbar's width and lands the page off
    centre when it guesses wrong. `scrollbar-gutter: stable` above already

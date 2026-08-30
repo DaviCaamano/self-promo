@@ -47,7 +47,26 @@ export const useScrollReveal = <T extends HTMLElement>(revealClass: string): Ref
     );
 
     items.forEach((item) => observer.observe(item));
-    return () => observer.disconnect();
+
+    /**
+     * A held piece is only hidden by opacity, so its buttons and links are still
+     * focusable while invisible. Tab can therefore reach one before the observer
+     * has caught up, and the focus ring would land on nothing anyone can see.
+     * Revealing the piece the focus is inside closes that gap.
+     */
+    const onFocusIn = (event: FocusEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const piece = items.find((item) => item.contains(target));
+      if (piece) piece.setAttribute('data-revealed', 'true');
+    };
+
+    root.addEventListener('focusin', onFocusIn);
+
+    return () => {
+      observer.disconnect();
+      root.removeEventListener('focusin', onFocusIn);
+    };
   }, [revealClass]);
 
   return ref;

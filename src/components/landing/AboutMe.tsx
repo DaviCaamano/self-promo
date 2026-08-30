@@ -44,9 +44,9 @@ export const AboutMe = ({ highlighted, setHighlighted }: AboutMeProps) => {
   return (
     <div id={sectionIds[Section.about]} ref={ref} data-reveal-scope='' className={sStyles.section}>
       <div className={sStyles.container}>
-        <div className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
+        <h2 className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
           About
-        </div>
+        </h2>
         <div
           className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`}
           style={{ '--i': 1 } as CSSProperties}
@@ -123,9 +123,9 @@ interface LettersProps {
 }
 const Letters = ({ highlighted, onOpen }: LettersProps) => (
   <div className={styles.group}>
-    <span className={`${styles.groupTitle} ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties}>
+    <h3 className={`${styles.groupTitle} ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties}>
       Letters of Recommendation
-    </span>
+    </h3>
     <div className={`h-[0.125rem] bg-latte mt-2 mb-4 ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties} />
     <div className={styles.letterGrid}>
       {LETTERS.map((letter, index) => (

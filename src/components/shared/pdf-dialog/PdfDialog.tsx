@@ -1,10 +1,11 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { AnimatePresence } from 'framer-motion';
 import { MotionDiv } from '@components/shared/motion';
 import { ArrowSquareOut, DownloadSimple, MagnifyingGlassMinus, MagnifyingGlassPlus, X } from 'phosphor-react';
 import styles from './pdf-dialog.module.scss';
+import { useDialogFocus } from '@hooks/useDialogFocus';
 
 /**
  * Widths for the viewer, as a percentage of the frame it sits in. The PDF is
@@ -50,6 +51,9 @@ export const PdfDialog = ({ id, onClose, open, subtitle, title, url }: PdfDialog
   useEffect(() => setMounted(true), []);
 
   const [zoom, setZoom] = useState<number>(FIT_ZOOM);
+
+  const frame = useRef<HTMLDivElement>(null);
+  useDialogFocus(frame, open);
 
   /**
    * Every opening starts fitted, however the last one was left. Kept apart from
@@ -102,6 +106,7 @@ export const PdfDialog = ({ id, onClose, open, subtitle, title, url }: PdfDialog
           {/* Lets clicks fall through to the backdrop everywhere but the frame itself. */}
           <div className={styles.positioner}>
             <MotionDiv
+              ref={frame}
               layoutId={pdfLayoutId(id)}
               style={pdfFrameStyle}
               className={styles.frame}

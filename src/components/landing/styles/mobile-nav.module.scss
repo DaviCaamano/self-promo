@@ -45,10 +45,19 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   transform: translateY(-100%);
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+  /* Switched, not eased — see the tech drawer: a hidden panel cannot take
+     focus, and a merely translated one is still in the tab order. */
+  visibility: hidden;
+  transition:
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 280ms;
 
   &[data-open='true'] {
     transform: none;
+    visibility: visible;
+    transition:
+      transform 280ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s;
   }
 }
 
@@ -80,7 +89,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .drawer {
-    transition: none;
+    transition: visibility 0s;
   }
 
   /* Keeps the wait and the arrival, drops only the travel. */

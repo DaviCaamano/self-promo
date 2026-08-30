@@ -1,9 +1,10 @@
 'use client';
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { List, X } from 'phosphor-react';
 import { Section, SECTIONS, sectionLabels } from '@components/landing/landing.interface';
 import { sectionIcons } from '@components/landing/navbar/SideNav';
 import styles from '../styles/mobile-nav.module.scss';
+import { useDialogFocus } from '@hooks/useDialogFocus';
 
 interface MobileNavProps {
   active: Section;
@@ -19,6 +20,9 @@ interface MobileNavProps {
  */
 export const MobileNav = ({ active, introDelayMs, onSelect }: MobileNavProps) => {
   const [open, setOpen] = useState<boolean>(false);
+
+  const drawer = useRef<HTMLElement>(null);
+  useDialogFocus(drawer, open);
 
   useEffect(() => {
     if (!open) return;
@@ -51,7 +55,7 @@ export const MobileNav = ({ active, introDelayMs, onSelect }: MobileNavProps) =>
           it never sits on top of the page's own links. */}
       <div className={styles.scrim} data-open={open} onClick={() => setOpen(false)} aria-hidden />
 
-      <nav id={'mobile-sections'} className={styles.drawer} data-open={open} aria-label={'Page sections'}>
+      <nav ref={drawer} id={'mobile-sections'} className={styles.drawer} data-open={open} aria-label={'Page sections'}>
         {SECTIONS.map((section) => {
           const Icon = sectionIcons[section];
           const current = section === active;
@@ -63,9 +67,6 @@ export const MobileNav = ({ active, introDelayMs, onSelect }: MobileNavProps) =>
               onClick={() => go(section)}
               className={`${styles.item} ${current ? styles.selected : ''}`}
               aria-current={current ? 'true' : undefined}
-              /* Unreachable by keyboard while the drawer is shut, which is what
-                 a reader tabbing through the page behind it expects. */
-              tabIndex={open ? undefined : -1}
             >
               <Icon weight={current ? 'fill' : 'light'} className={styles.icon} />
               {sectionLabels[section]}

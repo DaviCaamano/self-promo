@@ -13,8 +13,8 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: 'Davi Caamano',
-  description: 'Programmer for Hire!',
+  title: 'Davi Caamano — Fullstack Developer',
+  description: 'Portfolio of Davi Caamano, a fullstack web and mobile developer.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +26,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* Deliberately no font class: one on the body outranks the html class and
           would shadow Montserrat for the whole tree. */}
       <body>
-        <main className='flex min-h-screen flex-col items-center justify-between'>{children} </main>
+        {/* First focusable thing on the page: landmarks serve screen readers,
+            but sighted keyboard users have no jump key and would otherwise tab
+            the whole nav on every visit. */}
+        <a href='#main' className='skip-link'>
+          Skip to main content
+        </a>
+        <main id='main' className='flex min-h-screen flex-col items-center justify-between'>
+          {children}{' '}
+        </main>
       </body>
     </html>
   );

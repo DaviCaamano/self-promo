@@ -1,4 +1,4 @@
-import { CSSProperties, PropsWithChildren, ReactNode, useState } from 'react';
+import { CSSProperties, PropsWithChildren, ReactNode, useEffect, useState } from 'react';
 import styles from './tooltip.module.scss';
 
 export enum ToolTipAnchor {
@@ -59,7 +59,22 @@ export const Tooltip = ({
   const events = {
     onMouseEnter: () => setIsOpen(true),
     onMouseLeave: () => setIsOpen(false),
+    onFocus: () => setIsOpen(true),
+    onBlur: () => setIsOpen(false),
   };
+
+  /**
+   * Escape closes it without the pointer having to move. A screen-magnifier
+   * user who cannot see past the tip, or anyone whose pointer is parked on the
+   * trigger, otherwise has no way to get it out of the way.
+   */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && setIsOpen(false);
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, setIsOpen]);
 
   return (
     <div className={`tooltip ${name} relative w-max h-max ${wrapper?.className}`} style={wrapper?.style} {...events}>
@@ -67,6 +82,10 @@ export const Tooltip = ({
       <div
         className={`tooltip-framer fade_3 ${tooltip?.className} ${isOpen ? ' fadeIn' : 'fadeOut'} ${styles.backdrop}`}
         style={{ ...getPosition(anchor, distance), ...tooltip?.style }}
+        /* Faded out is still in the accessibility tree; the trigger carries its
+           own name, so the tip is decoration until it is actually showing. */
+        aria-hidden={isOpen ? undefined : true}
+        role={'tooltip'}
       >
         {content}
       </div>

@@ -17,9 +17,9 @@ export const Technologies = () => {
   return (
     <div id={sectionIds[Section.technologies]} ref={ref} data-reveal-scope='' className={sStyles.section}>
       <div className={sStyles.container}>
-        <div className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
+        <h2 className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
           Technologies
-        </div>
+        </h2>
         <div className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`} style={{ '--i': 1 } as CSSProperties} />
 
         {/* Holds the badge scale, which both groups below read — the small ones

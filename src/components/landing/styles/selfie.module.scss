@@ -396,6 +396,38 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
  * Scales with the artwork like the greeting and the job title do, and fades in
  * with the picture rather than waiting for the sequence.
  */
+/**
+ * Shrink-wraps the text so the scrim below is the width of the name rather than
+ * the whole stage.
+ */
+.nameText {
+  @apply relative inline-block;
+
+  /**
+   * Engineered contrast, not assumed contrast. This colour over the dark of the
+   * shoulders is fine, but the artwork behind it is a line drawing on white —
+   * measured at the worst pixel the name was 1.13:1, well under the 4.5:1 body
+   * text needs. The scrim guarantees the ratio whatever the picture does, which
+   * matters more now that the portrait has already been swapped once.
+   *
+   * Solid across the whole of the text and fading only past it, so no glyph
+   * edge ends up over the lighter fringe.
+   */
+  &::before {
+    content: '';
+    @apply absolute pointer-events-none;
+    inset: -0.35em -1.4em;
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      rgba(25, 29, 30, 0) 0%,
+      rgba(25, 29, 30, 0.94) 8%,
+      rgba(25, 29, 30, 0.94) 92%,
+      rgba(25, 29, 30, 0) 100%
+    );
+  }
+}
+
 .name {
   @apply absolute left-0 right-0 text-center text-sea uppercase pointer-events-none;
   top: calc(80% + 5px);

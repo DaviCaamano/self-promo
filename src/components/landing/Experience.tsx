@@ -29,7 +29,7 @@ export const Experience = ({ onShowProject }: ExperienceProps) => {
     <div id={sectionIds[Section.experience]} ref={ref} data-reveal-scope='' className={styles.section}>
       <div className={styles.container}>
         <div className={`${jobStyles.header} ${styles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
-          <span className={styles.title}>Experience</span>
+          <h2 className={styles.title}>Experience</h2>
           <button
             type={'button'}
             className={jobStyles.expandAll}

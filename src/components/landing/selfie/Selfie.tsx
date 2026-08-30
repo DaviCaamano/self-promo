@@ -28,7 +28,9 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
           {/* Inside the stage, not the column below it: the stage is what the
               artwork is measured against, so the name stays glued under the
               circle at every breakpoint instead of drifting with the scale. */}
-          <span className={styles.name}>Davi Caamano</span>
+          <h1 className={styles.name}>
+            <span className={styles.nameText}>Davi Caamano</span>
+          </h1>
           <Greeting isLandscape={isLandscape} />
           <JobTitle isLandscape={isLandscape} />
           {/* Hidden on purpose while we see whether the page reads cleaner

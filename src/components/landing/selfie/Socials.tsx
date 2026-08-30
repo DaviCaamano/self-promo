@@ -6,7 +6,12 @@ import styles from '../styles/selfie.module.scss';
 interface SocialsProps {
   isLandscape: boolean;
 }
-/** `--i` is this icon's place in the intro stagger; the delay is in the stylesheet. */
+/**
+ * `--i` is this icon's place in the intro stagger; the delay is in the stylesheet.
+ *
+ * Each link is a bare glyph, so it carries its own name — without one a screen
+ * reader announces "link" and a voice-control user has nothing to say to it.
+ */
 export const Socials = ({ isLandscape }: SocialsProps) => {
   return (
     <div className={`socials ${styles.socialsContainer} ${isLandscape && styles.landscape}`}>
@@ -14,6 +19,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         href={'https://github.com/DaviCaamano'}
         passHref
         target={'_blank'}
+        aria-label={'Davi Caamano on GitHub'}
         className={styles.socialLink}
         style={{ '--i': 0 } as CSSProperties}
       >
@@ -26,6 +32,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         href={'https://www.linkedin.com/in/davi-caamano-8a440b157/'}
         passHref
         target={'_blank'}
+        aria-label={'Davi Caamano on LinkedIn'}
         className={styles.socialLink}
         style={{ '--i': 1 } as CSSProperties}
       >
@@ -38,6 +45,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         href={'https://twitter.com/DaviSCaamano'}
         passHref
         target={'_blank'}
+        aria-label={'Davi Caamano on Twitter'}
         className={styles.socialLink}
         style={{ '--i': 2 } as CSSProperties}
       >

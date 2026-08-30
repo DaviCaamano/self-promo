@@ -1,11 +1,12 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowSquareOut, X } from 'phosphor-react';
 import { techDetails } from './tech-details';
 import { TechName, techIcons } from './tech-icons';
 import { TechMark } from './TechBadge';
 import styles from '../styles/tech-drawer.module.scss';
+import { useDialogFocus } from '@hooks/useDialogFocus';
 
 interface TechDrawerProps {
   onClose: () => void;
@@ -24,6 +25,9 @@ interface TechDrawerProps {
 export const TechDrawer = ({ onClose, tech }: TechDrawerProps) => {
   const [mounted, setMounted] = useState<boolean>(false);
   useEffect(() => setMounted(true), []);
+
+  const panel = useRef<HTMLDivElement>(null);
+  useDialogFocus(panel, Boolean(tech));
 
   useEffect(() => {
     if (!tech) return;
@@ -51,12 +55,13 @@ export const TechDrawer = ({ onClose, tech }: TechDrawerProps) => {
     <>
       <div className={styles.scrim} data-open={open} onClick={onClose} aria-hidden />
 
-      <aside
+      <div
+        ref={panel}
         className={styles.drawer}
         data-open={open}
         role={'dialog'}
         aria-modal={open ? 'true' : undefined}
-        aria-label={icon ? `About ${icon.title}` : undefined}
+        aria-labelledby={icon ? 'tech-drawer-title' : undefined}
         aria-hidden={open ? undefined : true}
       >
         {icon && detail && (
@@ -66,10 +71,12 @@ export const TechDrawer = ({ onClose, tech }: TechDrawerProps) => {
                 <TechMark icon={icon} />
               </span>
               <span className={styles.heading__group}>
-                <span className={styles.title}>{icon.title}</span>
+                <h2 id={'tech-drawer-title'} className={styles.title}>
+                  {icon.title}
+                </h2>
                 <span className={styles.released}>Released {detail.released}</span>
               </span>
-              <button type={'button'} onClick={onClose} className={styles.close} aria-label={'Close'}>
+              <button type={'button'} onClick={onClose} className={styles.close} aria-label={`Close ${icon.title} details`}>
                 <X size={24} weight={'regular'} />
               </button>
             </header>
@@ -94,7 +101,7 @@ export const TechDrawer = ({ onClose, tech }: TechDrawerProps) => {
             </div>
           </>
         )}
-      </aside>
+      </div>
     </>,
     document.body,
   );

@@ -123,9 +123,8 @@
   @apply text-white;
 }
 
+/* The global focus outline stands; this only brightens the rule alongside it. */
 .pullQuote:focus-visible {
-  @apply outline-none;
-
   .rule {
     background: linear-gradient(90deg, theme('colors.latte'), rgba(246, 243, 236, 0.15));
   }
