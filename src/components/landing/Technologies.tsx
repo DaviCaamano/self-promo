@@ -9,9 +9,6 @@ import { largeBadges, smallBadges, TechName, techIcons } from './technologies/te
 import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
 import { Section, sectionIds } from '@components/landing/landing.interface';
 
-/** Where the small badges pick up the stagger the large ones left off. */
-const smallBadgeOffset = 5 + largeBadges.length;
-
 export const Technologies = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const [opened, setOpened] = useState<TechName | undefined>(undefined);
@@ -58,7 +55,7 @@ export const Technologies = () => {
                   key={name}
                   onClick={() => setOpened(name)}
                   className={sStyles.reveal}
-                  style={{ '--i': 4 + index } as CSSProperties}
+                  style={{ '--i': index } as CSSProperties}
                 />
               ))}
             </div>
@@ -69,7 +66,7 @@ export const Technologies = () => {
           <button
             type={'button'}
             className={`${styles.expand} ${sStyles.reveal}`}
-            style={{ '--i': smallBadgeOffset } as CSSProperties}
+            style={{ '--i': 5 } as CSSProperties}
             onClick={() => setExpanded((open) => !open)}
             aria-controls={'small-technology-badges'}
             aria-expanded={expanded}
@@ -87,7 +84,7 @@ export const Technologies = () => {
                 key={name}
                 onClick={() => setOpened(name)}
                 className={sStyles.reveal}
-                style={{ '--i': smallBadgeOffset + 1 + index } as CSSProperties}
+                style={{ '--i': largeBadges.length + index } as CSSProperties}
               />
             ))}
           </div>

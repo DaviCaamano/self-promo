@@ -103,6 +103,16 @@
  * wrap and centre, which keeps a short final row balanced under its neighbours.
  */
 .group {
+  /**
+   * 30 badges, so the section's default rhythm would either take several
+   * seconds or, capped, land most of them at once. 18ms steps across the whole
+   * run puts the last one at 522ms and its 420ms arrival finishes at 942ms,
+   * inside the second this is budgeted. The cap is lifted to the last index so
+   * every badge gets its own place in the run.
+   */
+  --reveal-duration: 420ms;
+  --reveal-step: 18ms;
+  --reveal-cap: 29;
   display: grid;
   gap: var(--badge-gap);
   justify-content: center;

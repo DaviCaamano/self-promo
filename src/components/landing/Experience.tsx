@@ -147,10 +147,9 @@ const Job = ({ dates, children, index, name, onShowProject, onToggle, open, proj
 
           The anchor is positioned inline rather than by class: Tooltip hardcodes
           `relative` on its wrapper, and a competing class would come down to
-          stylesheet order. ToolTipAnchor.right offsets by the trigger's own
-          width, which lands the tip to its LEFT — the side with room here. */}
+          stylesheet order. */}
       <Tooltip
-        anchor={ToolTipAnchor.right}
+        anchor={ToolTipAnchor.top}
         distance={'0.625rem'}
         content={<span className={jobStyles.tip}>{`Jump to ${name} Project`}</span>}
         wrapper={{ style: { position: 'absolute', top: '1rem', right: '1.5rem' } }}

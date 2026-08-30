@@ -64,12 +64,17 @@
  * further down now trigger on their own, and an uncapped index would leave a
  * lone card sitting blank for most of a second after the reader reached it.
  *
+ * The three knobs are here rather than baked in so a dense run of small pieces
+ * can set its own rhythm — a grid of badges wants many quick steps where a
+ * column of cards wants a few slow ones. Override them on a container and every
+ * `.reveal` inside it inherits the new timing.
+ *
  * `backwards` covers the delay; nothing is needed after the run, because the
  * held rule above has already stopped matching by then.
  */
 .section[data-reveal-scope] .reveal[data-revealed='true'] {
-  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
-  animation-delay: calc(min(var(--i, 0), 3) * 80ms);
+  animation: revealIn var(--reveal-duration, 620ms) cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+  animation-delay: calc(min(var(--i, 0), var(--reveal-cap, 3)) * var(--reveal-step, 80ms));
 }
 
 
