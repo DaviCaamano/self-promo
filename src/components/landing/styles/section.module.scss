@@ -45,7 +45,15 @@
   }
 }
 
-.section[data-reveal-scope] .reveal {
+/**
+ * Held only while the piece has not arrived. Scoping this to the arrived flag
+ * rather than leaning on a forwards fill is what lets the animation stop
+ * applying entirely once it has run: a forwards fill would pin `transform: none`
+ * on the element for good, and several of these pieces are framer-motion layout
+ * elements whose own transforms are written inline — a filled CSS animation
+ * outranks inline styles and would freeze them out of their layout projection.
+ */
+.section[data-reveal-scope] .reveal:not([data-revealed='true']) {
   opacity: 0;
   transform: translateY(1.5rem);
 }
@@ -55,15 +63,12 @@
  * rule and first rows cross the fold in one go. It is capped because pieces
  * further down now trigger on their own, and an uncapped index would leave a
  * lone card sitting blank for most of a second after the reader reached it.
- */
-/**
- * `both`, not `backwards`. The held rule above matches whether or not a piece
- * has arrived, so without a forwards fill the piece drops back to opacity 0 the
- * instant its animation ends — it fades in and then vanishes. Backwards still
- * covers the delay, forwards holds the arrived state afterwards.
+ *
+ * `backwards` covers the delay; nothing is needed after the run, because the
+ * held rule above has already stopped matching by then.
  */
 .section[data-reveal-scope] .reveal[data-revealed='true'] {
-  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
+  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
   animation-delay: calc(min(var(--i, 0), 3) * 80ms);
 }
 
@@ -80,7 +85,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section[data-reveal-scope] .reveal {
+  .section[data-reveal-scope] .reveal:not([data-revealed='true']) {
     transform: none;
   }
 

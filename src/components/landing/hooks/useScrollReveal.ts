@@ -40,9 +40,10 @@ export const useScrollReveal = <T extends HTMLElement>(revealClass: string): Ref
           observer.unobserve(entry.target);
         });
       },
-      /* A sliver of the piece has to be up before it counts as arrived, so it
-         starts with somewhere left to play rather than finishing off screen. */
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.01 },
+      /* No insets and no threshold: a piece arrives the moment any part of it
+         would be on screen, so its entrance starts with it rather than a tenth
+         of a screen later. */
+      { rootMargin: '0px', threshold: 0 },
     );
 
     items.forEach((item) => observer.observe(item));
