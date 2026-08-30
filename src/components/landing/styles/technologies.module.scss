@@ -104,15 +104,17 @@
  */
 .group {
   /**
-   * 30 badges, so the section's default rhythm would either take several
-   * seconds or, capped, land most of them at once. 18ms steps across the whole
-   * run puts the last one at 522ms and its 420ms arrival finishes at 942ms,
-   * inside the second this is budgeted. The cap is lifted to the last index so
-   * every badge gets its own place in the run.
+   * 30 badges. The step is what bounds the wait, not the cap: at 8ms even the
+   * last badge only holds for 200ms, so one drifting into view on its own still
+   * reads as arriving immediately, while the grid crossing the fold together
+   * still sweeps. The cap is a backstop for that 200ms should the grid ever
+   * grow — past it the tail lands as one, which is the lesser fault.
+   *
+   * A badge takes 420ms, so the run finishes at 620ms, inside its budget.
    */
   --reveal-duration: 420ms;
-  --reveal-step: 18ms;
-  --reveal-cap: 29;
+  --reveal-step: 8ms;
+  --reveal-cap: 25;
   display: grid;
   gap: var(--badge-gap);
   justify-content: center;
