@@ -45,6 +45,7 @@ export const Experience = ({ onShowProject }: ExperienceProps) => {
             definite width to bleed evenly on both sides. */}
         <div className={'flex flex-col justify-between text-[1.5rem] mb-3'}>
           <Job
+            tipBelow
             dates={'JAN 2026 ─ CURRENT'}
             name={'WATER WRITING'}
             project={Project.waterwriting}
@@ -122,12 +123,18 @@ interface JobHeaderProps extends PropsWithChildren {
   open: boolean;
   onShowProject: (project: Project) => void;
   onToggle: () => void;
+  /**
+   * Drops this entry's tooltip under its button rather than over it. Only the
+   * topmost entry needs it: the section heading sits directly above, and the
+   * expand-all control there is exactly what the tip would land on.
+   */
+  tipBelow?: boolean;
   /** The write-up further down the page that this job produced. */
   project: Project;
   title: string;
 }
 
-const Job = ({ dates, children, index, name, onShowProject, onToggle, open, project, title }: JobHeaderProps) => {
+const Job = ({ dates, children, index, name, onShowProject, onToggle, open, project, tipBelow, title }: JobHeaderProps) => {
   const titles = title.split('&&');
   const [hovered, setHovered] = useState<boolean>(false);
 
@@ -149,7 +156,7 @@ const Job = ({ dates, children, index, name, onShowProject, onToggle, open, proj
           `relative` on its wrapper, and a competing class would come down to
           stylesheet order. */}
       <Tooltip
-        anchor={ToolTipAnchor.top}
+        anchor={tipBelow ? ToolTipAnchor.bottom : ToolTipAnchor.top}
         distance={'0.625rem'}
         content={<span className={jobStyles.tip}>{`Jump to ${name} Project`}</span>}
         wrapper={{ style: { position: 'absolute', top: '1rem', right: '1.5rem' } }}
