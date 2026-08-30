@@ -398,7 +398,7 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
  */
 .name {
   @apply absolute left-0 right-0 text-center text-sea uppercase pointer-events-none;
-  top: 86%;
+  top: 80%;
   font-size: 1.25rem;
   letter-spacing: 0.22em;
   animation: portraitIn var(--intro-portrait) ease-out;
