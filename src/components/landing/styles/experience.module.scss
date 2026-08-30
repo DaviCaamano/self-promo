@@ -25,15 +25,15 @@
  * Jumps to this job's write-up further down the page. It only appears while the
  * entry is hovered, so it has to read as a control the instant it does — hence
  * a bordered plate rather than a bare glyph, and its own hover state on top.
- * Centred on the entry with translateY, which every transform here must repeat.
+ *
+ * Its wrapper is pinned to the top of the entry rather than centred on it: a
+ * centred button slides down the moment the write-up below it opens, and this
+ * one should sit still while the row grows past it.
  */
 .jump {
-  @apply absolute flex justify-center items-center w-10 h-10 rounded-xl
+  @apply flex justify-center items-center w-10 h-10 rounded-xl
   text-sea bg-void-light border border-[#263e79] border-b-sea
   opacity-0 pointer-events-none cursor-pointer;
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
   font-size: 1.25rem;
   transition:
     opacity 200ms ease,
@@ -43,8 +43,14 @@
 
   &:hover {
     @apply text-latte bg-void-highlight;
-    transform: translateY(-50%) scale(1.12);
+    transform: scale(1.12);
   }
+}
+
+/* The tip sits on the flat card rather than on a panel, so it carries its own. */
+.tip {
+  @apply block whitespace-nowrap rounded-lg px-2 py-1 bg-void-light text-latte text-[0.8125rem]
+  border border-[#263e79];
 }
 
 .jumpVisible {

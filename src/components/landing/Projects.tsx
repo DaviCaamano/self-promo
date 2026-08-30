@@ -2,7 +2,7 @@
 import sStyles from './styles/section.module.scss';
 import styles from './styles/project.module.scss';
 import Image from 'next/image';
-import { CSSProperties, PropsWithChildren, useState } from 'react';
+import { CSSProperties, PropsWithChildren, useEffect, useState } from 'react';
 import { Project as ProjectName, Section, sectionIds } from './landing.interface';
 import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
 import { TechBadge } from '@components/landing/technologies/TechBadge';
@@ -12,10 +12,27 @@ import Link from 'next/link';
 import { ArrowSquareOut } from 'phosphor-react';
 import colors from '@styles/colors';
 
-export const Projects = () => {
+/** Three beats of `projectFlash` at 800ms each; clearing sooner would cut the last one. */
+const FLASH_MS = 2400;
+
+interface ProjectsProps {
+  /** The project an Experience entry jumped to, whose title should flash. */
+  flashed: ProjectName | undefined;
+  setFlashed: Setter<ProjectName | undefined>;
+}
+export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
   const ref = useScrollReveal<HTMLDivElement>(sStyles.reveal);
   /** The badge whose write-up is open, shared by every project's tech list. */
   const [opened, setOpened] = useState<TechName | undefined>(undefined);
+
+  /* `setFlashed` is a useState setter and so referentially stable; a handler
+     rebuilt each render would restart this timer on every re-render and the
+     flash would outlive its three beats. */
+  useEffect(() => {
+    if (!flashed) return;
+    const timer = setTimeout(() => setFlashed(undefined), FLASH_MS);
+    return () => clearTimeout(timer);
+  }, [flashed, setFlashed]);
 
   return (
     <div id={sectionIds[Section.projects]} ref={ref} data-reveal-scope='' className={sStyles.section}>
@@ -28,6 +45,7 @@ export const Projects = () => {
             definite width to bleed evenly on both sides. */}
         <div className={'flex flex-col justify-between text-[1.5rem] mb-3'}>
           <Project
+            flashing={flashed === ProjectName.waterwriting}
             onOpen={setOpened}
             id={ProjectName.waterwriting}
             name={'Water Writing'}
@@ -46,6 +64,7 @@ export const Projects = () => {
             and depth best selling authors dream about.
           </Project>
           <Project
+            flashing={flashed === ProjectName.legitscript}
             onOpen={setOpened}
             id={ProjectName.legitscript}
             name={'Merchant Monitoring/Onboarding/Xray'}
@@ -62,6 +81,7 @@ export const Projects = () => {
             business.</span>
           </Project>
           <Project
+            flashing={flashed === ProjectName.quellivMobile}
             onOpen={setOpened}
             id={ProjectName.quellivMobile}
             name={'QUELLIV (MOBILE)'}
@@ -84,6 +104,7 @@ export const Projects = () => {
             and I were able to keep this app accessible to the company's predominantly older clientele.
           </Project>
           <Project
+            flashing={flashed === ProjectName.quelliv}
             onOpen={setOpened}
             id={ProjectName.quelliv}
             name={'QUELLIV'}
@@ -105,6 +126,7 @@ export const Projects = () => {
             looking for.
           </Project>
           <Project
+            flashing={flashed === ProjectName.oit}
             onOpen={setOpened}
             id={ProjectName.oit}
             name={'ORSINI IT'}
@@ -132,6 +154,8 @@ export const Projects = () => {
 };
 
 interface ProjectProps extends PropsWithChildren {
+  /** True while this project's title should be flashing. */
+  flashing: boolean;
   id: ProjectName;
   /** Opens a technology's write-up in the shared drawer. */
   onOpen: (tech: TechName) => void;
@@ -146,7 +170,7 @@ interface ProjectProps extends PropsWithChildren {
   url: string;
 }
 
-const Project = ({ children, id, index, name, onOpen, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
+const Project = ({ children, flashing, id, index, name, onOpen, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
   const [hovered, setHovered] = useState<boolean>(false);
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -183,7 +207,7 @@ const Project = ({ children, id, index, name, onOpen, techs, thumbnails: { sm, l
         </div>
       </Link>
 
-      <div className={'job-dates text-sea font-medium mb-1 uppercase'}>{name}</div>
+      <div className={`job-dates text-sea font-medium mb-1 uppercase ${flashing ? styles.flashing : ''}`}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
         <ProjectThumbnail alt={'Project: ' + id} sm={sm} lg={lg} url={url} />

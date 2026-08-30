@@ -26,3 +26,33 @@
   font-medium  m-1 py-1 text-center
   border-[#263e79] border-b-sea border-r-sea border;
 }
+
+/**
+ * Arrival flash for the project an Experience entry jumped to: three beats and
+ * done. Colour and shadow only, never transform — the card carries the
+ * section's reveal animation on the same subtree, and a transform here would
+ * fight it.
+ */
+.flashing {
+  animation: projectFlash 800ms ease-in-out 3;
+}
+
+@keyframes projectFlash {
+  0%,
+  100% {
+    color: theme('colors.sea');
+    text-shadow: none;
+  }
+  50% {
+    color: theme('colors.latte');
+    text-shadow: 0 0 18px rgba(156, 182, 255, 0.75);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Still mark the title, just hold it lit rather than pulsing. */
+  .flashing {
+    animation: none;
+    color: theme('colors.latte');
+  }
+}

@@ -5,11 +5,17 @@ import jobStyles from '@components/landing/styles/experience.module.scss';
 import { Project, Section, sectionIds } from '@components/landing/landing.interface';
 import { ArrowsInLineVertical, ArrowsOutLineVertical, FlowArrow, Plus } from 'phosphor-react';
 import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
+import { ToolTipAnchor, Tooltip } from '@components/shared/tooltip/Tooltip';
+
+interface ExperienceProps {
+  /** Scrolls to a project's write-up and flashes its title. */
+  onShowProject: (project: Project) => void;
+}
 
 /** Ids of every collapsible write-up, in page order. */
 const JOBS = [Project.waterwriting, Project.legitscript, Project.quelliv, Project.oit];
 
-export const Experience = () => {
+export const Experience = ({ onShowProject }: ExperienceProps) => {
   const ref = useScrollReveal<HTMLDivElement>(styles.reveal);
 
   /** The write-ups currently open. Empty is the resting state — all collapsed. */
@@ -46,6 +52,7 @@ export const Experience = () => {
             index={2}
             open={open.includes(Project.waterwriting)}
             onToggle={() => toggle(Project.waterwriting)}
+            onShowProject={onShowProject}
           >
             I founded Water Writing, a solo-developed platform that automatically generates comprehensive wikis for
             authors' bodies of work. As the sole engineer and product owner, I independently managed all facets of the
@@ -61,6 +68,7 @@ export const Experience = () => {
             index={3}
             open={open.includes(Project.legitscript)}
             onToggle={() => toggle(Project.legitscript)}
+            onShowProject={onShowProject}
           >
             Joining the team as a fullstack developer, I helped build 3 new products from the ground up. Merchant Xray,
             Merchant Monitoring, and Merchant Onboarding. These AI powered products helped clients track problematic
@@ -81,6 +89,7 @@ export const Experience = () => {
             index={5}
             open={open.includes(Project.quelliv)}
             onToggle={() => toggle(Project.quelliv)}
+            onShowProject={onShowProject}
           >
             Starting again as a junior developer, I was promoted to team lead where I managed a team of 10. In addition
             to this, I also expanded my skillset into mobile while continuing my work as a fullstack developer.
@@ -93,6 +102,7 @@ export const Experience = () => {
             index={6}
             open={open.includes(Project.oit)}
             onToggle={() => toggle(Project.oit)}
+            onShowProject={onShowProject}
           >
             Starting as an backend intern, I was promoted to a fullstack developer and team lead of a four man team in
             about three months where I managed the development of the company{"'"}s front and backend.
@@ -110,20 +120,16 @@ interface JobHeaderProps extends PropsWithChildren {
   name: string;
   /** Whether this card's write-up is showing, owned by the section. */
   open: boolean;
+  onShowProject: (project: Project) => void;
   onToggle: () => void;
   /** The write-up further down the page that this job produced. */
   project: Project;
   title: string;
 }
 
-const Job = ({ dates, children, index, name, onToggle, open, project, title }: JobHeaderProps) => {
+const Job = ({ dates, children, index, name, onShowProject, onToggle, open, project, title }: JobHeaderProps) => {
   const titles = title.split('&&');
   const [hovered, setHovered] = useState<boolean>(false);
-
-  /* The project cards carry their own id, so this is a scroll down the page
-     rather than the slide change it used to be. */
-  const showProject = () =>
-    document.getElementById(project)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
   return (
     <div
@@ -137,16 +143,28 @@ const Job = ({ dates, children, index, name, onToggle, open, project, title }: J
       onMouseLeave={() => setHovered(false)}
     >
       {/* Follows the job through to its write-up further down the page. Its own
-          control now, because the card body toggles the summary instead. */}
-      <button
-        type={'button'}
-        onClick={showProject}
-        className={`${jobStyles.jump} ${hovered ? jobStyles.jumpVisible : ''}`}
-        aria-label={`Jump to the ${name} project`}
-        tabIndex={hovered ? undefined : -1}
+          control now, because the card body toggles the summary instead.
+
+          The anchor is positioned inline rather than by class: Tooltip hardcodes
+          `relative` on its wrapper, and a competing class would come down to
+          stylesheet order. ToolTipAnchor.right offsets by the trigger's own
+          width, which lands the tip to its LEFT — the side with room here. */}
+      <Tooltip
+        anchor={ToolTipAnchor.right}
+        distance={'0.625rem'}
+        content={<span className={jobStyles.tip}>{`Jump to ${name} Project`}</span>}
+        wrapper={{ style: { position: 'absolute', top: '1rem', right: '1.5rem' } }}
       >
-        <FlowArrow weight={'fill'} />
-      </button>
+        <button
+          type={'button'}
+          onClick={() => onShowProject(project)}
+          className={`${jobStyles.jump} ${hovered ? jobStyles.jumpVisible : ''}`}
+          aria-label={`Jump to ${name} Project`}
+          tabIndex={hovered ? undefined : -1}
+        >
+          <FlowArrow weight={'fill'} />
+        </button>
+      </Tooltip>
 
       <button type={'button'} onClick={onToggle} className={jobStyles.summary} aria-expanded={open}>
         <Plus className={`${jobStyles.toggleIcon} ${open ? jobStyles.open : ''}`} weight={'bold'} aria-hidden />

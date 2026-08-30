@@ -8,7 +8,7 @@ import { Technologies } from '@components/landing/Technologies';
 import { SideNav } from '@components/landing/navbar/SideNav';
 import { MobileNav } from '@components/landing/navbar/MobileNav';
 import { scrollToSection, useActiveSection } from '@components/landing/hooks/useActiveSection';
-import { Section, sectionIds } from '@components/landing/landing.interface';
+import { Project, Section, sectionIds } from '@components/landing/landing.interface';
 import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
 import { letterAnchorId } from '@components/landing/letters';
 
@@ -23,6 +23,20 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
 
   /** Which letter card the About section should flash, set by the landing quote. */
   const [highlighted, setHighlighted] = useState<string | undefined>(undefined);
+
+  /** Which project the Projects section should flash, set by an Experience entry. */
+  const [flashedProject, setFlashedProject] = useState<Project | undefined>(undefined);
+
+  const showProject = (project: Project) => {
+    document.getElementById(project)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    /* Cleared before it is set again so a second jump to the same project
+       replays the flash — React would otherwise leave the class in place and
+       the animation would never restart. The re-set goes in a fresh task so
+       React commits the removal first; a rAF would tie it to a frame, which a
+       backgrounded tab never delivers. */
+    setFlashedProject(undefined);
+    setTimeout(() => setFlashedProject(project), 0);
+  };
 
   useEffect(() => {
     if (initialSection === Section.socials) return;
@@ -51,8 +65,8 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
       />
       <AboutMe highlighted={highlighted} setHighlighted={setHighlighted} />
       <Technologies />
-      <Experience />
-      <Projects />
+      <Experience onShowProject={showProject} />
+      <Projects flashed={flashedProject} setFlashed={setFlashedProject} />
 
       <SideNav active={active} isMobile={isMobile} onSelect={scrollToSection} />
       <MobileNav active={active} onSelect={scrollToSection} />
