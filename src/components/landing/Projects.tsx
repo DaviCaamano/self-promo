@@ -53,7 +53,7 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
               sm: '/images/thumbnails/water-writing-sm.webp',
               lg: '/images/thumbnails/water-writing-lg.webp',
             }}
-            techs={['next', 'nestjs', 'typescript', 'prisma', 'redux', 'postgres']}
+            techs={['next', 'express', 'typescript', 'prisma', 'tanstack', 'postgres']}
             url={'https://www.WaterWriting.com/'}
             index={2}
           >
