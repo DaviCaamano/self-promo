@@ -3,7 +3,20 @@
   @apply md:hidden;
 }
 
+/* Comes in off the edge it is pinned to, once the page has finished arriving. */
+@keyframes triggerIn {
+  from {
+    opacity: 0;
+    transform: translateX(calc(100% + 1rem));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .trigger {
+  animation: triggerIn 560ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--nav-intro-delay, 0ms) backwards;
   @apply fixed right-4 top-4 z-[60] flex justify-center items-center w-11 h-11 rounded-xl
   text-latte border border-[#263e79] border-b-sea cursor-pointer;
   font-size: 1.625rem;
@@ -56,8 +69,22 @@
   font-size: 1.5rem;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .drawer {
     transition: none;
+  }
+
+  /* Keeps the wait and the arrival, drops only the travel. */
+  .trigger {
+    animation-name: fadeIn;
   }
 }

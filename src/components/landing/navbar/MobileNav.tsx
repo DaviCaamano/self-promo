@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useState } from 'react';
 import { List, X } from 'phosphor-react';
 import { Section, SECTIONS, sectionLabels } from '@components/landing/landing.interface';
 import { sectionIcons } from '@components/landing/navbar/SideNav';
@@ -7,15 +7,17 @@ import styles from '../styles/mobile-nav.module.scss';
 
 interface MobileNavProps {
   active: Section;
+  /** How long to hold the trigger off screen, so it arrives after the page has. */
+  introDelayMs: number;
   onSelect: (section: Section) => void;
 }
 
 /**
- * The phone's nav: a hamburger pinned to the top left, opening a drawer that
+ * The phone's nav: a hamburger pinned to the top right, opening a drawer that
  * comes down over the top of the page. Hidden from the tablet up, where the
  * left rail takes over.
  */
-export const MobileNav = ({ active, onSelect }: MobileNavProps) => {
+export const MobileNav = ({ active, introDelayMs, onSelect }: MobileNavProps) => {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,6 +39,7 @@ export const MobileNav = ({ active, onSelect }: MobileNavProps) => {
         type={'button'}
         onClick={() => setOpen((isOpen) => !isOpen)}
         className={styles.trigger}
+        style={{ '--nav-intro-delay': `${introDelayMs}ms` } as CSSProperties}
         aria-label={open ? 'Close menu' : 'Open menu'}
         aria-expanded={open}
         aria-controls={'mobile-sections'}

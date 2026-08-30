@@ -11,6 +11,7 @@ import { scrollToSection, useActiveSection } from '@components/landing/hooks/use
 import { Project, Section, sectionIds } from '@components/landing/landing.interface';
 import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
 import { letterAnchorId } from '@components/landing/letters';
+import { LANDING_INTRO_ENDS_MS, SECTION_REVEAL_ENDS_MS } from '@components/landing/intro';
 
 interface LandingProps {
   /** Section the requested route opens the page scrolled to. */
@@ -19,6 +20,14 @@ interface LandingProps {
 }
 export const Landing = ({ initialSection, isMobile }: LandingProps) => {
   const isLandscape = useIsLandscape(isMobile);
+
+  /**
+   * The nav arrives last, once whatever the page opened on has finished. On the
+   * landing route that is the whole opening sequence; on a deep link it is only
+   * the one section, which reveals as soon as the page lands on it.
+   */
+  const navIntroDelayMs =
+    initialSection === Section.socials ? LANDING_INTRO_ENDS_MS : SECTION_REVEAL_ENDS_MS;
   const active = useActiveSection(initialSection);
 
   /** Which letter card the About section should flash, set by the landing quote. */
@@ -68,8 +77,8 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
       <Experience onShowProject={showProject} />
       <Projects flashed={flashedProject} setFlashed={setFlashedProject} />
 
-      <SideNav active={active} isMobile={isMobile} onSelect={scrollToSection} />
-      <MobileNav active={active} onSelect={scrollToSection} />
+      <SideNav active={active} isMobile={isMobile} introDelayMs={navIntroDelayMs} onSelect={scrollToSection} />
+      <MobileNav active={active} introDelayMs={navIntroDelayMs} onSelect={scrollToSection} />
     </div>
   );
 };

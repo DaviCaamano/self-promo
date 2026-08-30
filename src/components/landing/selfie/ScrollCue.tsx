@@ -2,18 +2,12 @@
 import { useEffect, useState } from 'react';
 import { CaretDown } from 'phosphor-react';
 import { Section, sectionIds } from '@components/landing/landing.interface';
+import { LANDING_INTRO_ENDS_MS } from '@components/landing/intro';
 import styles from '../styles/scroll-cue.module.scss';
 
-/**
- * Two seconds after the landing sequence finishes, so it reads as an offer to a
- * reader who has stopped rather than as the last beat of the intro.
- *
- * The sequence ends with the quote's "read the letter" line: --intro-credit
- * (--intro-start + 1700ms) plus its own 300ms offset and 700ms run, which lands
- * at 3450ms. Retime any of those in `selfie.module.scss` and this moves too.
- */
-const INTRO_ENDS_MS = 3450;
-const APPEAR_AFTER_MS = INTRO_ENDS_MS + 2000;
+/** Two seconds past the sequence, so it reads as an offer to a reader who has
+ *  stopped rather than as the last beat of the intro. */
+const APPEAR_AFTER_MS = LANDING_INTRO_ENDS_MS + 2000;
 
 interface ScrollCueProps {
   onScrollDown: () => void;

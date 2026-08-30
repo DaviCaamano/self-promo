@@ -9,8 +9,6 @@ import { TechBadge } from '@components/landing/technologies/TechBadge';
 import { TechDrawer } from '@components/landing/technologies/TechDrawer';
 import { TechName, techIcons } from '@components/landing/technologies/tech-icons';
 import Link from 'next/link';
-import { ArrowSquareOut } from 'phosphor-react';
-import colors from '@styles/colors';
 
 /** Three beats of `projectFlash` at 800ms each; clearing sooner would cut the last one. */
 const FLASH_MS = 2400;
@@ -171,9 +169,6 @@ interface ProjectProps extends PropsWithChildren {
 }
 
 const Project = ({ children, flashing, id, index, name, onOpen, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
-  const [hovered, setHovered] = useState<boolean>(false);
-  const [focused, setFocused] = useState<boolean>(false);
-
   return (
     <section
       id={id}
@@ -181,32 +176,7 @@ const Project = ({ children, flashing, id, index, name, onOpen, techs, thumbnail
          hover panel is what bleeds outward, not the copy. */
       className={`relative text-[1.5rem] p-4 -mx-4 rounded-2xl hover:bg-void-off ${sStyles.reveal}`}
       style={{ '--i': index } as CSSProperties}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
     >
-      <Link
-        href={url}
-        passHref
-        target={'_blank'}
-        onFocus={() => {
-          setHovered(true);
-          setFocused(true);
-        }}
-        onBlur={() => {
-          setHovered(false);
-          setFocused(false);
-        }}
-      >
-        <div
-          className={`absolute ${hovered || focused ? 'block' : 'hidden'} ${
-            focused && 'bg-void border-mug'
-          } hover:bg-void rounded-[0.375rem] p-1`}
-          style={{ top: '1rem', right: '2rem' }}
-        >
-          <ArrowSquareOut size={32} color={colors.latte} weight='fill' />
-        </div>
-      </Link>
-
       <div className={`job-dates text-sea font-medium mb-1 uppercase ${flashing ? styles.flashing : ''}`}>{name}</div>
       <div className={'job-description text-[1rem] font-regular'}>{children}</div>
       <div className={`visuals ${styles.visuals}`}>
@@ -227,9 +197,7 @@ const ProjectThumbnail = ({ alt, lg, sm, url }: JobThumbnailProps) => {
   return (
     <Link href={url} passHref target={'_blank'}>
       <div
-        className={
-          'job-thumbnails inline-flex justify-center items-center rounded-3xl md:rounded-2xl overflow-hidden mb-6 md:mb-0 md:mr-6'
-        }
+        className={`job-thumbnails ${styles.thumbnail} inline-flex justify-center items-center rounded-3xl md:rounded-2xl overflow-hidden mb-6 md:mb-0 md:mr-6`}
       >
         <picture>
           <source media={'(min-width: 1024px)'} srcSet={lg} width={500} height={282} />

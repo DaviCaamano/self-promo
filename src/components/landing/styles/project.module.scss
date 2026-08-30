@@ -2,6 +2,25 @@
   @apply flex flex-col md:flex-row justify-center items-center mx-4 my-8;
 }
 
+/**
+ * The preview grows a tenth on hover. A transform, so the card around it keeps
+ * its size and nothing below shifts; the frame clips the overflow, so the
+ * picture fills a little more of it rather than spilling past the corners.
+ */
+.thumbnail {
+  @apply transition-transform duration-300;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thumbnail {
+    transition: none;
+  }
+}
+
 /* Badges are sized off these on the Technologies section too; the write-ups
    are a different tree, so they carry the small scale themselves. */
 .technology {
