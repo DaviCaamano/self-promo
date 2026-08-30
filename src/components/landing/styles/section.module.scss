@@ -56,8 +56,14 @@
  * further down now trigger on their own, and an uncapped index would leave a
  * lone card sitting blank for most of a second after the reader reached it.
  */
+/**
+ * `both`, not `backwards`. The held rule above matches whether or not a piece
+ * has arrived, so without a forwards fill the piece drops back to opacity 0 the
+ * instant its animation ends — it fades in and then vanishes. Backwards still
+ * covers the delay, forwards holds the arrived state afterwards.
+ */
 .section[data-reveal-scope] .reveal[data-revealed='true'] {
-  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) backwards;
+  animation: revealIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) both;
   animation-delay: calc(min(var(--i, 0), 3) * 80ms);
 }
 
