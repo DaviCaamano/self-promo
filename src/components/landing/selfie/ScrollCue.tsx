@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { CaretDown } from 'phosphor-react';
 import { Section, sectionIds } from '@components/landing/landing.interface';
 import { LANDING_INTRO_ENDS_MS } from '@components/landing/intro';
 import styles from '../styles/scroll-cue.module.scss';
@@ -35,8 +34,15 @@ export const ScrollCue = ({ onScrollDown }: ScrollCueProps) => {
      * landing screen is a whole viewport tall at minimum but can be taller, so
      * "scrolled at all" and "the next section is showing" are not the same
      * moment. A zero threshold makes this the instant any of About appears.
+     *
+     * Measured by the overlap rather than by `isIntersecting`, which is also
+     * true when the two boxes merely touch. Unscrolled, About's top lands
+     * exactly on the bottom of the screen — so the flag would read as taken
+     * before the reader had done anything, and the cue would never appear.
      */
-    const observer = new IntersectionObserver(([entry]) => setTaken(entry.isIntersecting), { threshold: 0 });
+    const observer = new IntersectionObserver(([entry]) => setTaken(entry.intersectionRect.height > 0), {
+      threshold: 0,
+    });
     observer.observe(about);
     return () => observer.disconnect();
   }, []);
@@ -54,7 +60,30 @@ export const ScrollCue = ({ onScrollDown }: ScrollCueProps) => {
          something the reader cannot see. */
       tabIndex={shown ? undefined : -1}
     >
-      <CaretDown weight={'bold'} />
+      <ScrollMouse />
     </button>
   );
 };
+
+/**
+ * A mouse drawn in outline, with its wheel running down the body on a loop —
+ * the gesture the page is asking for, rather than a generic arrow.
+ *
+ * Hand drawn rather than taken from the icon set: the wheel has to be its own
+ * element for the animation to move it independently of the shell.
+ */
+const ScrollMouse = () => (
+  <svg className={styles.mouse} viewBox={'0 0 28 44'} fill={'none'} aria-hidden focusable={'false'}>
+    <rect x={1} y={1} width={26} height={42} rx={13} stroke={'currentColor'} strokeWidth={1.5} />
+    <line
+      className={styles.wheel}
+      x1={14}
+      y1={11}
+      x2={14}
+      y2={16}
+      stroke={'currentColor'}
+      strokeWidth={2}
+      strokeLinecap={'round'}
+    />
+  </svg>
+);
