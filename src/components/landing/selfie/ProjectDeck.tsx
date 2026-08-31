@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { CSSProperties } from 'react';
 import styles from '../styles/project-deck.module.scss';
 import { projectPreviews } from '@components/landing/project-previews';
+import { DECK_ATTR, DECK_CARD_ATTR } from '@components/landing/hooks/useCardSilhouette';
 
 /**
  * The landing screen's centrepiece: each project's preview turns past the
@@ -15,9 +16,12 @@ import { projectPreviews } from '@components/landing/project-previews';
  * heading, announced in an order that keeps changing.
  */
 export const ProjectDeck = () => (
-  <div className={styles.deck} aria-hidden>
+  /* Marked rather than styled: the caption's dark copy is clipped to whatever
+     shape these cards are making, and the hook that measures them cannot see a
+     CSS module's hashed class names. */
+  <div className={styles.deck} {...{ [DECK_ATTR]: '' }} aria-hidden>
     {projectPreviews.map(({ id, lg }, index) => (
-      <div key={id} className={styles.card} style={{ '--i': index } as CSSProperties}>
+      <div key={id} className={styles.card} {...{ [DECK_CARD_ATTR]: '' }} style={{ '--i': index } as CSSProperties}>
         <Image
           src={lg}
           alt={''}

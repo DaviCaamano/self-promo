@@ -1,3 +1,5 @@
+'use client';
+import { useRef } from 'react';
 import styles from '../styles/selfie.module.scss';
 import { Section, sectionIds } from '@components/landing/landing.interface';
 import { ProjectDeck } from '@components/landing/selfie/ProjectDeck';
@@ -8,6 +10,7 @@ import { JobTitle } from '@components/landing/selfie/JobTitle';
 import { Socials } from '@components/landing/selfie/Socials';
 import { PullQuote } from '@components/landing/selfie/PullQuote';
 import { ScrollCue } from '@components/landing/selfie/ScrollCue';
+import { useCardSilhouette } from '@components/landing/hooks/useCardSilhouette';
 
 interface SelfieProps {
   isLandscape: boolean;
@@ -15,6 +18,9 @@ interface SelfieProps {
   onShowLetter: (id: string) => void;
 }
 export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps) => {
+  const silhouette = useRef<HTMLDivElement>(null);
+  useCardSilhouette(silhouette);
+
   return (
     // Carries `landscape` too: the pull quote is sized against the stage,
     // whose width follows a different ladder in that orientation.
@@ -25,12 +31,16 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
             of it, so the arrangement holds at every breakpoint. */}
         <div className={`${styles.stage} ${isLandscape && styles.landscape}`}>
           <ProjectDeck />
-          {/* Inside the stage, not the column below it: the stage is what the
-              artwork is measured against, so the name stays glued under it at
-              every breakpoint instead of drifting with the scale. */}
-          <h1 className={styles.name}>Davi Caamano</h1>
           <Greeting isLandscape={isLandscape} />
           <JobTitle isLandscape={isLandscape} />
+          {/* The caption a second time in dark, clipped to whatever shape the
+              cards are making, and painted over the light copy underneath. It
+              is the same words twice, so it is kept out of the accessibility
+              tree entirely. */}
+          <div ref={silhouette} className={styles.silhouette} aria-hidden>
+            <Greeting isLandscape={isLandscape} dark />
+            <JobTitle isLandscape={isLandscape} dark />
+          </div>
           {/* Hidden on purpose while we see whether the page reads cleaner
               without it — put this back to restore the waving hand. */}
           {/* <Wave isLandscape={isLandscape} /> */}

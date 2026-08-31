@@ -12,14 +12,12 @@
 
 .greeting {
   @apply absolute whitespace-nowrap;
-  /**
-   * Placed by its last word, not by its own left edge: "Davi" is meant to sit
-   * over the middle of the stage. 4.893em is where that word's centre falls
-   * inside this line, measured once — and because it is in `em` it tracks the
-   * font size, so the same one line holds at every breakpoint the greeting is
-   * resized at.
-   */
-  left: calc(50% - 4.893em);
+  /* Centred on the stage. It used to be placed by its last word instead, so
+     that "Davi" landed over the middle of the portrait's face; there is no face
+     to line up with now, and the whole name is the caption. */
+  left: 0;
+  right: 0;
+  text-align: center;
   /* 5px above the old resting position. */
   top: calc(8% - 5px);
   font-size: 1.75rem;

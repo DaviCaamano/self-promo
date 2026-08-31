@@ -382,27 +382,25 @@
   }
 }
 
-/**
- * Sits below the stage on the page background, where light blue has the
- * contrast it needs. Positioned against the stage rather than the column, so it
- * stays the same distance under the artwork at every breakpoint instead of
- * drifting with the scale.
- *
- * Fades in with the deck rather than waiting for the sequence.
- */
-.name {
-  @apply absolute left-0 right-0 text-center text-sea uppercase pointer-events-none;
-  top: 100%;
-  font-size: 1.25rem;
-  letter-spacing: 0.22em;
-  animation: fadeIn var(--intro-stage) ease-out;
-}
-
 /* A full-stage box holding text placed as a fraction of the stage. Kept as its
    own layer so the caption and the job title can each be positioned against the
    square without either becoming a box the other has to flow around. */
 .layer {
   @apply pointer-events-none absolute inset-0;
+}
+
+/**
+ * Holds the dark copy of everything over the stage and is clipped, from script,
+ * to the outline of the turning cards. It sits above both the deck and the
+ * light copies, so what shows through is dark text exactly where a card is and
+ * nothing anywhere else.
+ *
+ * No clip until that script has run, which would flash a full dark copy over
+ * the page on the first frame — so it starts clipped to nothing.
+ */
+.silhouette {
+  @apply pointer-events-none absolute inset-0 z-10;
+  clip-path: path('');
 }
 
 /* Top left wherever the icons sit in a corner, because the hamburger owns the

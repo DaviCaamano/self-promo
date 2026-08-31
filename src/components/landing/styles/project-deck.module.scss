@@ -59,10 +59,21 @@
   object-fit: cover;
 }
 
+/**
+ * The turn, and with it the stacking order.
+ *
+ * A card is arriving for its first half and leaving for its second, and the
+ * arriving one has to be in front. Document order cannot say that, because the
+ * roles come round again: it works for four of the five handovers and then puts
+ * the last card in front of the first when the loop restarts. So the z-index
+ * rides the same timeline — 2 while arriving, 1 while leaving — and every
+ * handover comes out the same way round, wrap included.
+ */
 @keyframes cardTurn {
   /* Edge-on and close, about to swing into view. */
   0% {
     opacity: 0;
+    z-index: 2;
     transform: translateZ(var(--card-near)) rotateY(90deg);
   }
   /* Faded up while still nearly edge-on, so the card is solid by the time it
@@ -70,9 +81,14 @@
   4% {
     opacity: 1;
   }
-  /* Square to the reader, at rest depth: the one moment it is fully readable. */
+  /* Square to the reader, at rest depth: the one moment it is fully readable,
+     and the handover — from here on it is the one being covered. */
   20% {
+    z-index: 2;
     transform: translateZ(0) rotateY(0deg);
+  }
+  20.001% {
+    z-index: 1;
   }
   36% {
     opacity: 1;
@@ -80,11 +96,13 @@
   /* Edge-on again, receding. */
   40% {
     opacity: 0;
+    z-index: 1;
     transform: translateZ(var(--card-far)) rotateY(-90deg);
   }
   /* Held there while the rest of the deck takes its turn. */
   100% {
     opacity: 0;
+    z-index: 1;
     transform: translateZ(var(--card-far)) rotateY(-90deg);
   }
 }
