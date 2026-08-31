@@ -3,8 +3,8 @@ import stage from '../styles/selfie.module.scss';
 
 interface GreetingsProps {
   isLandscape: boolean;
-  /** The copy painted over the cards, in place of the one under them. */
-  dark?: boolean;
+  /** Text colour class. Defaults to the light copy that sits under the cards. */
+  tone?: string;
 }
 
 /**
@@ -20,12 +20,12 @@ interface GreetingsProps {
  * time, and a screen reader announcing the name twice is worse than the seam it
  * exists to hide.
  */
-export const Greeting = ({ isLandscape, dark }: GreetingsProps) => {
-  const Text = dark ? 'div' : 'h1';
+export const Greeting = ({ isLandscape, tone }: GreetingsProps) => {
+  const Text = tone ? 'div' : 'h1';
 
   return (
     <div className={stage.layer}>
-      <Text className={`${styles.greeting} ${isLandscape && styles.landscape} ${dark ? 'text-void' : 'text-sea'}`}>
+      <Text className={`${styles.greeting} ${isLandscape && styles.landscape} ${tone ?? 'text-sea'}`}>
         Davi Caamano
       </Text>
     </div>

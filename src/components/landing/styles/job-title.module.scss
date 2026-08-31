@@ -30,7 +30,9 @@
   /* 4px in from where the fraction alone puts it. Subtracted here rather than
      folded into the percentage so the offset stays fixed as the stage scales. */
   left: calc(80% - 4px);
-  top: 51.39%;
+  /* 5px below where the fraction alone puts it. Added here rather than folded
+     into the percentage so the offset stays fixed as the stage scales. */
+  top: calc(51.39% + 5px);
   transform: translateY(-50%);
   /* Air between the lines, added as a gap rather than to the line-height so the
      block keeps its measured height as the type scales. */
@@ -67,6 +69,16 @@
       letter-spacing: 5px;
     }
   }
+}
+
+/**
+ * A line that keeps its box but prints nothing. Used by the copy painted over a
+ * card whose artwork only needs some of these lines re-coloured: dropping the
+ * others outright would shorten the block, and since it is centred on its own
+ * height every remaining line would shift off the copy underneath.
+ */
+.blank {
+  color: transparent;
 }
 
 /* Reduced motion asks for no movement, not for no sequence: swapping only the

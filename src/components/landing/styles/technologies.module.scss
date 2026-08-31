@@ -4,6 +4,11 @@
 
 .prose {
   @apply w-full text-center md:w-1/2 md:text-left;
+  /* So the quote below can size itself against this column rather than the
+     viewport. From the tablet up the column is half a capped container, which
+     means it narrows as the viewport does and then stops — a plain breakpoint
+     ladder cannot follow that closely enough to keep the quote on one line. */
+  container-type: inline-size;
 }
 
 /**
@@ -13,7 +18,24 @@
  * line-height because the serif's metrics no longer suit a fixed 2.5rem.
  */
 .quote {
-  @apply flex flex-col text-[1.5rem] sm:text-[1.75rem] md:text-[2rem];
+  @apply flex flex-col;
+  /**
+   * One line, always. The quotation measures 13.3 times its own font size
+   * including the marks, so 7.3% of the column width leaves it a little room
+   * and it never takes a second line — where it would leave a lone word
+   * stranded. The step sizes are the cap: this only ever shrinks the quote from
+   * what the breakpoint asks for, never grows it.
+   */
+  font-size: min(1.5rem, 7.3cqi);
+
+  @media (min-width: 480px) {
+    font-size: min(1.75rem, 7.3cqi);
+  }
+
+  @media (min-width: 768px) {
+    font-size: min(2rem, 7.3cqi);
+  }
+
   /* No unadjusted serif behind it: next/font's paired fallback is metric
      matched to Instrument Serif, so the quote cannot re-wrap onto a different
      number of lines when the real face finishes loading. */
@@ -133,6 +155,10 @@
 
   @media (min-width: 768px) {
     @apply w-1/2 self-start;
+    /* Flush with the right edge of the content area. Only the right: these sit
+       in the column beside the prose, and squaring them off against both edges
+       would pull them back under the text. */
+    justify-content: flex-end;
   }
 
   /* Two per row leaves an odd count's last badge alone; centre it rather than
@@ -167,6 +193,20 @@
 
   @media (min-width: 768px) {
     @apply mt-4;
+    /**
+     * Flush with both edges. Columns rather than centred flex: `auto-fill` takes
+     * as many as fit at the badge's own size and then shares the remainder out
+     * between them, so a full row spans the content area exactly and a short
+     * last row still lines up under it. `space-between` would have done the
+     * first of those and stranded the last three badges across the full width.
+     */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--badge-size), 1fr));
+    justify-content: initial;
+
+    .badge {
+      width: 100%;
+    }
   }
 }
 

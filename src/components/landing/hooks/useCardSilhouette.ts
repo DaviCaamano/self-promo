@@ -1,8 +1,10 @@
 'use client';
 import { RefObject, useEffect } from 'react';
+import { Project } from '@components/landing/landing.interface';
 
-/** Set by the deck on its root and on every card, so this can find them without
- *  either side importing the other's hashed CSS module class names. */
+/** Set by the deck on its root, and on every card with that card's project as
+ *  its value, so this can find them without either side importing the other's
+ *  hashed CSS module class names. */
 export const DECK_ATTR = 'data-deck';
 export const DECK_CARD_ATTR = 'data-deck-card';
 
@@ -20,8 +22,11 @@ export const DECK_CARD_ATTR = 'data-deck-card';
  * the stage's own layout coordinates — never `getBoundingClientRect`, which
  * reports screen pixels and would be wrong at every breakpoint that scales the
  * stage down.
+ *
+ * Pass `only` to clip to particular previews rather than all of them, which is
+ * how one card whose artwork needs a different colour gets its own copy.
  */
-export const useCardSilhouette = (target: RefObject<HTMLElement | null>) => {
+export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: readonly Project[]) => {
   useEffect(() => {
     const layer = target.current;
     if (!layer) return;
@@ -29,12 +34,16 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>) => {
     const deck = document.querySelector<HTMLElement>(`[${DECK_ATTR}]`);
     if (!deck) return;
 
+    const selector = only ? only.map((project) => `[${DECK_CARD_ATTR}="${project}"]`).join(',') : `[${DECK_CARD_ATTR}]`;
+
     /* The deck's perspective origin is its centre, which is also where every
        card sits before it is transformed, so one origin serves all of them. */
     const depth = parseFloat(getComputedStyle(deck).perspective);
 
     const outline = (card: HTMLElement, originX: number, originY: number) => {
-      const matrix = new DOMMatrix(getComputedStyle(card).transform);
+      const { transform } = getComputedStyle(card);
+      /* `none` before the deck starts turning, which DOMMatrix will not parse. */
+      const matrix = new DOMMatrix(transform === 'none' ? undefined : transform);
       const halfWidth = card.offsetWidth / 2;
       const halfHeight = card.offsetHeight / 2;
 
@@ -57,15 +66,18 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>) => {
     };
 
     const paint = () => {
-      const cards = deck.querySelectorAll<HTMLElement>(`[${DECK_CARD_ATTR}]`);
+      const cards = deck.querySelectorAll<HTMLElement>(selector);
       /* The layer fills the stage, so its own centre is the deck's centre. */
       const originX = layer.offsetWidth / 2;
       const originY = layer.offsetHeight / 2;
 
       /* One path holding every card as its own subpath: `clip-path` takes a
-         single shape, and subpaths are how two overlapping cards become one. A
-         card turned edge-on contributes a zero-width sliver and shows nothing. */
-      const shapes = Array.from(cards, (card) => outline(card, originX, originY));
+         single shape, and subpaths are how two overlapping cards become one.
+         A card waiting its turn is hidden but still square to the reader, so it
+         is skipped by opacity rather than trusted to be edge-on. */
+      const shapes = Array.from(cards)
+        .filter((card) => getComputedStyle(card).opacity !== '0')
+        .map((card) => outline(card, originX, originY));
       layer.style.clipPath = `path("${shapes.join(' ')}")`;
     };
 
@@ -90,5 +102,7 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>) => {
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
+    /* `only` is a module level constant at every call site, so it is stable. */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
 };

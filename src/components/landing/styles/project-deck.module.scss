@@ -42,15 +42,31 @@
   grid-area: 1 / 1;
   width: var(--card-width);
   aspect-ratio: 5 / 3;
-  /**
-   * `backwards`, and it is not optional. Every card but the first waits out a
-   * delay before its first turn, and without a fill it spends that wait in its
-   * own base style — square to the reader and fully opaque. The whole deck
-   * would sit stacked and visible until each card's turn came round. The fill
-   * makes them hold the 0% frame instead: edge-on and transparent.
-   */
+  /* The opening: no transform is square to the reader at rest depth, which is
+     exactly where the first card's turn will pick it up. */
+  opacity: 0;
+
+  &:first-child {
+    opacity: 1;
+  }
+}
+
+/**
+ * Once the deck starts turning.
+ *
+ * The delay counts from the SECOND card, so the first gets a negative one and
+ * begins a step in — already square to the reader, matching the state it was
+ * held in, and carrying straight on into leaving. Everything after it follows
+ * the ordinary ladder.
+ *
+ * `backwards`, and it is not optional. Every card but the first two waits out a
+ * delay, and without a fill it spends that wait in its own base style — square
+ * to the reader. The whole deck would stack up visible until its turn came
+ * round. The fill makes them hold the 0% frame instead: edge-on and transparent.
+ */
+.deck[data-turning='true'] .card {
   animation: cardTurn calc(var(--card-step) * var(--card-count)) linear infinite backwards;
-  animation-delay: calc(var(--i) * var(--card-step));
+  animation-delay: calc((var(--i) - 1) * var(--card-step));
 }
 
 .art {
@@ -118,15 +134,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   /* The turn is the entire content here, so there is no reduced version of it
-     to keep. One preview is shown square to the reader and the others drop
-     out — with no animation the card's transform is identity, which is already
-     that resting position. */
-  .card {
+     to keep. Dropping the animation leaves the opening state standing: the
+     first preview square to the reader, the rest out of sight. */
+  .deck[data-turning='true'] .card {
     animation: none;
-    opacity: 0;
-  }
-
-  .card:first-child {
-    opacity: 1;
   }
 }

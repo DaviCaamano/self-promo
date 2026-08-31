@@ -11,6 +11,16 @@ import { Socials } from '@components/landing/selfie/Socials';
 import { PullQuote } from '@components/landing/selfie/PullQuote';
 import { ScrollCue } from '@components/landing/selfie/ScrollCue';
 import { useCardSilhouette } from '@components/landing/hooks/useCardSilhouette';
+import { Project } from '@components/landing/landing.interface';
+
+/**
+ * The one preview dark enough to need light lettering rather than dark. Quelliv
+ * is a photograph across its middle, which is where the job title's first two
+ * lines land; the third crosses onto the white panel below it and stays dark
+ * like every other card's.
+ */
+const DARK_ARTWORK = [Project.quelliv] as const;
+const LINES_OVER_DARK_ARTWORK = [0, 1];
 
 interface SelfieProps {
   isLandscape: boolean;
@@ -20,6 +30,9 @@ interface SelfieProps {
 export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps) => {
   const silhouette = useRef<HTMLDivElement>(null);
   useCardSilhouette(silhouette);
+
+  const overDarkArtwork = useRef<HTMLDivElement>(null);
+  useCardSilhouette(overDarkArtwork, DARK_ARTWORK);
 
   return (
     // Carries `landscape` too: the pull quote is sized against the stage,
@@ -38,8 +51,14 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
               is the same words twice, so it is kept out of the accessibility
               tree entirely. */}
           <div ref={silhouette} className={styles.silhouette} aria-hidden>
-            <Greeting isLandscape={isLandscape} dark />
-            <JobTitle isLandscape={isLandscape} dark />
+            <Greeting isLandscape={isLandscape} tone={'text-void'} />
+            <JobTitle isLandscape={isLandscape} tone={'text-void'} />
+          </div>
+          {/* And a third time in white, clipped to the one card whose artwork is
+              too dark for the copy above to be read against. Last, so it covers
+              that copy for the lines it carries. */}
+          <div ref={overDarkArtwork} className={styles.silhouette} aria-hidden>
+            <JobTitle isLandscape={isLandscape} tone={'text-latte'} inked={LINES_OVER_DARK_ARTWORK} />
           </div>
           {/* Hidden on purpose while we see whether the page reads cleaner
               without it — put this back to restore the waving hand. */}
