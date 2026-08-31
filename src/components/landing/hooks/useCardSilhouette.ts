@@ -8,6 +8,9 @@ import { Project } from '@components/landing/landing.interface';
 export const DECK_ATTR = 'data-deck';
 export const DECK_CARD_ATTR = 'data-deck-card';
 
+/** Clips a layer down to nothing. See the note where it is used. */
+export const EMPTY_CLIP = 'M 0 0 Z';
+
 /**
  * Clips an element to the silhouette of the turning cards.
  *
@@ -23,10 +26,10 @@ export const DECK_CARD_ATTR = 'data-deck-card';
  * reports screen pixels and would be wrong at every breakpoint that scales the
  * stage down.
  *
- * Pass `only` to clip to particular previews rather than all of them, which is
- * how one card whose artwork needs a different colour gets its own copy.
+ * Pass `only` to clip to a single preview rather than all of them, which is how
+ * a card whose artwork needs a different colour gets its own copy.
  */
-export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: readonly Project[]) => {
+export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: Project) => {
   useEffect(() => {
     const layer = target.current;
     if (!layer) return;
@@ -34,7 +37,7 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: 
     const deck = document.querySelector<HTMLElement>(`[${DECK_ATTR}]`);
     if (!deck) return;
 
-    const selector = only ? only.map((project) => `[${DECK_CARD_ATTR}="${project}"]`).join(',') : `[${DECK_CARD_ATTR}]`;
+    const selector = only ? `[${DECK_CARD_ATTR}="${only}"]` : `[${DECK_CARD_ATTR}]`;
 
     /* The deck's perspective origin is its centre, which is also where every
        card sits before it is transformed, so one origin serves all of them. */
@@ -78,7 +81,10 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: 
       const shapes = Array.from(cards)
         .filter((card) => getComputedStyle(card).opacity !== '0')
         .map((card) => outline(card, originX, originY));
-      layer.style.clipPath = `path("${shapes.join(' ')}")`;
+      /* A single point when nothing is showing, never the empty path: browsers
+         reject `path("")` as invalid, and a rejected clip is no clip at all —
+         the whole copy would be painted over the page. */
+      layer.style.clipPath = `path("${shapes.join(' ') || EMPTY_CLIP}")`;
     };
 
     let frame = 0;
@@ -102,7 +108,5 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: 
       observer.disconnect();
       cancelAnimationFrame(frame);
     };
-    /* `only` is a module level constant at every call site, so it is stable. */
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [target]);
+  }, [target, only]);
 };

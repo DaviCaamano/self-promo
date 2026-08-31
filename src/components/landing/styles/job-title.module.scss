@@ -34,6 +34,19 @@
      into the percentage so the offset stays fixed as the stage scales. */
   top: calc(51.39% + 5px);
   transform: translateY(-50%);
+  /* Further down again on a phone, where the block sits over a much smaller
+     card and the same fraction lands higher against the artwork. */
+  @media (max-width: 767px) {
+    top: calc(51.39% + 4px);
+  }
+
+  /* `landscape` is only ever set on a phone held sideways, so it needs no width
+     test of its own — and could not use one, since sideways the viewport is
+     wide and short. Same reason the type below ladders on height, not width. */
+  &.landscape {
+    top: calc(51.39% + 8px);
+  }
+
   /* Air between the lines, added as a gap rather than to the line-height so the
      block keeps its measured height as the type scales. */
   gap: 4px;

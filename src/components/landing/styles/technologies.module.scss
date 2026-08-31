@@ -90,33 +90,40 @@
 /**
  * One knob drives the whole grid: every badge and its label are sized off
  * --badge-large, so the two groups keep their proportions at every width.
+ *
+ * The label sizes are a percentage of the badge rather than a length, because
+ * the small badges no longer render at exactly --badge-small: they fill their
+ * grid column so the group spans the content area, which leaves them a few
+ * percent wider. Percentages let the lettering follow whatever width the badge
+ * actually took. Each figure is that breakpoint's old length over its badge
+ * size, so nothing moves at the nominal width.
  */
 .stack {
   --badge-large: 6rem;
   --badge-small: calc(var(--badge-large) * 0.75);
   --badge-gap: 0.625rem;
-  --label-large: 0.6875rem;
-  --label-small: 0.5625rem;
+  --label-large: 11.46;
+  --label-small: 12.5;
   @apply w-full flex flex-col items-center;
 
   @media (min-width: 400px) {
     --badge-large: 7rem;
-    --label-large: 0.75rem;
-    --label-small: 0.625rem;
+    --label-large: 10.71;
+    --label-small: 11.9;
   }
 
   @media (min-width: 768px) {
     --badge-large: 5.5rem;
     --badge-gap: 0.5rem;
-    --label-large: 0.6875rem;
-    --label-small: 0.5625rem;
+    --label-large: 12.5;
+    --label-small: 13.64;
   }
 
   @media (min-width: 1024px) {
     --badge-large: 6rem;
     --badge-gap: 0.625rem;
-    --label-large: 0.75rem;
-    --label-small: 0.625rem;
+    --label-large: 12.5;
+    --label-small: 13.89;
   }
 }
 
@@ -215,14 +222,29 @@
   border border-[#263e79] border-b-sea border-r-sea rounded-br-lg;
   width: var(--badge-size);
   aspect-ratio: 1;
-  /* Sized off the badge, not a percentage: percentage padding resolves against
-     the containing block's width, which here is the whole badge column. */
+  /**
+   * A query container, so the mark and the label can be a share of the badge's
+   * own rendered width and follow one stretched to fill its column.
+   *
+   * --of-badge is one percent of that width. Query units measure the CONTENT
+   * box, so a share of the whole badge has to be scaled back up through what
+   * this rule adds around it — 84% of the width once the padding is taken, less
+   * the 2px of border, which lands a little over 81% across the sizes in use.
+   *
+   * The padding and gap cannot be written this way themselves: `cqi` on the
+   * container element resolves against the container ABOVE it, not itself, and
+   * with none there it falls back to the viewport — which blew the badge up to
+   * 204px. They stay on --badge-size, where the few percent a stretched badge
+   * gains only shows as a little more room around the mark.
+   */
+  container-type: inline-size;
+  --of-badge: 1.2207cqi;
   padding: calc(var(--badge-size) * 0.08);
   gap: calc(var(--badge-size) * 0.06);
 
   svg {
-    width: calc(var(--badge-size) * 0.36);
-    height: calc(var(--badge-size) * 0.36);
+    width: calc(36 * var(--of-badge));
+    height: calc(36 * var(--of-badge));
     flex-shrink: 0;
   }
 
@@ -233,7 +255,7 @@
 
 .label {
   @apply text-sea-light font-medium text-center;
-  font-size: var(--label-size);
+  font-size: calc(var(--label-size) * var(--of-badge));
   line-height: 1.2;
   /* break-word, not anywhere: multi word names may wrap at the space, but
      "TypeScript" must never come out as "TypeScr / ipt". */

@@ -11,16 +11,21 @@ import { Socials } from '@components/landing/selfie/Socials';
 import { PullQuote } from '@components/landing/selfie/PullQuote';
 import { ScrollCue } from '@components/landing/selfie/ScrollCue';
 import { useCardSilhouette } from '@components/landing/hooks/useCardSilhouette';
+import { LightCaption } from '@components/landing/selfie/LightCaption';
 import { Project } from '@components/landing/landing.interface';
 
 /**
- * The one preview dark enough to need light lettering rather than dark. Quelliv
- * is a photograph across its middle, which is where the job title's first two
- * lines land; the third crosses onto the white panel below it and stays dark
- * like every other card's.
+ * The previews dark enough to need light lettering, and which of the job
+ * title's three lines land on the dark part of each.
+ *
+ * Quelliv is a photograph across its middle, where the first two lines fall;
+ * the third crosses onto the white panel below and stays dark like every other
+ * card's. Orsini IT is dark top to bottom, so all three go light.
  */
-const DARK_ARTWORK = [Project.quelliv] as const;
-const LINES_OVER_DARK_ARTWORK = [0, 1];
+const DARK_ARTWORK: { inked?: number[]; project: Project }[] = [
+  { project: Project.quelliv, inked: [0, 1] },
+  { project: Project.oit },
+];
 
 interface SelfieProps {
   isLandscape: boolean;
@@ -30,9 +35,6 @@ interface SelfieProps {
 export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps) => {
   const silhouette = useRef<HTMLDivElement>(null);
   useCardSilhouette(silhouette);
-
-  const overDarkArtwork = useRef<HTMLDivElement>(null);
-  useCardSilhouette(overDarkArtwork, DARK_ARTWORK);
 
   return (
     // Carries `landscape` too: the pull quote is sized against the stage,
@@ -54,12 +56,11 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
             <Greeting isLandscape={isLandscape} tone={'text-void'} />
             <JobTitle isLandscape={isLandscape} tone={'text-void'} />
           </div>
-          {/* And a third time in white, clipped to the one card whose artwork is
-              too dark for the copy above to be read against. Last, so it covers
-              that copy for the lines it carries. */}
-          <div ref={overDarkArtwork} className={styles.silhouette} aria-hidden>
-            <JobTitle isLandscape={isLandscape} tone={'text-latte'} inked={LINES_OVER_DARK_ARTWORK} />
-          </div>
+          {/* And once more in white for each card too dark to read the copy
+              above against. Last, so they cover it for their own lines. */}
+          {DARK_ARTWORK.map(({ inked, project }) => (
+            <LightCaption key={project} isLandscape={isLandscape} inked={inked} project={project} />
+          ))}
           {/* Hidden on purpose while we see whether the page reads cleaner
               without it — put this back to restore the waving hand. */}
           {/* <Wave isLandscape={isLandscape} /> */}

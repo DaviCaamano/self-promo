@@ -395,12 +395,14 @@
  * light copies, so what shows through is dark text exactly where a card is and
  * nothing anywhere else.
  *
- * No clip until that script has run, which would flash a full dark copy over
- * the page on the first frame — so it starts clipped to nothing.
+ * Starts clipped to nothing, because until that script has run there is no clip
+ * at all and the whole copy would be painted over the page. A single point, not
+ * the empty path: browsers reject `path('')` outright, and a rejected clip
+ * leaves the layer showing in full.
  */
 .silhouette {
   @apply pointer-events-none absolute inset-0 z-10;
-  clip-path: path('');
+  clip-path: path('M 0 0 Z');
 }
 
 /* Top left wherever the icons sit in a corner, because the hamburger owns the
