@@ -8,6 +8,7 @@ import { useScrollReveal } from '@components/landing/hooks/useScrollReveal';
 import { TechBadge } from '@components/landing/technologies/TechBadge';
 import { TechDrawer } from '@components/landing/technologies/TechDrawer';
 import { TechName, techIcons } from '@components/landing/technologies/tech-icons';
+import { previewOf } from '@components/landing/project-previews';
 import Link from 'next/link';
 
 /** Three beats of `projectFlash` at 800ms each; clearing sooner would cut the last one. */
@@ -47,66 +48,52 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
             onOpen={setOpened}
             id={ProjectName.waterwriting}
             name={'Water Writing'}
-            thumbnails={{
-              sm: '/images/thumbnails/water-writing-sm.webp',
-              lg: '/images/thumbnails/water-writing-lg.webp',
-            }}
             techs={['next', 'express', 'typescript', 'prisma', 'tanstack', 'postgres']}
             url={'https://www.WaterWriting.com/'}
             index={2}
           >
             Being a long time amateur writer, I've seen the incredible potential language models have for fiction
             writers. It's this potential Water Writing seeks to leverage in it's objective to provide a scalable method
-            for fiction authors to convert entire bodies of work into an expansive labrinth of wiki articles. What
-            used to take thousands of fans months to build, Water Writing finishes in minutes with a level of quality
-            and depth best selling authors dream about.
+            for fiction authors to convert entire bodies of work into an expansive labrinth of wiki articles. What used
+            to take thousands of fans months to build, Water Writing finishes in minutes with a level of quality and
+            depth best selling authors dream about.
           </Project>
           <Project
             flashing={flashed === ProjectName.legitscript}
             onOpen={setOpened}
             id={ProjectName.legitscript}
             name={'Merchant Monitoring/Onboarding/Xray'}
-            thumbnails={{
-              sm: '/images/thumbnails/legit-script-sm.webp',
-              lg: '/images/thumbnails/legit-script-lg.webp',
-            }}
             techs={['react', 'typescript', 'angular', 'sequelize', 'mobx', 'postgres']}
             url={'https://www.legitscript.com/'}
             index={3}
           >
-            <span>3 Projects built in a combination of React Js and Angular. These projects employed advanced usage of
-            AI to scrape merchant pages/sites to determine if the merchant was a potential risk to the host seller's
-            business.</span>
+            <span>
+              3 Projects built in a combination of React Js and Angular. These projects employed advanced usage of AI to
+              scrape merchant pages/sites to determine if the merchant was a potential risk to the host seller's
+              business.
+            </span>
           </Project>
           <Project
             flashing={flashed === ProjectName.quellivMobile}
             onOpen={setOpened}
             id={ProjectName.quellivMobile}
             name={'QUELLIV (MOBILE)'}
-            thumbnails={{
-              sm: '/images/thumbnails/quelliv-mobile-sm.webp',
-              lg: '/images/thumbnails/quelliv-mobile-lg.webp',
-            }}
             techs={['reactnative', 'typescript', 'recoil']}
             url={'https://quelliv.com/'}
             index={4}
           >
-            Everything offered by{' '}
-            <ProjectSubLink url={'https://quelliv.com'}>
-              Quelliv.com
-            </ProjectSubLink>{' '}
-            and more. This was first mobile app I've developed in a professional setting, of which I was the sole
-            developer. One of the focuses for the team was to train customers to treat this app first and last point of
-            contact for our users, even going as far as trying to discourage users from using our webapp for the same
-            services. Because of the many hats this app had to wear, I am particularly proud of the way the designers
-            and I were able to keep this app accessible to the company's predominantly older clientele.
+            Everything offered by <ProjectSubLink url={'https://quelliv.com'}>Quelliv.com</ProjectSubLink> and more.
+            This was first mobile app I've developed in a professional setting, of which I was the sole developer. One
+            of the focuses for the team was to train customers to treat this app first and last point of contact for our
+            users, even going as far as trying to discourage users from using our webapp for the same services. Because
+            of the many hats this app had to wear, I am particularly proud of the way the designers and I were able to
+            keep this app accessible to the company's predominantly older clientele.
           </Project>
           <Project
             flashing={flashed === ProjectName.quelliv}
             onOpen={setOpened}
             id={ProjectName.quelliv}
             name={'QUELLIV'}
-            thumbnails={{ sm: '/images/thumbnails/quelliv-sm.webp', lg: '/images/thumbnails/quelliv-lg.webp' }}
             techs={['next', 'nestjs', 'typescript', 'prisma', 'redux', 'postgres']}
             url={'https://quelliv.com/'}
             index={5}
@@ -125,7 +112,6 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
             onOpen={setOpened}
             id={ProjectName.oit}
             name={'ORSINI IT'}
-            thumbnails={{ sm: '/images/thumbnails/oit-sm.webp', lg: '/images/thumbnails/oit-lg.webp' }}
             techs={['react', 'typescript', 'node', 'express', 'sequelize', 'recoil', 'mysql']}
             url={'https://oit.co/'}
             index={6}
@@ -134,10 +120,7 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
               A manager portal for a VOIP phone service start-up. I was involved in both the frontend, backend, and
               devops, bringing the company's linux hosted servers to AWS. I also served as the developer lead in a team
               of four and took part in various smaller solo projects such as a chat-bot, click-to-call chrome extension,
-              and an{' '}
-              <ProjectSubLink url={'https://heytaco.com/'}>
-                in-house version of HeyTaco.
-              </ProjectSubLink>
+              and an <ProjectSubLink url={'https://heytaco.com/'}>in-house version of HeyTaco.</ProjectSubLink>
             </span>
           </Project>
         </div>
@@ -158,14 +141,14 @@ interface ProjectProps extends PropsWithChildren {
   index: number;
   name: string;
   techs: TechName[];
-  thumbnails: {
-    sm: string;
-    lg: string;
-  };
   url: string;
 }
 
-const Project = ({ children, flashing, id, index, name, onOpen, techs, thumbnails: { sm, lg }, url }: ProjectProps) => {
+const Project = ({ children, flashing, id, index, name, onOpen, techs, url }: ProjectProps) => {
+  /* Looked up rather than passed in: the landing deck turns through the same
+     art, so the paths live in one place and a card only names its project. */
+  const { lg, sm } = previewOf[id];
+
   return (
     <section
       id={id}
@@ -233,13 +216,7 @@ interface ProjectSubLinkProps extends PropsWithChildren {
  * a link for anyone who cannot see that hue shift.
  */
 const ProjectSubLink = ({ children, url }: ProjectSubLinkProps) => (
-  <a
-    href={url}
-    target={'_blank'}
-    rel={'noreferrer'}
-    className={'underline'}
-    style={{ textUnderlineOffset: '4px' }}
-  >
+  <a href={url} target={'_blank'} rel={'noreferrer'} className={'underline'} style={{ textUnderlineOffset: '4px' }}>
     {children}
   </a>
 );

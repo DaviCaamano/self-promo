@@ -51,7 +51,8 @@ export const FEATURED_LETTER_ID = 'steve-swanson';
 export const featuredLetter = LETTERS.find(({ id }) => id === FEATURED_LETTER_ID) as Letter;
 
 /** The one place the letters' filename convention is spelled out. */
-export const letterUrl = (name: string) => `/pdfs/recommendations/${name} - Letter of Recommendation for Davi Caamano.pdf`;
+export const letterUrl = (name: string) =>
+  `/pdfs/recommendations/${name} - Letter of Recommendation for Davi Caamano.pdf`;
 
 /** Anchor the landing quote scrolls to once it has switched slides. */
 export const letterAnchorId = (id: string) => `letter-${id}`;

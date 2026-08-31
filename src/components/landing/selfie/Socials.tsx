@@ -23,10 +23,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         className={styles.socialLink}
         style={{ '--i': 0 } as CSSProperties}
       >
-        <GithubLogo
-          color={colors.sea}
-          className={`${styles.gitHub} ${isLandscape && styles.landscape}`}
-        />
+        <GithubLogo color={colors.sea} className={`${styles.gitHub} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link
         href={'https://www.linkedin.com/in/davi-caamano-8a440b157/'}
@@ -36,10 +33,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         className={styles.socialLink}
         style={{ '--i': 1 } as CSSProperties}
       >
-        <LinkedinLogo
-          color={colors.sea}
-          className={`${styles.socials} ${isLandscape && styles.landscape}`}
-        />
+        <LinkedinLogo color={colors.sea} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
       <Link
         href={'https://twitter.com/DaviSCaamano'}
@@ -49,10 +43,7 @@ export const Socials = ({ isLandscape }: SocialsProps) => {
         className={styles.socialLink}
         style={{ '--i': 2 } as CSSProperties}
       >
-        <TwitterLogo
-          color={colors.sea}
-          className={`${styles.socials} ${isLandscape && styles.landscape}`}
-        />
+        <TwitterLogo color={colors.sea} className={`${styles.socials} ${isLandscape && styles.landscape}`} />
       </Link>
     </div>
   );

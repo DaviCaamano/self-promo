@@ -26,8 +26,7 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
    * landing route that is the whole opening sequence; on a deep link it is only
    * the one section, which reveals as soon as the page lands on it.
    */
-  const navIntroDelayMs =
-    initialSection === Section.socials ? LANDING_INTRO_ENDS_MS : SECTION_REVEAL_ENDS_MS;
+  const navIntroDelayMs = initialSection === Section.socials ? LANDING_INTRO_ENDS_MS : SECTION_REVEAL_ENDS_MS;
   const active = useActiveSection(initialSection);
 
   /** Which letter card the About section should flash, set by the landing quote. */
@@ -67,11 +66,7 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
     /* Left padding clears the fixed rail, so the sections centre in the space
        beside it rather than sliding underneath. */
     <div id={'landing'} className={'w-full md:pl-[4.5rem]'}>
-      <Selfie
-        isLandscape={isLandscape}
-        onScrollDown={() => scrollToSection(Section.about)}
-        onShowLetter={showLetter}
-      />
+      <Selfie isLandscape={isLandscape} onScrollDown={() => scrollToSection(Section.about)} onShowLetter={showLetter} />
       <AboutMe highlighted={highlighted} setHighlighted={setHighlighted} />
       <Technologies />
       <Experience onShowProject={showProject} />

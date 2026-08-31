@@ -1,0 +1,114 @@
+/**
+ * Five previews turning past the reader on one shared loop.
+ *
+ * Every card runs the same keyframes, offset by one step. A card's turn spans
+ * two steps — one to come from edge-on to facing, one to carry on to edge-on
+ * again — so at any moment exactly two are moving: the one arriving and the one
+ * leaving. That overlap is the whole effect. Give the turn a single step and
+ * the deck reads as a slideshow instead.
+ *
+ * --card-count has to match the number of previews AND the percentages in
+ * `cardTurn`, where the turn is 2/count of the loop: 40% here, 33.33% for six.
+ * CSS cannot compute a keyframe offset, so that pair is the one thing a new
+ * project means editing by hand.
+ */
+.deck {
+  @apply absolute inset-0 grid;
+  place-items: center;
+  --card-count: 5;
+  --card-step: 2s;
+  /* Card width in rem; the height follows from the 5:3 below. Sized against
+     `.stage`, which is 23rem across on a phone and 31.25rem from 480px up. */
+  --card-width: 20rem;
+  /* How far a card sits from the reader at the two edge-on ends of its turn.
+     Both are invisible moments — the point is the depth it travels through. */
+  --card-near: 16rem;
+  --card-far: -16rem;
+  /* Shallow enough that the turn reads as a turn rather than a flat squash. */
+  perspective: 60rem;
+  /* Arrives with the same fade the portrait it replaced had, so the intro
+     sequence still opens on the artwork. */
+  animation: fadeIn var(--intro-stage) ease-out;
+
+  @media (min-width: 480px) {
+    --card-width: 30rem;
+  }
+}
+
+.card {
+  @apply relative overflow-hidden rounded-2xl;
+  /* Every card in the same grid cell, so they stack and `transform` is left
+     free for the turn rather than being spent on centring them. */
+  grid-area: 1 / 1;
+  width: var(--card-width);
+  aspect-ratio: 5 / 3;
+  /**
+   * `backwards`, and it is not optional. Every card but the first waits out a
+   * delay before its first turn, and without a fill it spends that wait in its
+   * own base style — square to the reader and fully opaque. The whole deck
+   * would sit stacked and visible until each card's turn came round. The fill
+   * makes them hold the 0% frame instead: edge-on and transparent.
+   */
+  animation: cardTurn calc(var(--card-step) * var(--card-count)) linear infinite backwards;
+  animation-delay: calc(var(--i) * var(--card-step));
+}
+
+.art {
+  /* Shrunk to the card and cropped to its 5:3 — the previews are 16:9, so this
+     takes a sliver off each end rather than letterboxing them. */
+  object-fit: cover;
+}
+
+@keyframes cardTurn {
+  /* Edge-on and close, about to swing into view. */
+  0% {
+    opacity: 0;
+    transform: translateZ(var(--card-near)) rotateY(90deg);
+  }
+  /* Faded up while still nearly edge-on, so the card is solid by the time it
+     has enough width on screen to be seen at all. */
+  4% {
+    opacity: 1;
+  }
+  /* Square to the reader, at rest depth: the one moment it is fully readable. */
+  20% {
+    transform: translateZ(0) rotateY(0deg);
+  }
+  36% {
+    opacity: 1;
+  }
+  /* Edge-on again, receding. */
+  40% {
+    opacity: 0;
+    transform: translateZ(var(--card-far)) rotateY(-90deg);
+  }
+  /* Held there while the rest of the deck takes its turn. */
+  100% {
+    opacity: 0;
+    transform: translateZ(var(--card-far)) rotateY(-90deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The turn is the entire content here, so there is no reduced version of it
+     to keep. One preview is shown square to the reader and the others drop
+     out — with no animation the card's transform is identity, which is already
+     that resting position. */
+  .card {
+    animation: none;
+    opacity: 0;
+  }
+
+  .card:first-child {
+    opacity: 1;
+  }
+}

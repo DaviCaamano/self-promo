@@ -3,10 +3,8 @@
  * page reads top to bottom.
  *
  * The animation lives on the LINES, never on their container: the container is
- * what the circle clip is measured against, so animating it would drag the
- * colour seam off the portrait's edge for the whole run. A given line also
- * uses the same index in both copies — mismatch them and that line's light and
- * dark halves slide apart.
+ * placed as a fraction of the stage, and animating it would drag the block off
+ * that placement for the whole run.
  */
 @keyframes jobTitleLineIn {
   from {
@@ -24,10 +22,9 @@
   animation-delay: calc(var(--intro-job-title) + var(--i) * 110ms);
 }
 
-/* Sits across the circle's right edge at its vertical centre, running out past
-   it. Centred on the artwork's circle (51.39%), not the box, so the middle line
-   crosses at the widest point. The clip lives on the parent layer, so shifting
-   this block moves the text without dragging the colour seam with it. */
+/* Sits over the right of the stage at its vertical centre, running out past it.
+   51.39% rather than a flat half: it is where the old artwork's circle was
+   centred, and the composition was built around that line. */
 .jobTitle {
   @apply absolute flex flex-col whitespace-nowrap;
   /* 4px in from where the fraction alone puts it. Subtracted here rather than
@@ -36,13 +33,13 @@
   top: 51.39%;
   transform: translateY(-50%);
   /* Air between the lines, added as a gap rather than to the line-height so the
-     clipped copy's glyphs stay on exactly the same baselines as the light one's. */
+     block keeps its measured height as the type scales. */
   gap: 4px;
   font-size: 1.375rem;
   line-height: 1.65rem;
   letter-spacing: 2px;
   /* Heavier than body copy: wide letter-spacing over the busy edge of the
-     portrait thins these out badly at 400. */
+     artwork thins these out badly at 400. */
   font-weight: 500;
 
   @media (min-width: 480px) {
@@ -71,7 +68,6 @@
     }
   }
 }
-
 
 /* Reduced motion asks for no movement, not for no sequence: swapping only the
    keyframes keeps every delay and stagger while dropping the travel. */

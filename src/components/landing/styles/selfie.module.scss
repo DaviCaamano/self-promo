@@ -7,7 +7,7 @@
   justify-content: safe center;
   /**
    * svh, not dvh. This column is vertically centred, so anything that changes
-   * the section's height moves the portrait — and dvh does exactly that on a
+   * the section's height moves the artwork — and dvh does exactly that on a
    * phone every time the browser's toolbar slides away. svh is the height with
    * that toolbar showing, which is what the page loads at, so the first screen
    * is unchanged and the picture then stays put for the rest of the scroll.
@@ -16,16 +16,16 @@
 
   /**
    * One intro timeline for the whole page, inherited by every piece of it. The
-   * portrait fades in on its own; everything else waits for --intro-start and
+   * deck fades in on its own; everything else waits for --intro-start and
    * then arrives in reading order — socials, greeting, job title, quote, credit.
    * Each step is expressed against --intro-start, so shifting the whole
    * sequence is a single edit.
    *
    * Only opacity and transform are ever animated. Anything that changed a box
-   * would re-centre this column mid-run and drag the portrait with it.
+   * would re-centre this column mid-run and drag the deck with it.
    */
-  --intro-portrait: 250ms;
-  /* The fade ends at 250ms and the picture then has the screen to itself for
+  --intro-stage: 250ms;
+  /* The fade ends at 250ms and the deck then has the screen to itself for
      half a second, which is what puts the rest of the sequence at 750ms. */
   --intro-start: 750ms;
   --intro-socials: var(--intro-start);
@@ -35,60 +35,60 @@
   --intro-credit: calc(var(--intro-start) + 1700ms);
 
   /**
-   * The portrait's rendered width: `.stage` is a fraction of `.responsive`,
-   * which is then scaled down. Both change at every breakpoint below, so this
-   * ladder has to mirror theirs — it is what the pull quote is measured
-   * against, and a stale value here shows up as a quote wider than the picture.
+   * The stage's rendered width: `.stage` is a fraction of `.responsive`, which
+   * is then scaled down. Both change at every breakpoint below, so this ladder
+   * has to mirror theirs — it is what the pull quote is measured against, and a
+   * stale value here shows up as a quote wider than the artwork.
    */
-  --portrait-width: calc(25rem * 0.5833 * 0.92);
+  --stage-width: calc(25rem * 0.5833 * 0.92);
 
   @media (min-width: 320px) {
-    --portrait-width: calc(400px * 0.625 * 0.92);
+    --stage-width: calc(400px * 0.625 * 0.92);
   }
 
   @media (min-width: 400px) {
-    --portrait-width: calc(400px * 0.83333 * 0.92);
+    --stage-width: calc(400px * 0.83333 * 0.92);
   }
 
   @media (min-width: 480px) {
-    --portrait-width: calc(62.5rem * 0.48 * 0.5);
+    --stage-width: calc(62.5rem * 0.48 * 0.5);
   }
 
   @media (min-width: 600px) {
-    --portrait-width: calc(62.5rem * 0.58 * 0.5);
+    --stage-width: calc(62.5rem * 0.58 * 0.5);
   }
 
   @media (min-width: 800px) {
-    --portrait-width: calc(62.5rem * 0.78 * 0.5);
+    --stage-width: calc(62.5rem * 0.78 * 0.5);
   }
 
   @media (min-width: 1024px) {
-    --portrait-width: calc(62.5rem * 1 * 0.5);
+    --stage-width: calc(62.5rem * 1 * 0.5);
   }
 
   /* Landscape drops the width ladder entirely and sizes off the height, exactly
-     as `.responsive` and `.stage` do for the picture itself. */
+     as `.responsive` and `.stage` do for the artwork itself. */
   &.landscape {
-    --portrait-width: calc(25rem * 0.5833 * 0.92);
+    --stage-width: calc(25rem * 0.5833 * 0.92);
 
     @media (min-height: 320px) {
-      --portrait-width: calc(400px * 0.625 * 0.92);
+      --stage-width: calc(400px * 0.625 * 0.92);
     }
 
     @media (min-height: 480px) {
-      --portrait-width: calc(62.5rem * 0.48 * 0.5);
+      --stage-width: calc(62.5rem * 0.48 * 0.5);
     }
 
     @media (min-height: 600px) {
-      --portrait-width: calc(62.5rem * 0.58 * 0.5);
+      --stage-width: calc(62.5rem * 0.58 * 0.5);
     }
 
     @media (min-height: 800px) {
-      --portrait-width: calc(62.5rem * 0.78 * 0.5);
+      --stage-width: calc(62.5rem * 0.78 * 0.5);
     }
 
     @media (min-height: 1024px) {
-      --portrait-width: calc(62.5rem * 1 * 0.5);
+      --stage-width: calc(62.5rem * 1 * 0.5);
     }
   }
 }
@@ -354,15 +354,10 @@
 }
 
 /**
- * The portrait is a circle drawn inside a square canvas with transparent
- * corners: centre (540, 555), radius 512, in 1080x1080. The stage is that same
- * square, so anything clipped with $portrait-circle has its seam land exactly
- * on the drawn edge - at any size, because the numbers are fractions of the
- * box rather than the pixel polygons the old diamond artwork needed at each
- * breakpoint. Change the artwork and this one value is what moves.
+ * The square the whole composition is measured against. The deck is centred in
+ * it and the greeting and job title are placed as fractions of it, so moving a
+ * breakpoint moves all three together rather than pulling them apart.
  */
-$portrait-circle: circle(47.41% at 50% 51.39%);
-
 .stage {
   @apply relative mx-auto;
   width: 92%;
@@ -388,52 +383,26 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
 }
 
 /**
- * Sits on the picture rather than under it, low enough to land on the dark of
- * the shoulders — the circle's own bottom edge is at 51.39% + 47.41% of the
- * stage, so this stays well inside it. Light blue needs that dark backing; over
- * the white of the portrait it would wash out.
+ * Sits below the stage on the page background, where light blue has the
+ * contrast it needs. Positioned against the stage rather than the column, so it
+ * stays the same distance under the artwork at every breakpoint instead of
+ * drifting with the scale.
  *
- * Scales with the artwork like the greeting and the job title do, and fades in
- * with the picture rather than waiting for the sequence.
+ * Fades in with the deck rather than waiting for the sequence.
  */
 .name {
   @apply absolute left-0 right-0 text-center text-sea uppercase pointer-events-none;
   top: 100%;
   font-size: 1.25rem;
   letter-spacing: 0.22em;
-  animation: portraitIn var(--intro-portrait) ease-out;
+  animation: fadeIn var(--intro-stage) ease-out;
 }
 
-/* First thing on the page and the only one that does not wait for the sequence:
-   it is already downloaded by the time this runs, so it just fades up. */
-@keyframes portraitIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.portrait {
-  animation: portraitIn var(--intro-portrait) ease-out;
-}
-
-.portrait {
-  @apply absolute inset-0 h-full w-full;
-}
-
-/* Both halves of a two-tone caption are full-stage layers holding identically
-   positioned text. The light one sits underneath; the dark one is painted over
-   it and clipped to the circle, so a glyph crossing the edge changes colour
-   mid-stroke. Identical metrics in both copies is what keeps that seam
-   invisible - the old pair diverged and needed hand-kerning to line up. */
+/* A full-stage box holding text placed as a fraction of the stage. Kept as its
+   own layer so the caption and the job title can each be positioned against the
+   square without either becoming a box the other has to flow around. */
 .layer {
   @apply pointer-events-none absolute inset-0;
-}
-
-.clipped {
-  clip-path: $portrait-circle;
 }
 
 /* Top left wherever the icons sit in a corner, because the hamburger owns the
@@ -517,7 +486,6 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
   }
 }
 
-
 /* Reduced motion asks for no movement, not for no sequence: swapping only the
    keyframes keeps every delay and stagger while dropping the travel. */
 @keyframes fadeIn {
@@ -530,8 +498,8 @@ $portrait-circle: circle(47.41% at 50% 51.39%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* portraitIn only moves opacity already, so the picture and its caption keep
-     the animation they have. */
+  /* The deck's own fade and the caption's already move opacity only, so both
+     keep the animation they have. */
   .socialLink {
     animation-name: fadeIn;
   }

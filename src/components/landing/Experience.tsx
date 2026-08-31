@@ -134,7 +134,18 @@ interface JobHeaderProps extends PropsWithChildren {
   title: string;
 }
 
-const Job = ({ dates, children, index, name, onShowProject, onToggle, open, project, tipBelow, title }: JobHeaderProps) => {
+const Job = ({
+  dates,
+  children,
+  index,
+  name,
+  onShowProject,
+  onToggle,
+  open,
+  project,
+  tipBelow,
+  title,
+}: JobHeaderProps) => {
   const titles = title.split('&&');
   const [hovered, setHovered] = useState<boolean>(false);
 

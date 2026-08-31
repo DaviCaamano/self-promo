@@ -83,9 +83,7 @@ export const techIcons = {
     title: 'vLLM',
     viewBox: '0 0 24 24',
     hex: '30A2FF',
-    paths: [
-      'm23.6 0-8.721 4.59L9.829 24h7.41zM9.83 24V5.142H.4Z',
-    ],
+    paths: ['m23.6 0-8.721 4.59L9.829 24h7.41zM9.83 24V5.142H.4Z'],
   },
   html: {
     title: 'HTML',
@@ -172,9 +170,7 @@ export const techIcons = {
     title: 'Framer Motion',
     viewBox: '0 0 24 24',
     hex: '0055FF',
-    paths: [
-      'M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z',
-    ],
+    paths: ['M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z'],
   },
   reactnative: {
     title: 'React Native',

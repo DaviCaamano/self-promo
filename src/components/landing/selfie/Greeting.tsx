@@ -4,23 +4,14 @@ import stage from '../styles/selfie.module.scss';
 interface GreetingsProps {
   isLandscape: boolean;
 }
+/**
+ * Drawn once, in one colour. It used to be two stacked copies with the dark one
+ * clipped to the portrait's circle, so the line turned dark where it crossed
+ * onto the white artwork. There is no circle behind it any more, and a dark
+ * copy over the page would just be unreadable.
+ */
 export const Greeting = ({ isLandscape }: GreetingsProps) => (
-  <>
-    <Copy isLandscape={isLandscape} tone={'text-sea'} />
-    <Copy isLandscape={isLandscape} tone={'text-void'} clipped />
-  </>
-);
-
-interface CopyProps {
-  isLandscape: boolean;
-  tone: string;
-  /** Paints this copy only inside the portrait's circle. */
-  clipped?: boolean;
-}
-/** Same rule as the job title: both copies render identical text at identical
- *  metrics, and only colour and clip differ, or the seam doubles. */
-const Copy = ({ isLandscape, tone, clipped }: CopyProps) => (
-  <div className={`${stage.layer}${clipped ? ` ${stage.clipped}` : ''}`}>
-    <div className={`${styles.greeting} ${isLandscape && styles.landscape} ${tone}`}>It&apos;s Me, Davi</div>
+  <div className={stage.layer}>
+    <div className={`${styles.greeting} ${isLandscape && styles.landscape} text-sea`}>It&apos;s Me, Davi</div>
   </div>
 );

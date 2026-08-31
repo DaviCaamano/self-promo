@@ -76,7 +76,12 @@ export const TechDrawer = ({ onClose, tech }: TechDrawerProps) => {
                 </h2>
                 <span className={styles.released}>Released {detail.released}</span>
               </span>
-              <button type={'button'} onClick={onClose} className={styles.close} aria-label={`Close ${icon.title} details`}>
+              <button
+                type={'button'}
+                onClick={onClose}
+                className={styles.close}
+                aria-label={`Close ${icon.title} details`}
+              >
                 <X size={24} weight={'regular'} />
               </button>
             </header>

@@ -47,10 +47,7 @@ export const AboutMe = ({ highlighted, setHighlighted }: AboutMeProps) => {
         <h2 className={`${sStyles.title} ${sStyles.reveal}`} style={{ '--i': 0 } as CSSProperties}>
           About
         </h2>
-        <div
-          className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`}
-          style={{ '--i': 1 } as CSSProperties}
-        />
+        <div className={`h-[0.0625rem] bg-sea mt-3 mb-6 ${sStyles.reveal}`} style={{ '--i': 1 } as CSSProperties} />
         <ContactInfo />
         <Resume onOpen={setPreview} />
         <Letters onOpen={setPreview} highlighted={highlighted} />
