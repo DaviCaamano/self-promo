@@ -19,7 +19,7 @@
   right: 0;
   text-align: center;
   /**
-   * Two rem above the card's top edge.
+   * Three rem above the card's top edge.
    *
    * Measured off the card, not the stage: the deck sits a rem down and the card
    * centres in what is left, and the two are different fractions of the stage
@@ -31,7 +31,7 @@
    * only shows while one is swinging in and standing taller than it does head
    * on. Bring this back under 2rem to have it read that way square as well.
    */
-  top: calc(1rem + (100% - var(--card-width) * 3 / 5) / 2 - 0.22em - 2rem);
+  top: calc(1rem + (100% - var(--card-width) * 3 / 5) / 2 - 0.22em - 3rem);
   font-size: 1.3125rem;
   /* Same weight as the job title below it — the two read as one caption. */
   font-weight: 500;

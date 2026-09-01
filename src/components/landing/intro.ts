@@ -17,11 +17,11 @@ export const DECK_OPENING_MS = 2000;
 /**
  * The landing sequence's last beat is the pull quote's "read the letter" line:
  * `--intro-credit` (`--intro-start` + 1700ms) plus its own 300ms offset and its
- * 700ms run. `--intro-start` is a second past the deck's opening, so the page
- * begins arriving once the second preview is on its way in.
+ * 700ms run. `--intro-start` is half a second past the deck's opening, so the
+ * page begins arriving while the second preview is still on its way in.
  * See `selfie.module.scss` and `pull-quote.module.scss`.
  */
-export const LANDING_INTRO_ENDS_MS = 5700;
+export const LANDING_INTRO_ENDS_MS = 5200;
 
 /** The nav rail's own run, which follows the sequence above rather than
  *  overlapping it. See `side-nav.module.scss` and `mobile-nav.module.scss`. */

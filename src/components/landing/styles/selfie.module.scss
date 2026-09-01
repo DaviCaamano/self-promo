@@ -26,9 +26,9 @@
    */
   --intro-stage: 250ms;
   /* The deck has the screen to itself while the first preview turns away —
-     2s — and for a second after that, which is what puts the rest of the
-     sequence at 3s. Keep in step with DECK_OPENING_MS in `intro.ts`. */
-  --intro-start: 3000ms;
+     2s — and for half a second after that, which is what puts the rest of the
+     sequence at 2.5s. Keep in step with DECK_OPENING_MS in `intro.ts`. */
+  --intro-start: 2500ms;
   --intro-socials: var(--intro-start);
   --intro-greeting: calc(var(--intro-start) + 280ms);
   --intro-job-title: calc(var(--intro-start) + 540ms);
