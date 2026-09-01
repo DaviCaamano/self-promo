@@ -33,7 +33,7 @@
    * on. Bring this back under 2rem to have it read that way square as well.
    */
   top: calc(1rem + (100% - var(--card-width) * 3 / 5) / 2 - 0.22em - 5rem);
-  font-size: 1.3125rem;
+  font-size: 2.625rem;
   /* Same weight as the job title below it — the two read as one caption. */
   font-weight: 500;
   animation: greetingIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--intro-greeting) backwards;
@@ -42,7 +42,7 @@
     font-size: 2.25rem;
 
     &.landscape {
-      font-size: 1.3125rem;
+      font-size: 2.625rem;
 
       @media (min-height: 480px) {
         font-size: 2.25rem;

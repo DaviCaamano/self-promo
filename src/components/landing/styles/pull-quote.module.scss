@@ -77,7 +77,15 @@
   @apply block h-px mt-6 mb-3 origin-center;
   background: linear-gradient(90deg, rgba(156, 182, 255, 0.08), theme('colors.sea'), rgba(156, 182, 255, 0.08));
   transform: scaleX(0);
-  animation: draw 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--intro-credit) forwards;
+  /**
+   * `both`, not `forwards`. Everything else here hides itself with `opacity: 0`
+   * and so is covered during its delay; this one hides with a transform, and
+   * under reduced motion the rule below replaces that transform with the drawn
+   * state. With only a forwards fill there was then nothing holding it back:
+   * the line sat there fully drawn from the first frame and never animated.
+   * A backwards fill holds whichever keyframe set is in play at its start.
+   */
+  animation: draw 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--intro-credit) both;
 }
 
 .attribution {
