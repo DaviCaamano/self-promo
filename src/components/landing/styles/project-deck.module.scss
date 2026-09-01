@@ -17,9 +17,6 @@
   place-items: center;
   --card-count: 5;
   --card-step: 2s;
-  /* Card width in rem; the height follows from the 5:3 below. Sized against
-     `.stage`, which is 23rem across on a phone and 31.25rem from 480px up. */
-  --card-width: 20rem;
   /* How far a card sits from the reader at the two edge-on ends of its turn.
      Both are invisible moments — the point is the depth it travels through. */
   --card-near: 16rem;
@@ -33,14 +30,10 @@
   /* Arrives with the same fade the portrait it replaced had, so the intro
      sequence still opens on the artwork. */
   animation: fadeIn var(--intro-stage) ease-out;
-
-  @media (min-width: 480px) {
-    --card-width: 30rem;
-  }
 }
 
 .card {
-  @apply relative overflow-hidden rounded-2xl;
+  @apply relative;
   /* Every card in the same grid cell, so they stack and `transform` is left
      free for the turn rather than being spent on centring them. */
   grid-area: 1 / 1;
@@ -82,7 +75,12 @@
 
 .art {
   /* Shrunk to the card and cropped to its 5:3 — the previews are 16:9, so this
-     takes a sliver off each end rather than letterboxing them. */
+     takes a sliver off each end rather than letterboxing them.
+     Rounded here rather than clipped by the card: `overflow: hidden` on an
+     element carrying a 3D transform is a long standing source of mobile
+     rendering bugs, and the image fills the card exactly, so the corners come
+     out the same without it. */
+  @apply rounded-2xl;
   object-fit: cover;
 }
 
@@ -159,12 +157,56 @@
   }
 }
 
+/* The turn's timing without its travel, for readers who have asked not to be
+   moved. Same cadence, same handover, but each preview simply fades up where it
+   stands. Stopping the deck outright was the old answer and it reads as broken:
+   one card, forever. */
+@keyframes cardFade {
+  0% {
+    opacity: 0;
+    z-index: 2;
+  }
+  4% {
+    opacity: 1;
+  }
+  20% {
+    z-index: 2;
+  }
+  20.001% {
+    z-index: 1;
+  }
+  36% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0;
+    z-index: 1;
+  }
+  100% {
+    opacity: 0;
+    z-index: 1;
+  }
+}
+
+/* The opening card's share of that: it holds, then goes as the loop takes over. */
+@keyframes cardHold {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  /* The turn is the entire content here, so there is no reduced version of it
-     to keep. Dropping both animations leaves the opening state standing: the
-     first preview square to the reader, the rest out of sight. */
-  .card:first-child,
+  /* Only the keyframes are swapped, so every delay and duration carries over
+     and the previews still come round in the same order at the same pace. */
+  .card:first-child {
+    animation-name: cardHold;
+  }
+
   .deck[data-turning='true'] .card {
-    animation: none;
+    animation-name: cardFade;
   }
 }

@@ -1,15 +1,14 @@
-import { headers } from 'next/headers';
 import { Landing } from '@components/landing/Landing';
 import { Section } from '@components/landing/landing.interface';
-import { useIsMobile } from '@hooks/mobile/useIsMobile';
+import { getIsMobile } from '@hooks/mobile/getIsMobile';
 import { IsClientCtxProvider } from '@context/client.context';
 
 interface LandingPageProps {
   /** Where the page opens scrolled to, taken from the route that was requested. */
   section: Section;
 }
-export const LandingPage = ({ section }: LandingPageProps) => {
-  const isMobile = useIsMobile(headers);
+export const LandingPage = async ({ section }: LandingPageProps) => {
+  const isMobile = await getIsMobile();
   return (
     <IsClientCtxProvider>
       <div id={'home-page'} className={'relative min-h-[100svh] w-full'}>

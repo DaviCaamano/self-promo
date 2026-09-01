@@ -1,4 +1,4 @@
-import {  DieMap, DiePosition } from './interfaces/pop-die';
+import { DieMap, DiePosition } from './interfaces/pop-die';
 
 //  distance = d = √((x2 – x1)² + (y2 – y1)²
 //  die radius = dr = die width /2

@@ -43,6 +43,18 @@
    */
   --stage-width: calc(25rem * 0.5833 * 0.92);
 
+  /**
+   * The preview card's width; its height follows from the 5:3 the deck draws
+   * them at. It lives here rather than on the deck because the name is placed
+   * against the card — it has to read against that artwork, not against the
+   * square the artwork sits in.
+   */
+  --card-width: 20rem;
+
+  @media (min-width: 480px) {
+    --card-width: 30rem;
+  }
+
   @media (min-width: 320px) {
     --stage-width: calc(400px * 0.625 * 0.92);
   }

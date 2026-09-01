@@ -18,8 +18,19 @@
   left: 0;
   right: 0;
   text-align: center;
-  /* 5px above the old resting position. */
-  top: calc(8% - 5px);
+  /**
+   * On the card's top strip rather than above it, so the white copy has
+   * something to read against when a preview is square to the reader.
+   *
+   * Measured off the card, not the stage: the deck sits a rem down and the card
+   * centres in what is left, and the two are different fractions of the stage
+   * at different breakpoints. The last term lifts the box by its own leading so
+   * the lettering lands inside the card's edge rather than straddling it —
+   * within the top tenth, which is the one band both Legit Script and Orsini IT
+   * are dark across. In `em`, because the phone's card is barely half the
+   * height of the desktop one and a fixed lift there cuts the letters in half.
+   */
+  top: calc(1rem + (100% - var(--card-width) * 3 / 5) / 2 - 0.22em);
   font-size: 1.3125rem;
   /* Same weight as the job title below it — the two read as one caption. */
   font-weight: 500;
