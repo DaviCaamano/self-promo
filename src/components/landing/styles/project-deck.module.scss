@@ -7,20 +7,20 @@
  * leaving. That overlap is the whole effect. Give the turn a single step and
  * the deck reads as a slideshow instead.
  *
- * --card-count has to match the number of previews AND the percentages in
- * `cardTurn`, where the turn is 2/count of the loop: 40% here, 33.33% for six.
- * CSS cannot compute a keyframe offset, so that pair is the one thing a new
- * project means editing by hand.
+ * Every duration, delay and offset below is a literal, and deliberately so.
+ * They used to be built out of custom properties, which is how this came to
+ * animate on a desktop and not on an Android phone: a `var()` inside a keyframe
+ * that fails to resolve takes that keyframe's whole declaration with it, and
+ * since only the transform frames used one, the cards were left fading in and
+ * out without ever turning. Nothing in the animation path reads a variable now.
+ *
+ * The numbers: one step is 2s and must equal DECK_OPENING_MS in `intro.ts`; the
+ * loop is five of them; and the turn spans two, which is the 40% below. A sixth
+ * project means 12s here and 33.33%/16.67% there.
  */
 .deck {
   @apply absolute inset-0 grid;
   place-items: center;
-  --card-count: 5;
-  --card-step: 2s;
-  /* How far a card sits from the reader at the two edge-on ends of its turn.
-     Both are invisible moments — the point is the depth it travels through. */
-  --card-near: 16rem;
-  --card-far: -16rem;
   /* Shallow enough that the turn reads as a turn rather than a flat squash. */
   perspective: 60rem;
   /* A rem below the square it otherwise fills. Shifted whole — moving only one
@@ -50,18 +50,18 @@
      * first pass: once the loop starts this card waits its turn like the rest,
      * and the rule below takes the animation over.
      */
-    animation: cardExit var(--card-step) linear forwards;
+    animation: cardExit 2s linear forwards;
   }
 }
 
 /**
  * Once the deck falls into its loop.
  *
- * --turn is the card's place in the cadence rather than its place in the deck.
- * The first card has just left, so it goes to the back of the queue and every
- * other card moves up one — which is what makes the handover into the loop
- * seamless: the second card starts arriving on the very frame the first one
- * finishes leaving.
+ * The delay is set on the element rather than here, because it depends on the
+ * card's place in the cadence rather than its place in the deck: the first card
+ * has just left, so it goes to the back of the queue and the rest each move up
+ * one. That is what makes the handover seamless — the second card starts
+ * arriving on the very frame the first finishes leaving.
  *
  * `backwards`, and it is not optional. A card waiting out its delay would
  * otherwise spend it in its own base style, square to the reader, and the deck
@@ -69,8 +69,7 @@
  * 0% frame instead: edge-on and transparent.
  */
 .deck[data-turning='true'] .card {
-  animation: cardTurn calc(var(--card-step) * var(--card-count)) linear infinite backwards;
-  animation-delay: calc(var(--turn) * var(--card-step));
+  animation: cardTurn 10s linear infinite backwards;
 }
 
 .art {
@@ -95,11 +94,12 @@
  * handover comes out the same way round, wrap included.
  */
 @keyframes cardTurn {
-  /* Edge-on and close, about to swing into view. */
+  /* Edge-on and close, about to swing into view. 16rem is how far from the
+     reader it starts; it recedes the same distance on the way out. */
   0% {
     opacity: 0;
     z-index: 2;
-    transform: translateZ(var(--card-near)) rotateY(90deg);
+    transform: translateZ(16rem) rotateY(90deg);
   }
   /* Faded up while still nearly edge-on, so the card is solid by the time it
      has enough width on screen to be seen at all. */
@@ -122,13 +122,13 @@
   40% {
     opacity: 0;
     z-index: 1;
-    transform: translateZ(var(--card-far)) rotateY(-90deg);
+    transform: translateZ(-16rem) rotateY(-90deg);
   }
   /* Held there while the rest of the deck takes its turn. */
   100% {
     opacity: 0;
     z-index: 1;
-    transform: translateZ(var(--card-far)) rotateY(-90deg);
+    transform: translateZ(-16rem) rotateY(-90deg);
   }
 }
 
@@ -144,7 +144,7 @@
   }
   100% {
     opacity: 0;
-    transform: translateZ(var(--card-far)) rotateY(-90deg);
+    transform: translateZ(-16rem) rotateY(-90deg);
   }
 }
 

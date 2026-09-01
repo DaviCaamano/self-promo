@@ -40,7 +40,7 @@ export const MotionCheck = () => {
           `${index} ${card.getAttribute('data-deck-card')}` +
             ` n=${name} d=${s.animationDuration} w=${s.animationDelay}` +
             ` p=${s.animationPlayState} f=${s.animationFillMode}` +
-            ` op=${(+s.opacity).toFixed(2)} turn="${s.getPropertyValue('--turn').trim()}"`,
+            ` op=${(+s.opacity).toFixed(2)} t=${s.transform === 'none' ? 'none' : 'SET'}`,
         );
       });
 

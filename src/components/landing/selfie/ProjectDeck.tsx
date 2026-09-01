@@ -1,10 +1,13 @@
 'use client';
 import Image from 'next/image';
-import { CSSProperties, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from '../styles/project-deck.module.scss';
 import { projectPreviews } from '@components/landing/project-previews';
 import { DECK_ATTR, DECK_CARD_ATTR } from '@components/landing/hooks/useCardSilhouette';
 import { DECK_OPENING_MS } from '@components/landing/intro';
+
+/** One step of the loop, in seconds, for the delays written onto each card. */
+const STEP_SECONDS = DECK_OPENING_MS / 1000;
 
 /**
  * The landing screen's centrepiece: each project's preview turns past the
@@ -40,9 +43,20 @@ export const ProjectDeck = () => {
           key={id}
           className={styles.card}
           {...{ [DECK_CARD_ATTR]: id }}
-          /* Place in the cadence, not in the deck: the first card has just left
-             on its own, so it drops to the back and the rest each move up one. */
-          style={{ '--turn': (index + projectPreviews.length - 1) % projectPreviews.length } as CSSProperties}
+          /**
+           * The delay, as a plain value rather than a custom property the
+           * stylesheet multiplies out. Its place in the cadence, not in the
+           * deck: the first card has just left on its own, so it drops to the
+           * back and the rest each move up one.
+           *
+           * Only once the loop starts — during the opening the first card runs
+           * its solo exit, and a delay here would hold that back too.
+           */
+          style={
+            turning
+              ? { animationDelay: `${((index + projectPreviews.length - 1) % projectPreviews.length) * STEP_SECONDS}s` }
+              : undefined
+          }
         >
           <Image
             src={lg}
