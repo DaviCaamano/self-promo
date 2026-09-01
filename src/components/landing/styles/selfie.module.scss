@@ -426,25 +426,25 @@
   left: 2rem;
   right: unset;
   transform: translateX(0);
-  width: 3.5rem;
+  width: 4.667rem;
 
   @media (min-width: 480px) {
     left: 50%;
     right: unset;
     transform: translateX(-50%);
-    width: 5.25rem;
+    width: 7rem;
 
     &.landscape {
       left: 2rem !important;
       right: unset;
       transform: translateX(0) !important;
-      width: 3.5rem !important;
+      width: 4.667rem !important;
 
       @media (min-height: 480px) {
         left: 50% !important;
         right: unset;
         transform: translateX(-50%) !important;
-        width: 5.25rem !important;
+        width: 7rem !important;
       }
     }
   }
@@ -454,7 +454,7 @@
       left: 2rem;
       right: unset;
       transform: translateX(0);
-      width: 3.5rem;
+      width: 4.667rem;
     }
   }
 }
@@ -479,22 +479,22 @@
 
 .socials {
   @apply cursor-pointer;
-  font-size: 16px;
+  font-size: 21px;
   @media (min-width: 480px) {
-    font-size: 24px;
+    font-size: 32px;
 
     &.landscape {
-      font-size: 16px;
+      font-size: 21px;
 
       @media (min-height: 480px) {
-        font-size: 24px;
+        font-size: 32px;
       }
     }
   }
 
   @media (max-width: 479px) {
     &.landscape {
-      font-size: 16px;
+      font-size: 21px;
     }
   }
 }
@@ -520,22 +520,22 @@
 
 .gitHub {
   @apply cursor-pointer;
-  font-size: 15px;
+  font-size: 20px;
   @media (min-width: 480px) {
-    font-size: 22px;
+    font-size: 29px;
 
     &.landscape {
-      font-size: 15px;
+      font-size: 20px;
 
       @media (min-height: 480px) {
-        font-size: 22px;
+        font-size: 29px;
       }
     }
   }
 
   @media (max-width: 479px) {
     &.landscape {
-      font-size: 15px;
+      font-size: 20px;
     }
   }
 }
