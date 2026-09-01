@@ -7,11 +7,25 @@
  */
 
 /**
+ * The deck's opening. The page lands on the first preview alone and it turns
+ * away by itself, with nothing arriving behind it, before the deck falls into
+ * its loop. One step of that loop — keep this equal to `--card-step` in
+ * `project-deck.module.scss`.
+ */
+export const DECK_OPENING_MS = 2000;
+
+/**
  * The landing sequence's last beat is the pull quote's "read the letter" line:
  * `--intro-credit` (`--intro-start` + 1700ms) plus its own 300ms offset and its
- * 700ms run. See `selfie.module.scss` and `pull-quote.module.scss`.
+ * 700ms run. `--intro-start` is a second past the deck's opening, so the page
+ * begins arriving once the second preview is on its way in.
+ * See `selfie.module.scss` and `pull-quote.module.scss`.
  */
-export const LANDING_INTRO_ENDS_MS = 3450;
+export const LANDING_INTRO_ENDS_MS = 5700;
+
+/** The nav rail's own run, which follows the sequence above rather than
+ *  overlapping it. See `side-nav.module.scss` and `mobile-nav.module.scss`. */
+export const NAV_INTRO_MS = 560;
 
 /**
  * A section's scroll reveal, for a page that opens on one. Its pieces are

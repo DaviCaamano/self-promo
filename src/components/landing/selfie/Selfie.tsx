@@ -15,16 +15,19 @@ import { LightCaption } from '@components/landing/selfie/LightCaption';
 import { Project } from '@components/landing/landing.interface';
 
 /**
- * The previews dark enough to need light lettering, and which of the job
- * title's three lines land on the dark part of each.
+ * The previews dark enough to need light lettering, and which pieces of the
+ * caption land on the dark part of each.
  *
- * Quelliv is a photograph across its middle, where the first two lines fall;
- * the third crosses onto the white panel below and stays dark like every other
- * card's. Orsini IT is dark top to bottom, so all three go light.
+ * Quelliv is a photograph across its middle, where the job title's first two
+ * lines fall; the third crosses onto the white panel below and stays dark like
+ * every other card's, and the name sits above the artwork entirely. Legit
+ * Script is dark under the name but light where the lines are. Orsini IT is
+ * dark top to bottom, so everything over it goes light.
  */
-const DARK_ARTWORK: { inked?: number[]; project: Project }[] = [
+const DARK_ARTWORK: { greeting?: boolean; inked?: number[]; project: Project }[] = [
   { project: Project.quelliv, inked: [0, 1] },
-  { project: Project.oit },
+  { project: Project.legitscript, greeting: true, inked: [] },
+  { project: Project.oit, greeting: true },
 ];
 
 interface SelfieProps {
@@ -58,8 +61,8 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
           </div>
           {/* And once more in white for each card too dark to read the copy
               above against. Last, so they cover it for their own lines. */}
-          {DARK_ARTWORK.map(({ inked, project }) => (
-            <LightCaption key={project} isLandscape={isLandscape} inked={inked} project={project} />
+          {DARK_ARTWORK.map(({ greeting, inked, project }) => (
+            <LightCaption key={project} isLandscape={isLandscape} greeting={greeting} inked={inked} project={project} />
           ))}
           {/* Hidden on purpose while we see whether the page reads cleaner
               without it — put this back to restore the waving hand. */}

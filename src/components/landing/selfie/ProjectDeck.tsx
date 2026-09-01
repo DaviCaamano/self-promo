@@ -4,11 +4,7 @@ import { CSSProperties, useEffect, useState } from 'react';
 import styles from '../styles/project-deck.module.scss';
 import { projectPreviews } from '@components/landing/project-previews';
 import { DECK_ATTR, DECK_CARD_ATTR } from '@components/landing/hooks/useCardSilhouette';
-import { LANDING_INTRO_ENDS_MS } from '@components/landing/intro';
-
-/** A second past the page's own opening, so the first preview is there to be
- *  read while the rest of the screen is still arriving. */
-const TURN_STARTS_MS = LANDING_INTRO_ENDS_MS + 1000;
+import { DECK_OPENING_MS } from '@components/landing/intro';
 
 /**
  * The landing screen's centrepiece: each project's preview turns past the
@@ -16,11 +12,10 @@ const TURN_STARTS_MS = LANDING_INTRO_ENDS_MS + 1000;
  * screen, then carrying on until it is edge-on again and receding. One card's
  * exit is the next one's entrance, and the sequence restarts after the last.
  *
- * It opens on the first preview held square to the reader instead of mid-turn,
- * so the page lands on something legible. When the wait is up that card is
- * already where its turn would have put it — the animation starts a step in,
- * by way of a negative delay — so it carries straight on into leaving without
- * a jump, and the second card arrives behind it as usual.
+ * The page lands on the first preview alone, square to the reader, and it turns
+ * away by itself with nothing arriving behind it. Only that once: when it has
+ * gone the deck falls into its loop, the second preview starts arriving on the
+ * very next frame, and from there every exit overlaps the next entrance.
  *
  * Hidden from assistive technology. It is the Projects section's own artwork on
  * a loop, and that section names, describes and links every one of them — read
@@ -31,7 +26,7 @@ export const ProjectDeck = () => {
   const [turning, setTurning] = useState<boolean>(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setTurning(true), TURN_STARTS_MS);
+    const timer = setTimeout(() => setTurning(true), DECK_OPENING_MS);
     return () => clearTimeout(timer);
   }, []);
 
@@ -41,7 +36,14 @@ export const ProjectDeck = () => {
        CSS module's hashed class names. */
     <div className={styles.deck} {...{ [DECK_ATTR]: '' }} data-turning={turning} aria-hidden>
       {projectPreviews.map(({ id, lg }, index) => (
-        <div key={id} className={styles.card} {...{ [DECK_CARD_ATTR]: id }} style={{ '--i': index } as CSSProperties}>
+        <div
+          key={id}
+          className={styles.card}
+          {...{ [DECK_CARD_ATTR]: id }}
+          /* Place in the cadence, not in the deck: the first card has just left
+             on its own, so it drops to the back and the rest each move up one. */
+          style={{ '--turn': (index + projectPreviews.length - 1) % projectPreviews.length } as CSSProperties}
+        >
           <Image
             src={lg}
             alt={''}

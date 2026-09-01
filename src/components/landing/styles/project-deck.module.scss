@@ -26,6 +26,10 @@
   --card-far: -16rem;
   /* Shallow enough that the turn reads as a turn rather than a flat squash. */
   perspective: 60rem;
+  /* A rem below the square it otherwise fills. Shifted whole — moving only one
+     edge would resize it, and the cards centre in whatever is left. */
+  top: 1rem;
+  bottom: -1rem;
   /* Arrives with the same fade the portrait it replaced had, so the intro
      sequence still opens on the artwork. */
   animation: fadeIn var(--intro-stage) ease-out;
@@ -42,31 +46,38 @@
   grid-area: 1 / 1;
   width: var(--card-width);
   aspect-ratio: 5 / 3;
-  /* The opening: no transform is square to the reader at rest depth, which is
-     exactly where the first card's turn will pick it up. */
+  /* The opening: no transform is square to the reader at rest depth. */
   opacity: 0;
 
   &:first-child {
     opacity: 1;
+    /**
+     * The page lands on this one already facing the reader, and it turns away
+     * on its own — nothing arrives behind it until it has gone. Only on the
+     * first pass: once the loop starts this card waits its turn like the rest,
+     * and the rule below takes the animation over.
+     */
+    animation: cardExit var(--card-step) linear forwards;
   }
 }
 
 /**
- * Once the deck starts turning.
+ * Once the deck falls into its loop.
  *
- * The delay counts from the SECOND card, so the first gets a negative one and
- * begins a step in — already square to the reader, matching the state it was
- * held in, and carrying straight on into leaving. Everything after it follows
- * the ordinary ladder.
+ * --turn is the card's place in the cadence rather than its place in the deck.
+ * The first card has just left, so it goes to the back of the queue and every
+ * other card moves up one — which is what makes the handover into the loop
+ * seamless: the second card starts arriving on the very frame the first one
+ * finishes leaving.
  *
- * `backwards`, and it is not optional. Every card but the first two waits out a
- * delay, and without a fill it spends that wait in its own base style — square
- * to the reader. The whole deck would stack up visible until its turn came
- * round. The fill makes them hold the 0% frame instead: edge-on and transparent.
+ * `backwards`, and it is not optional. A card waiting out its delay would
+ * otherwise spend it in its own base style, square to the reader, and the deck
+ * would stack up visible until each turn came round. The fill holds them at the
+ * 0% frame instead: edge-on and transparent.
  */
 .deck[data-turning='true'] .card {
   animation: cardTurn calc(var(--card-step) * var(--card-count)) linear infinite backwards;
-  animation-delay: calc((var(--i) - 1) * var(--card-step));
+  animation-delay: calc(var(--turn) * var(--card-step));
 }
 
 .art {
@@ -123,6 +134,22 @@
   }
 }
 
+/* The first card's solo exit: the same leg `cardTurn` runs from 20% to 40%,
+   opacity and all, so the loop picks up exactly where this leaves off. */
+@keyframes cardExit {
+  0% {
+    opacity: 1;
+    transform: translateZ(0) rotateY(0deg);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateZ(var(--card-far)) rotateY(-90deg);
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -134,8 +161,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   /* The turn is the entire content here, so there is no reduced version of it
-     to keep. Dropping the animation leaves the opening state standing: the
+     to keep. Dropping both animations leaves the opening state standing: the
      first preview square to the reader, the rest out of sight. */
+  .card:first-child,
   .deck[data-turning='true'] .card {
     animation: none;
   }

@@ -25,9 +25,10 @@
    * would re-centre this column mid-run and drag the deck with it.
    */
   --intro-stage: 250ms;
-  /* The fade ends at 250ms and the deck then has the screen to itself for
-     half a second, which is what puts the rest of the sequence at 750ms. */
-  --intro-start: 750ms;
+  /* The deck has the screen to itself while the first preview turns away —
+     2s — and for a second after that, which is what puts the rest of the
+     sequence at 3s. Keep in step with DECK_OPENING_MS in `intro.ts`. */
+  --intro-start: 3000ms;
   --intro-socials: var(--intro-start);
   --intro-greeting: calc(var(--intro-start) + 280ms);
   --intro-job-title: calc(var(--intro-start) + 540ms);
@@ -413,25 +414,25 @@
   left: 2rem;
   right: unset;
   transform: translateX(0);
-  width: 7rem;
+  width: 3.5rem;
 
   @media (min-width: 480px) {
     left: 50%;
     right: unset;
     transform: translateX(-50%);
-    width: 10.5rem;
+    width: 5.25rem;
 
     &.landscape {
       left: 2rem !important;
       right: unset;
       transform: translateX(0) !important;
-      width: 7rem !important;
+      width: 3.5rem !important;
 
       @media (min-height: 480px) {
         left: 50% !important;
         right: unset;
         transform: translateX(-50%) !important;
-        width: 10.5rem !important;
+        width: 5.25rem !important;
       }
     }
   }
@@ -441,7 +442,7 @@
       left: 2rem;
       right: unset;
       transform: translateX(0);
-      width: 7rem;
+      width: 3.5rem;
     }
   }
 }
@@ -466,22 +467,22 @@
 
 .socials {
   @apply cursor-pointer;
-  font-size: 32px;
+  font-size: 16px;
   @media (min-width: 480px) {
-    font-size: 48px;
+    font-size: 24px;
 
     &.landscape {
-      font-size: 32px;
+      font-size: 16px;
 
       @media (min-height: 480px) {
-        font-size: 48px;
+        font-size: 24px;
       }
     }
   }
 
   @media (max-width: 479px) {
     &.landscape {
-      font-size: 32px;
+      font-size: 16px;
     }
   }
 }
@@ -507,22 +508,22 @@
 
 .gitHub {
   @apply cursor-pointer;
-  font-size: 30px;
+  font-size: 15px;
   @media (min-width: 480px) {
-    font-size: 44px;
+    font-size: 22px;
 
     &.landscape {
-      font-size: 30px;
+      font-size: 15px;
 
       @media (min-height: 480px) {
-        font-size: 44px;
+        font-size: 22px;
       }
     }
   }
 
   @media (max-width: 479px) {
     &.landscape {
-      font-size: 30px;
+      font-size: 15px;
     }
   }
 }

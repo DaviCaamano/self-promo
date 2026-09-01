@@ -70,9 +70,13 @@ export const useCardSilhouette = (target: RefObject<HTMLElement | null>, only?: 
 
     const paint = () => {
       const cards = deck.querySelectorAll<HTMLElement>(selector);
-      /* The layer fills the stage, so its own centre is the deck's centre. */
-      const originX = layer.offsetWidth / 2;
-      const originY = layer.offsetHeight / 2;
+      /* Where a card sits before it is transformed, and where the perspective
+         is centred. Read off the deck rather than assumed to be the middle of
+         the layer: the two share a containing block but the deck is offset
+         within it, and a clip measured from the wrong centre misses by exactly
+         that offset. */
+      const originX = deck.offsetLeft + deck.offsetWidth / 2 - layer.offsetLeft;
+      const originY = deck.offsetTop + deck.offsetHeight / 2 - layer.offsetTop;
 
       /* One path holding every card as its own subpath: `clip-path` takes a
          single shape, and subpaths are how two overlapping cards become one.

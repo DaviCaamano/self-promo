@@ -20,26 +20,26 @@
   text-align: center;
   /* 5px above the old resting position. */
   top: calc(8% - 5px);
-  font-size: 1.75rem;
+  font-size: 1.3125rem;
   /* Same weight as the job title below it — the two read as one caption. */
   font-weight: 500;
   animation: greetingIn 620ms cubic-bezier(0.2, 0.8, 0.25, 1) var(--intro-greeting) backwards;
 
   @media (min-width: 480px) {
-    font-size: 3rem;
+    font-size: 2.25rem;
 
     &.landscape {
-      font-size: 1.75rem;
+      font-size: 1.3125rem;
 
       @media (min-height: 480px) {
-        font-size: 3rem;
+        font-size: 2.25rem;
       }
     }
   }
 
   &.landscape {
     @media (min-height: 480px) {
-      font-size: 3rem;
+      font-size: 2.25rem;
     }
   }
 }

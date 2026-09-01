@@ -1,12 +1,13 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { Section, sectionIds } from '@components/landing/landing.interface';
-import { LANDING_INTRO_ENDS_MS } from '@components/landing/intro';
+import { LANDING_INTRO_ENDS_MS, NAV_INTRO_MS } from '@components/landing/intro';
 import styles from '../styles/scroll-cue.module.scss';
 
-/** Two seconds past the sequence, so it reads as an offer to a reader who has
- *  stopped rather than as the last beat of the intro. */
-const APPEAR_AFTER_MS = LANDING_INTRO_ENDS_MS + 2000;
+/** Two seconds past the last thing on the page to move, the nav rail included,
+ *  so it reads as an offer to a reader who has stopped rather than as the
+ *  intro's own last beat. */
+const APPEAR_AFTER_MS = LANDING_INTRO_ENDS_MS + NAV_INTRO_MS + 2000;
 
 interface ScrollCueProps {
   onScrollDown: () => void;
@@ -82,7 +83,7 @@ const ScrollMouse = () => (
       x2={14}
       y2={16}
       stroke={'currentColor'}
-      strokeWidth={2}
+      strokeWidth={4}
       strokeLinecap={'round'}
     />
   </svg>
