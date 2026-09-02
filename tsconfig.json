@@ -51,9 +51,6 @@
       "@constants/*": [
         "./src/constants/*"
       ],
-      "@context/*": [
-        "./src/context/*"
-      ],
       "@hooks/*": [
         "./src/hooks/*"
       ],

@@ -109,7 +109,10 @@
 }
 
 .author {
-  @apply text-latte text-[0.9375rem] sm:text-[1.0625rem] font-medium uppercase;
+  /* A quarter off what it was: 0.9375rem and 1.0625rem. The wide tracking below
+     is what gives the name its presence, so it still reads as the attribution
+     at this size. */
+  @apply text-latte text-[0.703125rem] sm:text-[0.796875rem] font-medium uppercase;
   letter-spacing: 0.18em;
 }
 
