@@ -6,19 +6,19 @@
     "dev": "next dev -p 3002",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "build:tech-icons": "node scripts/build-tech-icons.mjs"
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "cross-env": "^7.0.3",
-    "dotenv": "^16.3.1",
-    "eslint-config-prettier": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^8",
+    "cross-env": "^10",
+    "dotenv": "^17",
+    "eslint-config-prettier": "^10",
     "eslint-plugin-prettier": "^5.0.1",
-    "framer-motion": "^10.16.4",
-    "next": "^15.1.0",
+    "framer-motion": "^13",
+    "next": "^16",
     "node-sass-json-importer": "^4.3.0",
     "phosphor-react": "^1.4.1",
     "prettier": "^3.0.3",
@@ -29,16 +29,16 @@
   },
   "devDependencies": {
     "@lobehub/icons-static-svg": "^1.94.0",
-    "@types/node": "^24",
+    "@types/node": "^26",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "autoprefixer": "^10",
     "devicon": "^2.17.0",
-    "eslint": "^8",
-    "eslint-config-next": "^15.1.0",
+    "eslint": "^9",
+    "eslint-config-next": "^16",
     "postcss": "^8",
     "simple-icons": "^16.28.0",
     "tailwindcss": "^3",
-    "typescript": "^5"
+    "typescript": "^6"
   }
 }

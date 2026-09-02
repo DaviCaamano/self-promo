@@ -1,38 +1,21 @@
-require('dotenv').config({ path: '../../.env' });
 const jsonImporter = require('node-sass-json-importer');
 
-let backendPort = process.env.NEXT_PUBLIC_BACKEND_PORT;
-backendPort = !backendPort || backendPort === '80' ? '' : ':' + backendPort;
-let backendHost = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost';
-//Next.js redirection does not allow localhost.
-if (backendHost === 'http://localhost') {
-    backendHost = 'http://127.0.0.1';
-}
-
+/**
+ * Next 16 builds with Turbopack, which refuses to run alongside a webpack
+ * config it cannot account for. There was one here, adding an SVGR loader for
+ * `.svg` imports — but nothing imports an SVG. The only files that read one do
+ * it with `fs` in `scripts/build-tech-icons.mjs`, which never touches the
+ * bundler. It went, and with it the Turbopack conflict.
+ *
+ * Three more entries went at the same time, all left over from the monorepo
+ * this was started from and all verified dead: `experimental.serverActions`,
+ * stable since Next 14 and invalid as a boolean in 16; `transpilePackages` for
+ * a `shared` package that does not exist; and a `/api/*` proxy to a backend,
+ * when nothing on the site makes a request at all.
+ */
 module.exports = {
-    reactStrictMode: true,
-    transpilePackages: ['shared'],
-    experimental: {
-        serverActions: true,
-    },
-    async rewrites() {
-        return {
-            fallback: [
-                {
-                    source: '/api/:path*',
-                    destination: `${backendHost}${backendPort}/data/:path*`, // Proxy to Backend
-                },
-            ],
-        };
-    },
-    webpack: (config) => {
-        config.module.rules.push({
-            test: /\.svg$/i,
-            use: ['@svgr/webpack'],
-        });
-        return config;
-    },
-    sassOptions: {
-        importer: jsonImporter(),
-    },
+  reactStrictMode: true,
+  sassOptions: {
+    importer: jsonImporter(),
+  },
 };
