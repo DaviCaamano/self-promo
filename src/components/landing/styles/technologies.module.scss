@@ -206,22 +206,16 @@
     }
   }
 
+  /**
+   * Centred, which is what `.group` above already does — so this only has to
+   * stop overriding it. It used to stretch the badges across shared columns so
+   * a full row met both edges of the content area, but 21 badges over 9 columns
+   * leaves a last row of three, and that row then sat against the left edge
+   * with two thirds of the width empty beside it. Centring balances every row,
+   * full or not, and costs about 20px of inset on the full ones.
+   */
   @media (min-width: 768px) {
     @apply mt-4;
-    /**
-     * Flush with both edges. Columns rather than centred flex: `auto-fill` takes
-     * as many as fit at the badge's own size and then shares the remainder out
-     * between them, so a full row spans the content area exactly and a short
-     * last row still lines up under it. `space-between` would have done the
-     * first of those and stranded the last three badges across the full width.
-     */
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--badge-size), 1fr));
-    justify-content: initial;
-
-    .badge {
-      width: 100%;
-    }
   }
 }
 

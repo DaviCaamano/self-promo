@@ -48,38 +48,20 @@
       "@components/*": [
         "./src/components/*"
       ],
-      "@constants/*": [
-        "./src/constants/*"
-      ],
       "@hooks/*": [
         "./src/hooks/*"
-      ],
-      "@interface/*": [
-        "./src/interface/*"
       ],
       "@styles/*": [
         "./src/styles/*"
       ],
-      "@tests/*": [
-        "./src/tests/*"
-      ],
       "@utils/*": [
         "./src/utils/*"
-      ],
-      "@pages/*": [
-        "./pages/*"
       ],
       "@images/*": [
         "./public/images/*"
       ],
-      "@svg/*": [
-        "./public/svg/*"
-      ],
       "@fonts/*": [
         "./public/fonts/*"
-      ],
-      "@public/*": [
-        "./src/public/*"
       ]
     },
     "target": "ES2017"
