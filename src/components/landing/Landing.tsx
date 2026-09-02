@@ -12,9 +12,6 @@ import { Project, Section, sectionIds } from '@components/landing/landing.interf
 import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
 import { letterAnchorId } from '@components/landing/letters';
 import { LANDING_INTRO_ENDS_MS, SECTION_REVEAL_ENDS_MS } from '@components/landing/intro';
-// TEMPORARY, for an Android report that will not reproduce locally. Remove with
-// the component itself.
-import { MotionCheck } from '@components/landing/MotionCheck';
 
 interface LandingProps {
   /** Section the requested route opens the page scrolled to. */
@@ -69,7 +66,6 @@ export const Landing = ({ initialSection, isMobile }: LandingProps) => {
     /* Left padding clears the fixed rail, so the sections centre in the space
        beside it rather than sliding underneath. */
     <div id={'landing'} className={'w-full md:pl-[4.5rem]'}>
-      <MotionCheck />
       <Selfie isLandscape={isLandscape} onScrollDown={() => scrollToSection(Section.about)} onShowLetter={showLetter} />
       <AboutMe highlighted={highlighted} setHighlighted={setHighlighted} />
       <Technologies />

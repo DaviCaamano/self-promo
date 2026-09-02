@@ -1,0 +1,26 @@
+/**
+ * Bottom left of the landing screen, opposite the scroll cue rather than under
+ * it. Small and quiet: it only appears for a reader whose device asked for less
+ * motion, and it should read as an offer, not as a control the page needs.
+ */
+.toggle {
+  @apply absolute z-30 flex flex-row items-center gap-2 px-3 py-2 rounded-br-xl
+  text-sea-light text-[0.75rem] uppercase cursor-pointer
+  bg-void-light hover:bg-void-highlight transition-colors
+  border border-[#263e79] border-b-sea border-r-sea;
+  left: 1.5rem;
+  /* Above the scroll cue's row on a narrow screen: the cue is centred and this
+     runs 175px from the left edge, so at 375 the two would overlap. There is
+     room for both on one line from the small breakpoint up. */
+  bottom: 5rem;
+  letter-spacing: 0.12em;
+
+  @media (min-width: 480px) {
+    bottom: 1.5rem;
+  }
+
+  svg {
+    font-size: 0.875rem;
+    flex-shrink: 0;
+  }
+}
