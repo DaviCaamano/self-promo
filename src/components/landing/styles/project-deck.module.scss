@@ -17,6 +17,12 @@
  * The numbers: one step is 2s and must equal DECK_OPENING_MS in `intro.ts`; the
  * loop is five of them; and the turn spans two, which is the 40% below. A sixth
  * project means 12s here and 33.33%/16.67% there.
+ *
+ * This deliberately does not answer to `prefers-reduced-motion`. It did — the
+ * previews cross faded instead of turning — but the owner wants the turn shown
+ * to everyone, which is their call to make about their own portfolio. The cost
+ * is real and worth writing down: the deck moves for as long as the page is
+ * open with no way to stop it, which is the case that preference exists for.
  */
 .deck {
   @apply absolute inset-0 grid;
@@ -154,59 +160,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-/* The turn's timing without its travel, for readers who have asked not to be
-   moved. Same cadence, same handover, but each preview simply fades up where it
-   stands. Stopping the deck outright was the old answer and it reads as broken:
-   one card, forever. */
-@keyframes cardFade {
-  0% {
-    opacity: 0;
-    z-index: 2;
-  }
-  4% {
-    opacity: 1;
-  }
-  20% {
-    z-index: 2;
-  }
-  20.001% {
-    z-index: 1;
-  }
-  36% {
-    opacity: 1;
-  }
-  40% {
-    opacity: 0;
-    z-index: 1;
-  }
-  100% {
-    opacity: 0;
-    z-index: 1;
-  }
-}
-
-/* The opening card's share of that: it holds, then goes as the loop takes over. */
-@keyframes cardHold {
-  0%,
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* Only the keyframes are swapped, so every delay and duration carries over
-     and the previews still come round in the same order at the same pace. */
-  .card:first-child {
-    animation-name: cardHold;
-  }
-
-  .deck[data-turning='true'] .card {
-    animation-name: cardFade;
   }
 }
