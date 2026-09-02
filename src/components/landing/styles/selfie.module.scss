@@ -15,6 +15,31 @@
   min-height: 100svh;
 
   /**
+   * Held sideways, the screen is wide and short — too short to stack a stage
+   * and a quote down it. So the two run side by side instead: the stage on the
+   * left carrying the name, the lines and the turning cards, the quote on the
+   * right. Everything else here is positioned absolutely and stays where it is.
+   *
+   * Gated on height as well as the class, because only a phone is this short —
+   * a tablet sideways has the room to keep the column.
+   */
+  &.landscape {
+    @media (max-height: 479px) {
+      @apply flex-row gap-6 pt-0 pb-0;
+      align-items: center;
+      justify-content: center;
+      /**
+       * The narrow card, not the wide one. Sideways the viewport is over 480px
+       * across, so the ladder below would otherwise hand this column the
+       * desktop width — which drew the card 300px wide inside a 250px column
+       * and ran it under the quote. At 20rem it draws 200 and still has room
+       * for the 36% it gains swinging in, inside the gap rather than past it.
+       */
+      --card-width: 20rem;
+    }
+  }
+
+  /**
    * One intro timeline for the whole page, inherited by every piece of it. The
    * deck fades in on its own; everything else waits for --intro-start and
    * then arrives in reading order — socials, greeting, job title, quote, credit.
@@ -320,6 +345,18 @@
         width: 62.5rem;
         min-width: 62.5rem;
       }
+    }
+  }
+
+  /**
+   * Sideways this is the left column. The box stays 400px wide while the scale
+   * draws it at 250, so it would otherwise hold 75px of dead space against each
+   * neighbour and push the quote off the screen. Pulled back to what it draws.
+   */
+  &.landscape {
+    @media (max-height: 479px) {
+      @apply mb-0;
+      margin-inline: calc((400px * 0.625 - 400px) / 2);
     }
   }
 

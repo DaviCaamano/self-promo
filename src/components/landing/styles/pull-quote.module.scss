@@ -12,6 +12,20 @@
   @apply relative block w-full mx-auto px-6 sm:px-10 text-center cursor-pointer;
   max-width: calc(var(--stage-width) + 6rem);
   isolation: isolate;
+
+  /* Closer to the stage on a portrait phone. A landscape one is wider than this
+     breakpoint, so it keeps its own spacing. */
+  @media (max-width: 767px) {
+    margin-top: -2rem;
+  }
+
+  /* Held sideways the section runs as two columns and this is the right one, so
+     it stops stretching and takes only the width it needs. */
+  @media (orientation: landscape) and (max-height: 479px) {
+    @apply mx-0;
+    flex: 0 1 auto;
+    margin-top: 0;
+  }
 }
 
 /**
