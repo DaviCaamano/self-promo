@@ -25,11 +25,7 @@ const STEP_SECONDS = DECK_OPENING_MS / 1000;
  * out here it would be five unlabelled images ahead of the page's first
  * heading, announced in an order that keeps changing.
  */
-interface ProjectDeckProps {
-  /** Turn even though the device asked for less motion. */
-  play: boolean;
-}
-export const ProjectDeck = ({ play }: ProjectDeckProps) => {
+export const ProjectDeck = () => {
   const [turning, setTurning] = useState<boolean>(false);
 
   useEffect(() => {
@@ -41,13 +37,7 @@ export const ProjectDeck = ({ play }: ProjectDeckProps) => {
     /* Marked rather than styled: the caption's dark copy is clipped to whatever
        shape these cards are making, and the hook that measures them cannot see a
        CSS module's hashed class names. */
-    <div
-      className={styles.deck}
-      {...{ [DECK_ATTR]: '' }}
-      data-turning={turning}
-      data-motion={play ? 'play' : undefined}
-      aria-hidden
-    >
+    <div className={styles.deck} {...{ [DECK_ATTR]: '' }} data-turning={turning} aria-hidden>
       {projectPreviews.map(({ id, lg }, index) => (
         <div
           key={id}

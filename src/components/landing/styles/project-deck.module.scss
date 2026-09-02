@@ -199,18 +199,6 @@
   }
 }
 
-/**
- * The reader asked for the motion back. One attribute more specific than the
- * reduced-motion rules below, so it outranks them without `!important`.
- */
-.deck[data-motion='play'] .card:first-child {
-  animation-name: cardExit;
-}
-
-.deck[data-motion='play'][data-turning='true'] .card {
-  animation-name: cardTurn;
-}
-
 @media (prefers-reduced-motion: reduce) {
   /* Only the keyframes are swapped, so every delay and duration carries over
      and the previews still come round in the same order at the same pace. */

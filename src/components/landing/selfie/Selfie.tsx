@@ -13,8 +13,6 @@ import { ScrollCue } from '@components/landing/selfie/ScrollCue';
 import { useCardSilhouette } from '@components/landing/hooks/useCardSilhouette';
 import { LightCaption } from '@components/landing/selfie/LightCaption';
 import { Project } from '@components/landing/landing.interface';
-import { MotionToggle } from '@components/landing/selfie/MotionToggle';
-import { useReducedMotion, usePlayMotion } from '@hooks/useMotionPreference';
 
 /**
  * The previews dark enough to need light lettering, and which pieces of the
@@ -41,12 +39,6 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
   const silhouette = useRef<HTMLDivElement>(null);
   useCardSilhouette(silhouette);
 
-  /* The deck turns for as long as the page is open, so a device asking for less
-     motion gets a cross fade instead — and this is the way back into the turn
-     for a reader who wants it anyway. */
-  const reducedMotion = useReducedMotion();
-  const [playMotion, setPlayMotion] = usePlayMotion();
-
   return (
     // Carries `landscape` too: the pull quote is sized against the stage,
     // whose width follows a different ladder in that orientation.
@@ -56,7 +48,7 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
             centred in it and the caption and job title are placed as fractions
             of it, so the arrangement holds at every breakpoint. */}
         <div className={`${styles.stage} ${isLandscape && styles.landscape}`}>
-          <ProjectDeck play={playMotion} />
+          <ProjectDeck />
           <Greeting isLandscape={isLandscape} />
           <JobTitle isLandscape={isLandscape} />
           {/* The caption a second time in dark, clipped to whatever shape the
@@ -80,7 +72,6 @@ export const Selfie = ({ isLandscape, onScrollDown, onShowLetter }: SelfieProps)
       <PullQuote onShowLetter={onShowLetter} />
       <Socials isLandscape={isLandscape} />
       <ScrollCue onScrollDown={onScrollDown} />
-      {reducedMotion && <MotionToggle play={playMotion} onChange={setPlayMotion} />}
     </div>
   );
 };
