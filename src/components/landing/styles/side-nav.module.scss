@@ -26,7 +26,9 @@
   @apply hidden md:flex fixed left-0 top-1/2 z-50 flex-col items-center gap-2 py-4 px-2
   rounded-r-2xl border border-l-0 border-[#263e79] border-b-sea;
   transform: translateY(-50%);
-  background: hsla(100%, 100%, 100%, 0.15);
+  /* White at 15%. Was an hsla() whose hue carried a percentage — the same
+     colour, since lightness 100% is white at any hue, but Sass now warns. */
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(4.4px);
   -webkit-backdrop-filter: blur(4.4px);
 }
