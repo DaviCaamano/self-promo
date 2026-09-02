@@ -45,6 +45,17 @@
   grid-area: 1 / 1;
   width: var(--card-width);
   aspect-ratio: 5 / 3;
+  /**
+   * Centred by hand rather than by the deck's `place-items`. On a phone the
+   * card is wider than the square it sits in, and grid alignment abandons
+   * `center` for an overflowing item — it falls back to `start` so that nothing
+   * is clipped off the left edge, which parked the card 15px right of the
+   * middle of the screen. Starting it at the edge and pulling back half the
+   * overflow centres it either way round: the same expression comes to +10px on
+   * a desktop, where the card is the narrower of the two.
+   */
+  justify-self: start;
+  margin-left: calc((100% - var(--card-width)) / 2);
   /* The opening: no transform is square to the reader at rest depth. */
   opacity: 0;
 

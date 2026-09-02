@@ -38,7 +38,7 @@
   /* Further down again on a phone, where the block sits over a much smaller
      card and the same fraction lands higher against the artwork. */
   @media (max-width: 767px) {
-    top: calc(51.39% + 4px + 1rem);
+    top: calc(51.39% + 12px + 1rem);
   }
 
   /* `landscape` is only ever set on a phone held sideways, so it needs no width
