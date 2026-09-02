@@ -43,9 +43,12 @@
 
   /* `landscape` is only ever set on a phone held sideways, so it needs no width
      test of its own — and could not use one, since sideways the viewport is
-     wide and short. Same reason the type below ladders on height, not width. */
+     wide and short. Same reason the type below ladders on height, not width.
+     It takes the same 8px drop the portrait rule above just took, and sits two
+     rem further out: sideways there is width to spare beside the card. */
   &.landscape {
-    top: calc(51.39% + 8px + 1rem);
+    top: calc(51.39% + 16px + 1rem);
+    left: calc(80% - 4px + 2rem);
   }
 
   /* Air between the lines, added as a gap rather than to the line-height so the

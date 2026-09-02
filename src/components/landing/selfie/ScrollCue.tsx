@@ -1,6 +1,5 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { Section, sectionIds } from '@components/landing/landing.interface';
 import { LANDING_INTRO_ENDS_MS, NAV_INTRO_MS } from '@components/landing/intro';
 import styles from '../styles/scroll-cue.module.scss';
 
@@ -27,25 +26,15 @@ export const ScrollCue = ({ onScrollDown }: ScrollCueProps) => {
   }, []);
 
   useEffect(() => {
-    const about = document.getElementById(sectionIds[Section.about]);
-    if (!about) return;
-
     /**
-     * Watches the section it points at rather than the scroll position: the
-     * landing screen is a whole viewport tall at minimum but can be taller, so
-     * "scrolled at all" and "the next section is showing" are not the same
-     * moment. A zero threshold makes this the instant any of About appears.
-     *
-     * Measured by the overlap rather than by `isIntersecting`, which is also
-     * true when the two boxes merely touch. Unscrolled, About's top lands
-     * exactly on the bottom of the screen — so the flag would read as taken
-     * before the reader had done anything, and the cue would never appear.
+     * The first scroll takes it, and it does not come back until the page is
+     * loaded again. It used to watch the About section and follow it both ways,
+     * so scrolling back to the top brought the cue with it — which is an offer
+     * to do something the reader has already done.
      */
-    const observer = new IntersectionObserver(([entry]) => setTaken(entry.intersectionRect.height > 0), {
-      threshold: 0,
-    });
-    observer.observe(about);
-    return () => observer.disconnect();
+    const onScroll = () => setTaken(true);
+    window.addEventListener('scroll', onScroll, { once: true, passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const shown = due && !taken;

@@ -30,7 +30,9 @@
 }
 
 /**
- * The wheel runs down the body and fades out, then starts again — the shape of
+ * The wheel runs down the body and fades out, then starts again. It used to
+ * stop for `prefers-reduced-motion`, which is why it sat still on a phone with
+ * that setting on; it follows the deck now and runs for everyone. — the shape of
  * the gesture rather than a dot bouncing. It only runs once the cue is showing,
  * so nothing loops away off screen for the whole of the intro.
  */
@@ -53,13 +55,5 @@
   100% {
     transform: translateY(12px);
     opacity: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* A loop, not an entrance: it stops rather than fading, and the wheel simply
-     rests where it sits so the mouse still reads as a mouse. */
-  .cue[data-shown='true'] .wheel {
-    animation: none;
   }
 }
