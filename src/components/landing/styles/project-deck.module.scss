@@ -199,6 +199,19 @@
   }
 }
 
+/**
+ * TEMPORARY, with `MotionCheck`. One attribute more specific than the
+ * reduced-motion rules below, so pressing Force there puts the turn back
+ * whatever the device preference says. Remove with the diagnostic.
+ */
+.deck[data-force='true'] .card:first-child {
+  animation-name: cardExit;
+}
+
+.deck[data-force='true'][data-turning='true'] .card {
+  animation-name: cardTurn;
+}
+
 @media (prefers-reduced-motion: reduce) {
   /* Only the keyframes are swapped, so every delay and duration carries over
      and the previews still come round in the same order at the same pace. */
