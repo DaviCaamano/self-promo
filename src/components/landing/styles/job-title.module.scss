@@ -101,19 +101,6 @@
   color: transparent;
 }
 
-/* Reduced motion asks for no movement, not for no sequence: swapping only the
-   keyframes keeps every delay and stagger while dropping the travel. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .line {
-    animation-name: fadeIn;
-  }
-}
+/* No reduced-motion variant: the lines slide in for every reader. That is the
+   whole intro sequence's decision rather than these three lines', and the cost
+   of it is written down with the timeline in `selfie.module.scss`. */

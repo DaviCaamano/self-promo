@@ -77,23 +77,16 @@
   animation-delay: calc(min(var(--i, 0), var(--reveal-cap, 3)) * var(--reveal-step, 80ms));
 }
 
-/* Reduced motion asks for no movement, not for no sequence: swapping only the
-   keyframes keeps every delay and stagger while dropping the travel. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .section[data-reveal-scope] .reveal:not([data-revealed='true']) {
-    transform: none;
-  }
-
-  .section[data-reveal-scope] .reveal[data-revealed='true'] {
-    animation-name: fadeIn;
-  }
-}
+/**
+ * No reduced-motion variant, the same decision the landing intro took: the
+ * pieces travel for every reader rather than fading where the preference is
+ * set. Held to here because a page that slid its copy in above the fold and
+ * then stopped doing it below would read as the effect breaking on scroll.
+ *
+ * The cost is higher here than it is there, and is worth writing down on its
+ * own rather than borrowed from `selfie.module.scss`. That sequence runs once
+ * on load and is finished; these fire again at every section for the whole
+ * length of the page, on the reader's own scrolling — which is nearer the case
+ * the preference exists for than anything else on the site. If the two are
+ * ever split, this is the one to give back.
+ */

@@ -80,22 +80,13 @@
   font-size: 1.5rem;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
+  /* The drawer still answers to the preference — it is opened by the reader,
+     and sliding a full-width panel down over the page on a tap is the kind of
+     movement the setting is asking about. The trigger's own arrival is not:
+     that is a step of the page's intro and runs for everyone, for the reasons
+     set down with the timeline in `selfie.module.scss`. */
   .drawer {
     transition: visibility 0s;
-  }
-
-  /* Keeps the wait and the arrival, drops only the travel. */
-  .trigger {
-    animation-name: fadeIn;
   }
 }

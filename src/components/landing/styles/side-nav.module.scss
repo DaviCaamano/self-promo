@@ -56,18 +56,6 @@
   border border-[#263e79];
 }
 
-/* Reduced motion keeps the wait and the arrival, and drops only the travel. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rail {
-    animation-name: fadeIn;
-  }
-}
+/* No reduced-motion variant: the rail slides in off the edge for every reader.
+   It arrives on the back of the page's intro and follows that sequence's
+   decision, whose cost is written down in `selfie.module.scss`. */

@@ -48,6 +48,16 @@
    *
    * Only opacity and transform are ever animated. Anything that changed a box
    * would re-centre this column mid-run and drag the deck with it.
+   *
+   * Like the deck behind it, this sequence deliberately does not answer to
+   * `prefers-reduced-motion`. It did — every step swapped its keyframes for a
+   * plain fade, which is why a phone with that setting on showed the copy
+   * appear without ever having moved. The owner wants the arrival shown to
+   * everyone, which is their call to make about their own portfolio. The cost
+   * is real and worth writing down: a reader who has asked for less motion is
+   * given the full travel regardless. It is at least bounded — the sequence
+   * runs once on load and is over inside six seconds, where the deck turns for
+   * as long as the page is open.
    */
   --intro-stage: 250ms;
   /* The deck has the screen to itself while the first preview turns away —
@@ -533,25 +543,6 @@
     &.landscape {
       font-size: 21px;
     }
-  }
-}
-
-/* Reduced motion asks for no movement, not for no sequence: swapping only the
-   keyframes keeps every delay and stagger while dropping the travel. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  /* The deck's own fade and the caption's already move opacity only, so both
-     keep the animation they have. */
-  .socialLink {
-    animation-name: fadeIn;
   }
 }
 

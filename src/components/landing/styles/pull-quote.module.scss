@@ -92,12 +92,12 @@
   background: linear-gradient(90deg, rgba(156, 182, 255, 0.08), theme('colors.sea'), rgba(156, 182, 255, 0.08));
   transform: scaleX(0);
   /**
-   * `both`, not `forwards`. Everything else here hides itself with `opacity: 0`
-   * and so is covered during its delay; this one hides with a transform, and
-   * under reduced motion the rule below replaces that transform with the drawn
-   * state. With only a forwards fill there was then nothing holding it back:
-   * the line sat there fully drawn from the first frame and never animated.
-   * A backwards fill holds whichever keyframe set is in play at its start.
+   * `both`, not `forwards`, and both halves are load bearing. Everything else
+   * here hides itself with `opacity: 0` and so is covered through its delay;
+   * this one hides with the transform above, and the backwards half is what
+   * holds it there until its turn comes. The forwards half then keeps it drawn
+   * afterwards — `draw` has only a `to`, so without it the resting `scaleX(0)`
+   * takes over again the moment the animation ends and the line snaps shut.
    */
   animation: draw 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--intro-credit) both;
 }
@@ -207,29 +207,6 @@
   }
 }
 
-/* Reduced motion asks for no movement, not for no sequence: swapping only the
-   keyframes keeps every delay and stagger while dropping the travel. */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .glow,
-  .word,
-  .mark,
-  .attribution,
-  .cue {
-    animation-name: fadeIn;
-  }
-
-  /* Drawn full width from the start; only its opacity is left to animate. */
-  .rule {
-    animation-name: fadeIn;
-    transform: scaleX(1);
-  }
-}
+/* No reduced-motion variant: the words rise and the rule draws for every
+   reader. This is the intro sequence's last beat and follows that sequence's
+   decision, whose cost is written down in `selfie.module.scss`. */
