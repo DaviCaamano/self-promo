@@ -21,18 +21,30 @@
   }
 }
 
-/* Badges are sized off these on the Technologies section too; the write-ups
-   are a different tree, so they carry the small scale themselves. */
+/**
+ * Badges are sized off these on the Technologies section too; the write-ups are
+ * a different tree, so they carry the small scale themselves. These are the
+ * same two figures `--badge-small` and `--label-small` hold over there, because
+ * this is that same small badge at both widths.
+ *
+ * The two are NOT both lengths, and mixing them up is silent. `--badge-size` is
+ * a length, and is used as one. `--label-size` is a bare number — a percentage
+ * of the badge's own width, which the label multiplies by a query unit to get
+ * its font size. Give it a length instead and that multiplication becomes a
+ * length times a length, which is invalid; the browser then drops `font-size`
+ * altogether and the label inherits the surrounding prose. That is how these
+ * came out set in 24px inside a 72px badge.
+ */
 .technology {
   --badge-size: 4.5rem;
-  --label-size: 0.5625rem;
+  --label-size: 12.5;
   @apply w-full flex flex-row flex-wrap flex-1 items-start justify-center gap-2
   min-w-[16.875rem]
   max-w-[15.625rem] xs:max-w-[18.75rem] sm:max-w-[31.25rem];
 
   @media (min-width: 400px) {
     --badge-size: 5.25rem;
-    --label-size: 0.625rem;
+    --label-size: 11.9;
   }
 }
 
