@@ -40,8 +40,8 @@ export const Technologies = () => {
                 <cite className={styles.attribution}>&mdash; Master Yi</cite>
               </blockquote>
               <p className={`${styles.description} ${sStyles.reveal}`} style={{ '--i': 3 } as CSSProperties}>
-                Before coding, my first love was teaching. When I was growing up, I wanted to be a teacher. As an
-                education major, I wanted to spend my life learning and growing.
+                Before coding, my first love was teaching. As an education major I wanted to spend my life learning and
+                growing.
               </p>
               <p className={`${styles.punchline} ${sStyles.reveal}`} style={{ '--i': 4 } as CSSProperties}>
                 So I switched to Computer Science instead.

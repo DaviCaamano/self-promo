@@ -90,7 +90,25 @@
 /* The turn at the end of the paragraph above. On its own line and in the
    quote attribution's colour, because it is the joke and not the setup. */
 .punchline {
-  @apply text-sea text-[0.9375rem] sm:text-[1rem] md:text-[1.125rem] mt-3;
+  @apply text-sea mt-3;
+  /**
+   * One line, always — same trick as the quote, against the same column. The
+   * sentence measures 21.1 times its own font size, so 4.6% of the column
+   * leaves it a little room and it never takes a second line, which would drop
+   * a word or two under the joke and blunt it. The step sizes are the cap: this
+   * only ever shrinks the line from what the breakpoint asks for, never grows
+   * it.
+   */
+  font-size: min(0.9375rem, 4.6cqi);
+
+  @media (min-width: 640px) {
+    font-size: min(1rem, 4.6cqi);
+  }
+
+  @media (min-width: 768px) {
+    font-size: min(1.125rem, 4.6cqi);
+  }
+
   font-weight: 200;
   line-height: 1.75rem;
 }
