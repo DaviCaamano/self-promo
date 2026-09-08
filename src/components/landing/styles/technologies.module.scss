@@ -6,8 +6,12 @@
  * this row, the row collapsed to the badge grid's 202px, and on a phone the
  * copy and the quote were squeezed into that.
  */
+/* `items-stretch` from the tablet up so the copy column takes the row's full
+   height rather than only its own — `.prose` below is what spends it. The badge
+   grid opts out with `self-start`, so it still sets the height instead of being
+   stretched to match. */
 .layout {
-  @apply w-full flex flex-col items-center gap-8 md:flex-row md:items-start md:gap-6;
+  @apply w-full flex flex-col items-center gap-8 md:flex-row md:items-stretch md:gap-6;
 }
 
 .prose {
@@ -17,6 +21,19 @@
      means it narrows as the viewport does and then stops — a plain breakpoint
      ladder cannot follow that closely enough to keep the quote on one line. */
   container-type: inline-size;
+
+  /**
+   * The badge grid beside this is the taller of the two columns, and the copy
+   * used to sit in a block at the top of its own with the rest empty beneath
+   * it. Spreading the three pieces down the full height closes that gap, and
+   * lands them roughly level with the three rows of badges opposite.
+   *
+   * Only from the tablet up. Below it the two stack, so there is no column to
+   * fill and the pieces should stay in one close block.
+   */
+  @media (min-width: 768px) {
+    @apply flex flex-col justify-between;
+  }
 }
 
 /**
