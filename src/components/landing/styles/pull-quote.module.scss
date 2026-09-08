@@ -45,14 +45,17 @@
 
 .quote {
   @apply text-latte;
-  /* No unadjusted serif in this stack. Instrument Serif is loaded at runtime,
-     and next/font's paired fallback is metric-matched to it; a plain Georgia or
+  /* No unadjusted serif in this stack. The quote face is loaded at runtime, and
+     next/font's paired fallback is metric-matched to it; a plain Georgia or
      Iowan behind it re-wraps the quote onto a different number of lines when
      the real face arrives, which changes this block's height and re-centres
      the entire page around it. */
-  font-family: var(--font-instrument-serif), serif;
+  font-family: var(--font-newsreader), serif;
   font-style: italic;
-  font-weight: 400;
+  /* The longest quote on the site, and the one on the darkest ground. 380 rather
+     than 400 because light type on a dark panel already reads a touch heavier
+     than the same weight does the other way round. */
+  font-weight: 380;
   /* vh in the middle term so a short laptop screen gets a smaller quote rather
      than one that runs off the bottom of the landing page. */
   font-size: clamp(1rem, min(2.6vw, 3vh), 1.75rem);

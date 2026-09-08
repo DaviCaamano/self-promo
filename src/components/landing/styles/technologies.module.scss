@@ -21,35 +21,38 @@
 
 /**
  * Same display face as the landing pull quote and the letter cards, so every
- * quotation on the site speaks in one voice. Instrument Serif ships a single
- * weight, so 400 here rather than the 300 the sans face used, and a unitless
- * line-height because the serif's metrics no longer suit a fixed 2.5rem.
+ * quotation on the site speaks in one voice. A unitless line-height because the
+ * serif's metrics no longer suit the fixed 2.5rem the sans face used.
  */
 .quote {
   @apply flex flex-col;
   /**
-   * One line, always. The quotation measures 13.3 times its own font size
-   * including the marks, so 7.3% of the column width leaves it a little room
+   * One line, always. The quotation measures 15.1 times its own font size
+   * including the marks, so 6.4% of the column width leaves it a little room
    * and it never takes a second line — where it would leave a lone word
    * stranded. The step sizes are the cap: this only ever shrinks the quote from
    * what the breakpoint asks for, never grows it.
+   *
+   * The figure is the widest the face gets over the sizes in play: Newsreader
+   * carries an optical size axis and draws narrower as it grows, so measuring
+   * at the top of the range would under-size the allowance at the bottom.
    */
-  font-size: min(1.5rem, 7.3cqi);
+  font-size: min(1.5rem, 6.4cqi);
 
   @media (min-width: 480px) {
-    font-size: min(1.75rem, 7.3cqi);
+    font-size: min(1.75rem, 6.4cqi);
   }
 
   @media (min-width: 768px) {
-    font-size: min(2rem, 7.3cqi);
+    font-size: min(2rem, 6.4cqi);
   }
 
   /* No unadjusted serif behind it: next/font's paired fallback is metric
-     matched to Instrument Serif, so the quote cannot re-wrap onto a different
+     matched to the quote face, so the quote cannot re-wrap onto a different
      number of lines when the real face finishes loading. */
-  font-family: var(--font-instrument-serif), serif;
+  font-family: var(--font-newsreader), serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 380;
   line-height: 1.3;
 }
 

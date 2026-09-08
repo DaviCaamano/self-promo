@@ -96,9 +96,9 @@
    type they recognise. */
 .quoteText {
   @apply text-latte text-[1.0625rem] sm:text-[1.1875rem];
-  font-family: var(--font-instrument-serif), 'Iowan Old Style', Georgia, serif;
+  font-family: var(--font-newsreader), 'Iowan Old Style', Georgia, serif;
   font-style: italic;
-  font-weight: 400;
+  font-weight: 380;
   line-height: 1.45;
 }
 
