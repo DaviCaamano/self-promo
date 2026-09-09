@@ -74,29 +74,13 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
             </span>
           </Project>
           <Project
-            flashing={flashed === ProjectName.quellivMobile}
-            onOpen={setOpened}
-            id={ProjectName.quellivMobile}
-            name={'QUELLIV (MOBILE)'}
-            techs={['reactnative', 'typescript', 'recoil']}
-            url={'https://quelliv.com/'}
-            index={4}
-          >
-            Everything offered by <ProjectSubLink url={'https://quelliv.com'}>Quelliv.com</ProjectSubLink> and more.
-            This was first mobile app I've developed in a professional setting, of which I was the sole developer. One
-            of the focuses for the team was to train customers to treat this app first and last point of contact for our
-            users, even going as far as trying to discourage users from using our webapp for the same services. Because
-            of the many hats this app had to wear, I am particularly proud of the way the designers and I were able to
-            keep this app accessible to the company's predominantly older clientele.
-          </Project>
-          <Project
             flashing={flashed === ProjectName.quelliv}
             onOpen={setOpened}
             id={ProjectName.quelliv}
             name={'QUELLIV'}
             techs={['next', 'nestjs', 'typescript', 'prisma', 'redux', 'postgres']}
             url={'https://quelliv.com/'}
-            index={5}
+            index={4}
           >
             Onboarding, purchases, offers, bookings, and subscriptions. I was tasked with starting and developing the
             initial NextJs/NestJs monorepo. Quelliv used{' '}
@@ -106,6 +90,22 @@ export const Projects = ({ flashed, setFlashed }: ProjectsProps) => {
             to aid with pain management, skincare, weight loss, and hair loss. The chat-bot, "Dr. A", used ChatGPT to
             direct clients towards the onboarding flow after helping them select which of Quelliv's services they were
             looking for.
+          </Project>
+          <Project
+            flashing={flashed === ProjectName.quellivMobile}
+            onOpen={setOpened}
+            id={ProjectName.quellivMobile}
+            name={'QUELLIV (MOBILE)'}
+            techs={['reactnative', 'typescript', 'recoil']}
+            url={'https://quelliv.com/'}
+            index={5}
+          >
+            Everything offered by <ProjectSubLink url={'https://quelliv.com'}>Quelliv.com</ProjectSubLink> and more.
+            This was first mobile app I've developed in a professional setting, of which I was the sole developer. One
+            of the focuses for the team was to train customers to treat this app first and last point of contact for our
+            users, even going as far as trying to discourage users from using our webapp for the same services. Because
+            of the many hats this app had to wear, I am particularly proud of the way the designers and I were able to
+            keep this app accessible to the company's predominantly older clientele.
           </Project>
           <Project
             flashing={flashed === ProjectName.oit}
