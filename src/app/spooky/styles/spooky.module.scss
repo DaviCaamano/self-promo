@@ -1,0 +1,12 @@
+/**
+ * The old site carried this rule in `globals.scss`, where a bare `.splide`
+ * selector could safely own every carousel on the site because there was only
+ * one. The carousel now lives on this route alone, so the rule is scoped to it
+ * rather than shipped to every page that never renders a slide.
+ */
+.carousel {
+  :global(.splide) {
+    width: 100% !important;
+    scroll-behavior: smooth;
+  }
+}

@@ -1,0 +1,19 @@
+.visuals {
+  @apply flex flex-col md:flex-row justify-center items-center mx-4 my-8;
+}
+
+.technology {
+  @apply w-full flex flex-row flex-wrap flex-1 items-start justify-center
+  min-w-[16.875rem]
+  max-w-[15.625rem] xs:max-w-[18.75rem] sm:max-w-[31.25rem];
+}
+
+.technologyItem {
+  @apply h-[2.5rem] xs:h-[3rem] w-[6rem]
+  text-sea-light
+  text-[0.7rem] xs:text-[0.75rem] md:text-[0.8rem]
+  leading-[0.7rem] xs:leading-[0.75rem] md:leading-[0.8rem]
+  flex justify-center items-center
+  font-medium  m-1 py-1 text-center
+  border-[#263e79] border-b-sea border-r-sea border;
+}

@@ -1,0 +1,32 @@
+
+
+.contactInfoField {
+  @apply font-medium text-[1rem] md:text-[1.25rem] inline-block mr-1;
+}
+
+.contactInfoText {
+  @apply text-[1rem] md:text-[1.25rem];
+  font-weight: 300;
+}
+
+.notepads {
+  @apply float-right mt-36 bg-red-950;
+  clip-path: polygon(7% 29%, 26.5% 3%, 66% 2%, 100% 39%, 100% 39%, 62% 100%, 0 92%);
+}
+
+.downloadContainer {
+  @apply flex flex-col-reverse items-center w-full mb-4;
+}
+
+.download {
+  @apply h-12 border-b-sea border-r-sea border flex flex-row justify-between items-center
+  w-full bg-void-light hover:bg-void-highlight cursor-pointer px-4;
+
+  &.last {
+    @apply rounded-br-xl;
+  }
+}
+
+.downloadTitle {
+  @apply text-[1rem] sm:text-[1.1rem] leading-[1.5rem] md:my-1;
+}

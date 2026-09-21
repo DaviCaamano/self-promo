@@ -11,6 +11,7 @@
     "build:tech-icons": "node scripts/build-tech-icons.mjs"
   },
   "dependencies": {
+    "@splidejs/react-splide": "^0.7.12",
     "@svgr/webpack": "^8.1.0",
     "@typescript-eslint/eslint-plugin": "^8",
     "cross-env": "^10",

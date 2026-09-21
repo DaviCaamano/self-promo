@@ -1,0 +1,56 @@
+'use client';
+import { Selfie } from './selfie/Selfie';
+import { AboutMe } from './AboutMe';
+import { NavBar } from './navbar/Navbar';
+import { Experience } from './Experience';
+import { useSlide } from '../hooks/useSlide';
+import { Slide } from '../spooky.interface';
+import { Projects } from './Projects';
+import { PropsWithChildren } from 'react';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
+import '@splidejs/react-splide/css';
+import { useIsLandscape } from '@hooks/mobile/useIsLandscape';
+import styles from '../styles/spooky.module.scss';
+
+interface LandingProps {
+  isMobile: boolean;
+}
+export const Landing = ({ isMobile }: LandingProps) => {
+  const { setFocusedProject, slide, setSlide, splide } = useSlide();
+  const isLandscape = useIsLandscape(isMobile);
+
+  return (
+    <div
+      id={'landing'}
+      className={`${styles.carousel} min-w-screen min-h-screen flex justify-center items-center overflow-hidden`}
+    >
+      <Splide {...splide}>
+        <Page current={slide} slide={Slide.socials}>
+          <Selfie active={slide === Slide.socials} isLandscape={isLandscape} />
+        </Page>
+        <Page current={slide} slide={Slide.about}>
+          <AboutMe active={slide === Slide.about} />
+        </Page>
+        <Page current={slide} slide={Slide.experience}>
+          <Experience active={slide === Slide.experience} setFocusedProject={setFocusedProject} />
+        </Page>
+        <Page current={slide} slide={Slide.projects}>
+          <Projects active={slide === Slide.projects} />
+        </Page>
+      </Splide>
+      <NavBar slide={slide} setSlide={setSlide} isLandscape={isLandscape} isMobile={isMobile} />
+    </div>
+  );
+};
+
+interface CarouselFilterProps extends PropsWithChildren {
+  current: Slide;
+  slide: Slide;
+}
+const Page = ({ children, current, slide }: CarouselFilterProps) => {
+  return (
+    <SplideSlide>
+      <div className={`trimmer ${current !== slide && 'max-h-[100dvh] overflow-hidden'} h-auto`}>{children}</div>
+    </SplideSlide>
+  );
+};
